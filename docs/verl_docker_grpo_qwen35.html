@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>verl Docker 训练 Qwen3.5 GRPO 环境与启动指南</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f9;
+      --paper: #ffffff;
+      --ink: #1f2933;
+      --muted: #5d6878;
+      --line: #dce2ea;
+      --accent: #116a7b;
+      --accent-2: #7a4f12;
+      --code-bg: #111827;
+      --code-ink: #e5eefb;
+      --ok: #157347;
+      --warn: #a15c00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Microsoft YaHei", sans-serif;
+      line-height: 1.65;
+    }
+    main {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 40px 20px 72px;
+    }
+    header {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 28px;
+      margin-bottom: 18px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 30px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+    h2 {
+      margin: 28px 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+    h3 {
+      margin: 22px 0 8px;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+    p { margin: 8px 0 12px; }
+    a { color: var(--accent); }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.94em;
+    }
+    pre {
+      overflow-x: auto;
+      background: var(--code-bg);
+      color: var(--code-ink);
+      border-radius: 8px;
+      padding: 16px;
+      line-height: 1.5;
+      border: 1px solid #0b1220;
+    }
+    pre code { font-size: 13px; }
+    section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px 24px;
+      margin: 16px 0;
+    }
+    .lead { color: var(--muted); font-size: 16px; }
+    .note, .warn, .ok {
+      border-left: 4px solid var(--accent);
+      background: #f1f8fa;
+      padding: 10px 12px;
+      margin: 14px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .warn {
+      border-color: var(--warn);
+      background: #fff7ed;
+    }
+    .ok {
+      border-color: var(--ok);
+      background: #eefaf3;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 16px;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+      text-align: left;
+    }
+    th { background: #eef2f6; }
+    ul { padding-left: 22px; }
+    li { margin: 5px 0; }
+    .small { color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>verl Docker 训练 Qwen3.5 GRPO 环境与启动指南</h1>
+    <p class="lead">
+      目标：把你本地已经微调好的 Qwen3.5 模型、<code>grpodata/verl</code> 数据、
+      <code>reward_functions.py</code> 和 <code>zhenghou_btree.json</code> 上传到服务器后，
+      用 Docker 进入 <code>verl</code> 环境进行 GRPO 训练。
+    </p>
+    <p class="small">
+      本指南默认 NVIDIA GPU、Linux 服务器、FSDP 训练、vLLM rollout。服务器路径会变，所以所有路径都用变量配置。
+    </p>
+  </header>
+
+  <section>
+    <h2>0. 关键结论</h2>
+    <ul>
+      <li>官方 Docker 镜像优先用 <code>verlai/verl:vllm011.latest</code>，因为我们要用 vLLM rollout。</li>
+      <li>你的本地 <code>grpodata/verl</code> 目前是 <code>.jsonl</code>，verl 训练前要转成 <code>.parquet</code>。</li>
+      <li><code>reward_functions.py</code> 里已经有 <code>compute_score</code>，verl 参数写 <code>custom_reward_function.name=compute_score</code>。</li>
+      <li><code>reward_functions.py</code> 会读取同目录下的 <code>zhenghou_btree.json</code>，上传时必须一起传。</li>
+      <li>先跑 smoke 配置确认链路，再扩大 batch、response length、rollout_n 和 epoch。</li>
+    </ul>
+    <div class="note">
+      官方安装文档写明 verl 需要 Python &gt;= 3.10、CUDA &gt;= 12.8，并推荐 Docker；预构建镜像在 DockerHub
+      <code>verlai/verl</code>，示例包括 <code>verlai/verl:vllm011.latest</code>。数据准备文档要求训练数据保存为 parquet。
+    </div>
+  </section>
+
+  <section>
+    <h2>1. 服务器目录规划</h2>
+    <p>假设你上传到服务器后使用下面的目录。你可以改，只要后面的变量同步即可。</p>
+    <table>
+      <thead>
+        <tr><th>变量</th><th>服务器宿主机路径示例</th><th>内容</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>PROJECT_DIR</code></td>
+          <td><code>/data/tcm_final</code></td>
+          <td>项目文件，至少包含 <code>grpodata/verl</code>、<code>reward_functions.py</code>、<code>zhenghou_btree.json</code></td>
+        </tr>
+        <tr>
+          <td><code>MODEL_DIR</code></td>
+          <td><code>/data/models/qwen35_tcm_sft</code></td>
+          <td>你在 Qwen3.5 基础上已经微调好的模型目录，里面应有 <code>config.json</code>、tokenizer、权重文件</td>
+        </tr>
+        <tr>
+          <td><code>OUTPUT_DIR</code></td>
+          <td><code>/data/outputs/tcm_grpo</code></td>
+          <td>GRPO checkpoint、日志输出目录</td>
+        </tr>
+        <tr>
+          <td><code>VERL_SRC_DIR</code></td>
+          <td><code>/data/verl_src</code></td>
+          <td>verl 源码目录，容器里用 editable 模式安装</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>2. 上传文件到服务器</h2>
+    <p>在本地机器执行，按你的服务器地址替换 <code>USER@SERVER</code>。</p>
+    <pre><code class="language-bash"># 项目最小必需文件：保留 grpodata/verl 这一层目录
+rsync -av ./grpodata \
+  ./reward_functions.py \
+  ./zhenghou_btree.json \
+  USER@SERVER:/data/tcm_final/
+
+# 上传你已经 SFT/继续训练好的 Qwen3.5 模型目录
+rsync -av /path/to/your/qwen35_tcm_sft/ USER@SERVER:/data/models/qwen35_tcm_sft/</code></pre>
+    <div class="warn">
+      注意：本地路径 <code>./...</code> 到服务器后不会存在，后面都使用容器内路径
+      <code>/workspace/tcm</code>、<code>/workspace/model</code>、<code>/workspace/output</code>。
+    </div>
+  </section>
+
+  <section>
+    <h2>3. 服务器宿主机检查</h2>
+    <p>在服务器上执行：</p>
+    <pre><code class="language-bash">nvidia-smi
+docker --version
+
+mkdir -p /data/tcm_final /data/models/qwen35_tcm_sft /data/outputs/tcm_grpo /data/verl_src
+
+test -f /data/tcm_final/reward_functions.py
+test -f /data/tcm_final/zhenghou_btree.json
+test -f /data/tcm_final/grpodata/verl/bianzheng_grpo_train.jsonl
+test -f /data/tcm_final/grpodata/verl/bianzheng_grpo_test.jsonl
+test -f /data/models/qwen35_tcm_sft/config.json</code></pre>
+    <div class="note">
+      如果你选择把 jsonl 直接放到 <code>/data/tcm_final/verl</code>，后面的 <code>DATA_JSONL_DIR</code>
+      改成 <code>/workspace/tcm/verl</code>。
+    </div>
+  </section>
+
+  <section>
+    <h2>4. 拉取并进入 Docker</h2>
+    <p>这里用 vLLM 版官方镜像。若镜像标签后续更新，可以到 DockerHub 的 <code>verlai/verl</code> 选择新的 vLLM 标签。</p>
+    <pre><code class="language-bash">export IMAGE=verlai/verl:vllm011.latest
+docker pull "${IMAGE}"
+
+export PROJECT_DIR=/data/tcm_final
+export MODEL_DIR=/data/models/qwen35_tcm_sft
+export OUTPUT_DIR=/data/outputs/tcm_grpo
+export VERL_SRC_DIR=/data/verl_src
+
+docker run --rm -it \
+  --name tcm-verl-grpo \
+  --runtime=nvidia \
+  --gpus all \
+  --net=host \
+  --ipc=host \
+  --shm-size=128g \
+  --ulimit memlock=-1 \
+  --ulimit stack=67108864 \
+  --cap-add=SYS_ADMIN \
+  -v "${PROJECT_DIR}:/workspace/tcm" \
+  -v "${MODEL_DIR}:/workspace/model" \
+  -v "${OUTPUT_DIR}:/workspace/output" \
+  -v "${VERL_SRC_DIR}:/workspace/verl_src" \
+  -v "${HOME}/.cache/huggingface:/root/.cache/huggingface" \
+  -w /workspace \
+  "${IMAGE}" \
+  bash</code></pre>
+    <div class="ok">
+      进入容器后，后续所有路径都用容器内路径：模型是 <code>/workspace/model</code>，项目是 <code>/workspace/tcm</code>，输出是 <code>/workspace/output</code>。
+    </div>
+  </section>
+
+  <section>
+    <h2>5. 容器内安装 verl 源码</h2>
+    <p>官方镜像带了大部分训练/推理依赖，但通常仍需要安装 verl 源码本身。</p>
+    <pre><code class="language-bash">cd /workspace/verl_src
+if [ ! -d verl ]; then
+  git clone https://github.com/verl-project/verl.git
+fi
+
+cd /workspace/verl_src/verl
+git pull --ff-only || true
+pip install --no-deps -e .
+
+python - <<'PY'
+import sys
+import torch
+import transformers
+print("python:", sys.executable)
+print("torch:", torch.__version__, "cuda:", torch.version.cuda, "cuda_available:", torch.cuda.is_available())
+print("transformers:", transformers.__version__)
+try:
+    import vllm
+    print("vllm:", vllm.__version__)
+except Exception as exc:
+    print("vllm import failed:", repr(exc))
+    raise
+PY</code></pre>
+    <div class="warn">
+      如果服务器不能联网，就先在能联网的机器下载 verl 源码，再 rsync 到 <code>/data/verl_src/verl</code>，然后在容器里只执行
+      <code>pip install --no-deps -e .</code>。
+    </div>
+  </section>
+
+  <section>
+    <h2>6. 把 jsonl 转成 parquet</h2>
+    <p>你的数据字段已经符合 verl 常见格式：<code>data_source</code>、<code>prompt</code>、<code>ability</code>、<code>reward_model</code>、<code>extra_info</code>。</p>
+    <pre><code class="language-bash">cd /workspace
+
+# 如果你的服务器上是 /data/tcm_final/grpodata/verl，则这里保持默认。
+# 如果你按第 3 步示例把文件直接放在 /data/tcm_final/verl，则改成 /workspace/tcm/verl。
+export DATA_JSONL_DIR=/workspace/tcm/grpodata/verl
+export DATA_PARQUET_DIR=/workspace/tcm/verl_data
+
+python - <<'PY'
+import json
+import os
+from pathlib import Path
+import pandas as pd
+
+src = Path(os.environ.get("DATA_JSONL_DIR", "/workspace/tcm/grpodata/verl"))
+out = Path(os.environ.get("DATA_PARQUET_DIR", "/workspace/tcm/verl_data"))
+out.mkdir(parents=True, exist_ok=True)
+
+for split in ["train", "test"]:
+    in_file = src / f"bianzheng_grpo_{split}.jsonl"
+    rows = []
+    with in_file.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                rows.append(json.loads(line))
+    df = pd.DataFrame(rows)
+    out_file = out / f"bianzheng_grpo_{split}.parquet"
+    df.to_parquet(out_file, index=False)
+    print(split, len(df), "->", out_file)
+PY
+
+python - <<'PY'
+import pandas as pd
+for split in ["train", "test"]:
+    p = f"/workspace/tcm/verl_data/bianzheng_grpo_{split}.parquet"
+    df = pd.read_parquet(p)
+    print(p, len(df), df.columns.tolist())
+    print(df.iloc[0]["reward_model"])
+PY</code></pre>
+    <div class="warn">
+      如果你把数据放在不同目录，记得同步修改 Python 里的 <code>src = Path(...)</code>。
+    </div>
+  </section>
+
+  <section>
+    <h2>7. 先跑 smoke GRPO</h2>
+    <p>smoke 只跑很小 batch，目的是验证：模型能加载、parquet 能读、奖励函数能调用、vLLM rollout 能启动、FSDP 能更新。</p>
+    <pre><code class="language-bash">cd /workspace/verl_src/verl
+
+export HYDRA_FULL_ERROR=1
+export TOKENIZERS_PARALLELISM=false
+export VLLM_USE_V1=1
+export RAY_DEDUP_LOGS=0
+export WANDB_MODE=offline
+
+python -m verl.trainer.main_ppo \
+  data.train_files=/workspace/tcm/verl_data/bianzheng_grpo_train.parquet \
+  data.val_files=/workspace/tcm/verl_data/bianzheng_grpo_test.parquet \
+  data.train_batch_size=8 \
+  data.max_prompt_length=1024 \
+  data.max_response_length=512 \
+  data.filter_overlong_prompts=True \
+  data.truncation=error \
+  data.shuffle=False \
+  algorithm.adv_estimator=grpo \
+  algorithm.use_kl_in_reward=False \
+  custom_reward_function.path=/workspace/tcm/reward_functions.py \
+  custom_reward_function.name=compute_score \
+  reward_model.reward_manager=naive \
+  actor_rollout_ref.model.path=/workspace/model \
+  actor_rollout_ref.model.trust_remote_code=True \
+  actor_rollout_ref.model.use_remove_padding=True \
+  actor_rollout_ref.model.enable_gradient_checkpointing=True \
+  actor_rollout_ref.actor.strategy=fsdp \
+  actor_rollout_ref.actor.optim.lr=5e-7 \
+  actor_rollout_ref.actor.ppo_mini_batch_size=4 \
+  actor_rollout_ref.actor.ppo_micro_batch_size_per_gpu=1 \
+  actor_rollout_ref.actor.use_kl_loss=False \
+  actor_rollout_ref.actor.kl_loss_coef=0.0 \
+  actor_rollout_ref.actor.entropy_coeff=0 \
+  actor_rollout_ref.actor.use_torch_compile=False \
+  actor_rollout_ref.actor.fsdp_config.param_offload=False \
+  actor_rollout_ref.actor.fsdp_config.optimizer_offload=True \
+  actor_rollout_ref.ref.strategy=fsdp \
+  actor_rollout_ref.ref.log_prob_micro_batch_size_per_gpu=1 \
+  actor_rollout_ref.ref.fsdp_config.param_offload=True \
+  actor_rollout_ref.rollout.name=vllm \
+  actor_rollout_ref.rollout.mode=sync \
+  actor_rollout_ref.rollout.n=1 \
+  actor_rollout_ref.rollout.tensor_model_parallel_size=1 \
+  actor_rollout_ref.rollout.gpu_memory_utilization=0.40 \
+  trainer.project_name=tcm-grpo \
+  trainer.experiment_name=qwen35_grpo_smoke \
+  trainer.logger='["console"]' \
+  trainer.nnodes=1 \
+  trainer.n_gpus_per_node=1 \
+  trainer.default_local_dir=/workspace/output/qwen35_grpo_smoke \
+  trainer.critic_warmup=0 \
+  trainer.val_before_train=False \
+  trainer.save_freq=-1 \
+  trainer.test_freq=1 \
+  trainer.total_epochs=1</code></pre>
+    <div class="note">
+      smoke 默认 1 张 GPU。如果你的模型 1 卡放不下，把 <code>trainer.n_gpus_per_node</code> 改成可用 GPU 数，
+      并把 <code>actor_rollout_ref.rollout.tensor_model_parallel_size</code> 改成 <code>2</code> 或 <code>4</code>。
+    </div>
+  </section>
+
+  <section>
+    <h2>8. 正式训练模板</h2>
+    <p>smoke 成功后再跑正式版本。下面假设单机 8 卡；如果是 6 卡，把 <code>N_GPUS_PER_NODE=6</code>、<code>FSDP_SIZE=6</code>。</p>
+    <pre><code class="language-bash">cd /workspace/verl_src/verl
+
+export HYDRA_FULL_ERROR=1
+export TOKENIZERS_PARALLELISM=false
+export VLLM_USE_V1=1
+export RAY_DEDUP_LOGS=0
+export WANDB_PROJECT=tcm-grpo
+export WANDB_MODE=online
+
+export N_GPUS_PER_NODE=8
+export ROLLOUT_TP=2
+export FSDP_SIZE=8
+export TRAIN_BATCH_SIZE=64
+export PPO_MINI_BATCH_SIZE=16
+export MAX_PROMPT_LENGTH=1024
+export MAX_RESPONSE_LENGTH=2048
+export ROLLOUT_N=4
+export EXPERIMENT_NAME=qwen35_tcm_grpo_v1
+
+python -m verl.trainer.main_ppo \
+  data.train_files=/workspace/tcm/verl_data/bianzheng_grpo_train.parquet \
+  data.val_files=/workspace/tcm/verl_data/bianzheng_grpo_test.parquet \
+  data.train_batch_size=${TRAIN_BATCH_SIZE} \
+  data.max_prompt_length=${MAX_PROMPT_LENGTH} \
+  data.max_response_length=${MAX_RESPONSE_LENGTH} \
+  data.filter_overlong_prompts=True \
+  data.truncation=error \
+  data.shuffle=True \
+  algorithm.adv_estimator=grpo \
+  algorithm.use_kl_in_reward=False \
+  custom_reward_function.path=/workspace/tcm/reward_functions.py \
+  custom_reward_function.name=compute_score \
+  reward_model.reward_manager=naive \
+  actor_rollout_ref.model.path=/workspace/model \
+  actor_rollout_ref.model.trust_remote_code=True \
+  actor_rollout_ref.model.use_remove_padding=True \
+  actor_rollout_ref.model.enable_gradient_checkpointing=True \
+  actor_rollout_ref.actor.strategy=fsdp \
+  actor_rollout_ref.actor.optim.lr=5e-7 \
+  actor_rollout_ref.actor.ppo_mini_batch_size=${PPO_MINI_BATCH_SIZE} \
+  actor_rollout_ref.actor.ppo_micro_batch_size_per_gpu=1 \
+  actor_rollout_ref.actor.use_kl_loss=False \
+  actor_rollout_ref.actor.kl_loss_coef=0.0 \
+  actor_rollout_ref.actor.entropy_coeff=0 \
+  actor_rollout_ref.actor.use_dynamic_bsz=False \
+  actor_rollout_ref.actor.use_torch_compile=False \
+  actor_rollout_ref.actor.fsdp_config.fsdp_size=${FSDP_SIZE} \
+  actor_rollout_ref.actor.fsdp_config.param_offload=False \
+  actor_rollout_ref.actor.fsdp_config.optimizer_offload=True \
+  actor_rollout_ref.actor.fsdp_config.reshard_after_forward=True \
+  actor_rollout_ref.ref.strategy=fsdp \
+  actor_rollout_ref.ref.log_prob_micro_batch_size_per_gpu=1 \
+  actor_rollout_ref.ref.fsdp_config.param_offload=True \
+  actor_rollout_ref.ref.fsdp_config.reshard_after_forward=True \
+  actor_rollout_ref.rollout.name=vllm \
+  actor_rollout_ref.rollout.mode=sync \
+  actor_rollout_ref.rollout.n=${ROLLOUT_N} \
+  actor_rollout_ref.rollout.tensor_model_parallel_size=${ROLLOUT_TP} \
+  actor_rollout_ref.rollout.gpu_memory_utilization=0.55 \
+  trainer.project_name=tcm-grpo \
+  trainer.experiment_name=${EXPERIMENT_NAME} \
+  trainer.logger='["console","wandb"]' \
+  trainer.nnodes=1 \
+  trainer.n_gpus_per_node=${N_GPUS_PER_NODE} \
+  trainer.default_local_dir=/workspace/output/${EXPERIMENT_NAME} \
+  trainer.critic_warmup=0 \
+  trainer.val_before_train=False \
+  trainer.save_freq=20 \
+  trainer.test_freq=10 \
+  trainer.total_epochs=3</code></pre>
+  </section>
+
+  <section>
+    <h2>9. 显存不够时怎么改</h2>
+    <table>
+      <thead>
+        <tr><th>现象</th><th>优先调整</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>vLLM 初始化 OOM</td>
+          <td>降低 <code>actor_rollout_ref.rollout.gpu_memory_utilization</code> 到 <code>0.35</code>；降低 <code>MAX_RESPONSE_LENGTH</code>；增大 <code>ROLLOUT_TP</code></td>
+        </tr>
+        <tr>
+          <td>actor update OOM</td>
+          <td>保持 <code>ppo_micro_batch_size_per_gpu=1</code>；开启/保留 optimizer offload；降低 <code>PPO_MINI_BATCH_SIZE</code></td>
+        </tr>
+        <tr>
+          <td>吞吐太慢</td>
+          <td>smoke 过后把 <code>ROLLOUT_N</code> 从 1 加到 4 或 8；逐步增加 <code>TRAIN_BATCH_SIZE</code></td>
+        </tr>
+        <tr>
+          <td>模型太大，单卡放不下 rollout</td>
+          <td>把 <code>ROLLOUT_TP</code> 设为 2、4 或 8，且总 GPU 数要能被 TP 合理划分</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>10. 常见报错</h2>
+    <h3>找不到 <code>zhenghou_btree.json</code></h3>
+    <p><code>reward_functions.py</code> 用 <code>os.path.dirname(__file__)</code> 读取同目录文件，所以必须保证容器内：</p>
+    <pre><code class="language-bash">ls /workspace/tcm/reward_functions.py /workspace/tcm/zhenghou_btree.json</code></pre>
+
+    <h3>找不到 parquet</h3>
+    <p>重新确认转换输出：</p>
+    <pre><code class="language-bash">ls -lh /workspace/tcm/verl_data/*.parquet</code></pre>
+
+    <h3>vLLM 或 torch 版本冲突</h3>
+    <p>不要在官方镜像里随手 <code>pip install -U torch vllm transformers</code>。先使用镜像自带版本，只对 verl 执行 <code>pip install --no-deps -e .</code>。</p>
+
+    <h3>多模态 Qwen3.5 类名兼容问题</h3>
+    <p>如果报 <code>AutoModelForVision2Seq</code> 相关错误，先检查 transformers 版本和模型 config 的 <code>architectures</code>。临时绕过可在 smoke 阶段加：</p>
+    <pre><code class="language-bash">+actor_rollout_ref.model.override_config._attn_implementation=eager</code></pre>
+    <p class="small">如果仍报错，需要根据模型实际 config 做一处 verl/transformers 兼容 patch。</p>
+  </section>
+
+  <section>
+    <h2>11. 依据与链接</h2>
+    <ul>
+      <li><a href="https://raw.githubusercontent.com/volcengine/verl/main/docs/start/install.rst">verl 官方安装文档</a>：说明 Python/CUDA 要求、Docker 镜像、vLLM/SGLang 后端、Docker 运行示例。</li>
+      <li><a href="https://raw.githubusercontent.com/volcengine/verl/main/docs/preparation/prepare_data.rst">verl 数据准备文档</a>：说明训练数据应保存为 parquet，并包含 <code>data_source</code>、<code>prompt</code>、<code>ability</code>、<code>reward_model</code>、<code>extra_info</code> 字段。</li>
+      <li><a href="https://raw.githubusercontent.com/volcengine/verl/main/verl/trainer/config/legacy_reward_impl.yaml">verl reward 配置</a>：包含 <code>custom_reward_function.path</code> 与 <code>custom_reward_function.name</code> 配置项。</li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>

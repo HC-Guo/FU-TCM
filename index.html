@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TCM_final 目录索引</title>
+  <style>
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #202124; background: #f7f8fa; }
+    main { max-width: 1180px; margin: 0 auto; padding: 32px 20px 56px; }
+    a { color: #0b57d0; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h1 { font-size: 32px; margin: 0 0 8px; }
+    h2 { font-size: 20px; margin: 30px 0 12px; }
+    p { line-height: 1.7; }
+    table { width: 100%; border-collapse: collapse; background: white; border: 1px solid #d9dee5; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #edf0f2; font-size: 14px; vertical-align: top; }
+    th { background: #eef3f8; font-weight: 650; }
+    code { background: #eef0f3; padding: 2px 5px; border-radius: 4px; }
+    .lead { max-width: 860px; }
+    .note { background: #fff7db; border: 1px solid #ead487; padding: 12px 14px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>TCM_final 目录索引</h1>
+  <p class="lead">生成时间：2026-06-12 22:45:05。目录按四段生产链路整理：古籍 QA，教材 PDF QA 与带图书籍 VQA，两类病例推理扩写，最后进入 SFT、GRPO 与评测。</p>
+  <p class="note">架构总览：<a href="docs/architecture_overview.html">docs/architecture_overview.html</a>；详细流程页：<a href="docs/workflow_overview.html">docs/workflow_overview.html</a>。普通 GitHub 仓库不能接收超过 100 MiB 的单个文件，请参考 <code>docs/large_files.tsv</code>。</p>
+
+  <h2>流程主线</h2>
+  <table>
+    <thead><tr><th>#</th><th>章节</th><th>目标</th></tr></thead>
+    <tbody><tr><td>1</td><td><a href="docs/01_guji_qa.html">第一部分：古籍 QA 对提取处理</a></td><td>从中医古籍分类文本生成 QA，对结果清洗、去重、合并，并转换为 SFT 可用格式。</td></tr>
+<tr><td>2</td><td><a href="docs/02_pdf_vqa.html">第二部分：教材 PDF QA 与带图书籍 VQA 提取处理</a></td><td>把教材 PDF 书籍抽成文本 QA，同时把带图书籍、舌诊、望诊、脉诊、中药草图等图文材料抽成 VQA。</td></tr>
+<tr><td>3</td><td><a href="docs/03_reasoning_expansion.html">第三部分：推理数据生成，两类病例数据扩写</a></td><td>把两类病例数据扩写/转换为结构化辨证推理数据，并进行四诊补足、证候参数复核和 train/test 切分。</td></tr>
+<tr><td>4</td><td><a href="docs/04_sft_grpo.html">第四部分：SFT、GRPO、评测与训练入口</a></td><td>把前面三部分产物汇入 SFT、多模态 SFT、冷启动和 GRPO 数据，并连接 LLaMA-Factory、verl、reward 和评测脚本。</td></tr></tbody>
+  </table>
+
+  <h2>顶层结构</h2>
+  <table>
+    <thead><tr><th>名称</th><th>类型</th><th>大小</th></tr></thead>
+    <tbody><tr><td><a href=".env.example"><code>.env.example</code></a></td><td>file</td><td>160 B</td></tr><tr><td><a href=".gitignore"><code>.gitignore</code></a></td><td>file</td><td>220 B</td></tr><tr><td><a href=".venv"><code>.venv</code></a></td><td>dir</td><td>14.7 MB</td></tr><tr><td><a href="archives"><code>archives</code></a></td><td>dir</td><td>1019.4 MB</td></tr><tr><td><a href="benchmark"><code>benchmark</code></a></td><td>dir</td><td>30.3 MB</td></tr><tr><td><a href="convert_benchmark_to_mcq.py"><code>convert_benchmark_to_mcq.py</code></a></td><td>file</td><td>11.6 KB</td></tr><tr><td><a href="convert_bianzheng_to_mcq.py"><code>convert_bianzheng_to_mcq.py</code></a></td><td>file</td><td>18.3 KB</td></tr><tr><td><a href="convert_bianzheng_to_verl_grpo.py"><code>convert_bianzheng_to_verl_grpo.py</code></a></td><td>file</td><td>13.6 KB</td></tr><tr><td><a href="convert_image_benchmark_to_mcq.py"><code>convert_image_benchmark_to_mcq.py</code></a></td><td>file</td><td>12.3 KB</td></tr><tr><td><a href="docs"><code>docs</code></a></td><td>dir</td><td>70.5 KB</td></tr><tr><td><a href="download_model.sh"><code>download_model.sh</code></a></td><td>file</td><td>104 B</td></tr><tr><td><a href="eval_qwen35.py"><code>eval_qwen35.py</code></a></td><td>file</td><td>20.2 KB</td></tr><tr><td><a href="eval_qwen35_vllm.py"><code>eval_qwen35_vllm.py</code></a></td><td>file</td><td>19.2 KB</td></tr><tr><td><a href="generate_bianzheng_mcq_coldstart.py"><code>generate_bianzheng_mcq_coldstart.py</code></a></td><td>file</td><td>32.0 KB</td></tr><tr><td><a href="generate_coldstart_400.py"><code>generate_coldstart_400.py</code></a></td><td>file</td><td>5.0 KB</td></tr><tr><td><a href="grpodata"><code>grpodata</code></a></td><td>dir</td><td>31.2 MB</td></tr><tr><td><a href="identity_generation"><code>identity_generation</code></a></td><td>dir</td><td>279.4 KB</td></tr><tr><td><a href="index.html"><code>index.html</code></a></td><td>file</td><td>8.3 KB</td></tr><tr><td><a href="llamafactory_qwen35"><code>llamafactory_qwen35</code></a></td><td>dir</td><td>10.1 KB</td></tr><tr><td><a href="merge_identity_overwrite_sft.py"><code>merge_identity_overwrite_sft.py</code></a></td><td>file</td><td>2.9 KB</td></tr><tr><td><a href="meta_reasoning"><code>meta_reasoning</code></a></td><td>dir</td><td>10.0 MB</td></tr><tr><td><a href="mlzy_reasoning"><code>mlzy_reasoning</code></a></td><td>dir</td><td>74.9 MB</td></tr><tr><td><a href="normalize_bianzheng_syndromes_to_tree.py"><code>normalize_bianzheng_syndromes_to_tree.py</code></a></td><td>file</td><td>13.2 KB</td></tr><tr><td><a href="prepare_tcm_multimodal_data.py"><code>prepare_tcm_multimodal_data.py</code></a></td><td>file</td><td>4.9 KB</td></tr><tr><td><a href="qa_output"><code>qa_output</code></a></td><td>dir</td><td>821.7 MB</td></tr><tr><td><a href="README.md"><code>README.md</code></a></td><td>file</td><td>2.1 KB</td></tr><tr><td><a href="remove_coldstart_from_train.py"><code>remove_coldstart_from_train.py</code></a></td><td>file</td><td>3.3 KB</td></tr><tr><td><a href="requirements_eval.txt"><code>requirements_eval.txt</code></a></td><td>file</td><td>42 B</td></tr><tr><td><a href="requirements_eval_vllm.txt"><code>requirements_eval_vllm.txt</code></a></td><td>file</td><td>60 B</td></tr><tr><td><a href="reward_functions.py"><code>reward_functions.py</code></a></td><td>file</td><td>15.4 KB</td></tr><tr><td><a href="run_tcm_grpo_smoke.sh"><code>run_tcm_grpo_smoke.sh</code></a></td><td>file</td><td>11.6 KB</td></tr><tr><td><a href="run_tcm_grpo_smoke_hf.sh"><code>run_tcm_grpo_smoke_hf.sh</code></a></td><td>file</td><td>6.8 KB</td></tr><tr><td><a href="scripts"><code>scripts</code></a></td><td>dir</td><td>126.4 KB</td></tr><tr><td><a href="sft_data"><code>sft_data</code></a></td><td>dir</td><td>746.7 MB</td></tr><tr><td><a href="sft_image_data"><code>sft_image_data</code></a></td><td>dir</td><td>1.4 GB</td></tr><tr><td><a href="sft_merged"><code>sft_merged</code></a></td><td>dir</td><td>1.5 GB</td></tr><tr><td><a href="tcm_vision_dataflow"><code>tcm_vision_dataflow</code></a></td><td>dir</td><td>2.5 GB</td></tr><tr><td><a href="zhenghou_btree.json"><code>zhenghou_btree.json</code></a></td><td>file</td><td>300.8 KB</td></tr></tbody>
+  </table>
+
+  <h2>超过 100 MiB 的文件</h2>
+  <table>
+    <thead><tr><th>路径</th><th>大小</th></tr></thead>
+    <tbody><tr><td><a href="archives/sft_merged.zip"><code>archives/sft_merged.zip</code></a></td><td>1011.4 MB</td></tr>
+<tr><td><a href="tcm_vision_dataflow/archives/舌诊带图书籍.zip"><code>tcm_vision_dataflow/archives/舌诊带图书籍.zip</code></a></td><td>757.1 MB</td></tr>
+<tr><td><a href="sft_merged/tcm_sft_merged.json"><code>sft_merged/tcm_sft_merged.json</code></a></td><td>560.7 MB</td></tr>
+<tr><td><a href="sft_data/guji700.json"><code>sft_data/guji700.json</code></a></td><td>358.5 MB</td></tr>
+<tr><td><a href="sft_data/guji700_remaining.json"><code>sft_data/guji700_remaining.json</code></a></td><td>329.5 MB</td></tr>
+<tr><td><a href="tcm_vision_dataflow/data/medical_books_qa/all_books_qa_final.jsonl"><code>tcm_vision_dataflow/data/medical_books_qa/all_books_qa_final.jsonl</code></a></td><td>223.7 MB</td></tr>
+<tr><td><a href="tcm_vision_dataflow/source_books/中医舌诊研究与临床应用 (许朝霞，王忆勤编者) (Z-Library).pdf"><code>tcm_vision_dataflow/source_books/中医舌诊研究与临床应用 (许朝霞，王忆勤编者) (Z-Library).pdf</code></a></td><td>127.2 MB</td></tr>
+<tr><td><a href="tcm_vision_dataflow/data/shezhen_vqa/舌诊数据.zip"><code>tcm_vision_dataflow/data/shezhen_vqa/舌诊数据.zip</code></a></td><td>115.8 MB</td></tr></tbody>
+  </table>
+</main>
+</body>
+</html>

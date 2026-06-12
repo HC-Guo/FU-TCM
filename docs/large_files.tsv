@@ -1,0 +1,9 @@
+path	size_bytes	size_human
+archives/sft_merged.zip	1060499986	1011.4 MB
+tcm_vision_dataflow/archives/舌诊带图书籍.zip	793927508	757.1 MB
+sft_merged/tcm_sft_merged.json	587907770	560.7 MB
+sft_data/guji700.json	375901836	358.5 MB
+sft_data/guji700_remaining.json	345471416	329.5 MB
+tcm_vision_dataflow/data/medical_books_qa/all_books_qa_final.jsonl	234542891	223.7 MB
+tcm_vision_dataflow/source_books/中医舌诊研究与临床应用 (许朝霞，王忆勤编者) (Z-Library).pdf	133364998	127.2 MB
+tcm_vision_dataflow/data/shezhen_vqa/舌诊数据.zip	121374994	115.8 MB

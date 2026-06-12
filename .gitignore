@@ -1,0 +1,15 @@
+# Local/system artifacts
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+local_artifacts/
+eval_output/
+
+# Large local archives; keep the files on disk, but use Git LFS or release assets if you need to share them.
+archives/*.zip
+
+# Excluded distillation files kept out of GitHub upload
+**/ladder_distill.json
+**/exam_distill.json
+**/shizhen_distill.json

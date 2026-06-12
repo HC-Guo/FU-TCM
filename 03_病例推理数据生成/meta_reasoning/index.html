@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meta Reasoning 辨证数据流程</title>
+  <style>
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f7f8fa; color: #202124; }
+    main { max-width: 960px; margin: 0 auto; padding: 32px 20px 48px; }
+    h1 { margin: 0 0 10px; font-size: 30px; }
+    h2 { margin-top: 28px; font-size: 20px; }
+    p, li { line-height: 1.7; }
+    code { background: #eef0f3; padding: 2px 5px; border-radius: 4px; }
+    pre { background: #1f2933; color: #f5f7fa; padding: 14px; overflow: auto; border-radius: 6px; }
+    table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #dde1e6; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #edf0f2; vertical-align: top; }
+    th { background: #eef3f8; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Meta Reasoning 辨证数据流程</h1>
+  <p>从 <code>meta_reasoning.json</code> 生成结构化辨证数据，并对辨证参数进行复核。</p>
+
+  <h2>流程</h2>
+  <pre><code>python scripts/convert/convert_bianzheng.py
+python scripts/verify/verify_bianzheng.py</code></pre>
+
+  <h2>环境变量</h2>
+  <pre><code>export OPENAI_API_KEY="你的API_KEY"
+export OPENAI_BASE_URL="https://cc.580ai.net/v1"
+export META_REASONING_MODELS="claude-sonnet-4-6,deepseek-reasoner"</code></pre>
+
+  <h2>核心文件</h2>
+  <table>
+    <thead><tr><th>路径</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td><code>data/raw/meta_reasoning.json</code></td><td>原始病案数据，共 799 条</td></tr>
+      <tr><td><code>data/processed/bianzheng_minimax.jsonl</code></td><td>训练集转换结果，599 条</td></tr>
+      <tr><td><code>data/processed/bianzheng_minimax_test.jsonl</code></td><td>测试集转换结果，200 条</td></tr>
+      <tr><td><code>configs/mapping_table.json</code></td><td>辨证映射规则</td></tr>
+      <tr><td><code>scripts/convert/convert_bianzheng.py</code></td><td>结构化转换脚本</td></tr>
+      <tr><td><code>scripts/verify/verify_bianzheng.py</code></td><td>辨证参数复核脚本</td></tr>
+    </tbody>
+  </table>
+</main>
+</body>
+</html>

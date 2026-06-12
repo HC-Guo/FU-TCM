@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第二部分：教材 PDF QA 与带图书籍 VQA 提取处理</title>
+  <style>
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #202124; background: #f8fafb; }
+    main { max-width: 1080px; margin: 0 auto; padding: 32px 20px 56px; }
+    a { color: #0b57d0; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h1 { font-size: 30px; margin: 0 0 10px; }
+    h2 { font-size: 20px; margin: 28px 0 12px; }
+    p { line-height: 1.7; }
+    table { width: 100%; border-collapse: collapse; background: white; border: 1px solid #d9dee5; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #edf0f2; font-size: 14px; vertical-align: top; }
+    th { background: #eef3f8; font-weight: 650; }
+    code { background: #eef0f3; padding: 2px 5px; border-radius: 4px; }
+    pre { background: #202124; color: #f8fafd; padding: 14px; overflow: auto; border-radius: 6px; }
+    .nav { margin-bottom: 18px; color: #5f6368; }
+    .note { background: #fff7db; border: 1px solid #ead487; padding: 12px 14px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="nav"><a href="../index.html">TCM_final 索引</a> / <a href="workflow_overview.html">流程总览</a></div>
+  <h1>第二部分：教材 PDF QA 与带图书籍 VQA 提取处理</h1>
+  <p>把教材 PDF 书籍抽成文本 QA，同时把带图书籍、舌诊、望诊、脉诊、中药草图等图文材料抽成 VQA。</p>
+  <p class="note">生成时间：2026-06-12 22:45:06。路径均相对于项目根目录。</p>
+
+  <h2>输入与来源</h2>
+  <table><thead><tr><th>路径</th><th>作用</th></tr></thead><tbody><tr><td><a href="../tcm_vision_dataflow/source_books/"><code>tcm_vision_dataflow/source_books/</code></a></td><td>原始 PDF/EPUB 书籍</td></tr>
+<tr><td><a href="../tcm_vision_dataflow/data/"><code>tcm_vision_dataflow/data/</code></a></td><td>医学书籍 QA、舌诊/望诊/脉诊/中药草图 VQA 数据</td></tr>
+<tr><td><a href="../tcm_vision_dataflow/results/"><code>tcm_vision_dataflow/results/</code></a></td><td>DataFlow 已生成的图文 VQA 结果</td></tr></tbody></table>
+
+  <h2>脚本与处理</h2>
+  <table><thead><tr><th>路径</th><th>作用</th></tr></thead><tbody><tr><td><a href="../tcm_vision_dataflow/workflows/dataflow2/scripts/qa/medical_pdf_to_qa_pipeline.py"><code>tcm_vision_dataflow/workflows/dataflow2/scripts/qa/medical_pdf_to_qa_pipeline.py</code></a></td><td>教材 PDF 到医学 QA 流水线</td></tr>
+<tr><td><a href="../tcm_vision_dataflow/workflows/dataflow2/scripts/qa/gen_ypd2_qa.py"><code>tcm_vision_dataflow/workflows/dataflow2/scripts/qa/gen_ypd2_qa.py</code></a></td><td>药典二部 QA 生成</td></tr>
+<tr><td><a href="../tcm_vision_dataflow/workflows/dataflow2/scripts/qa/gen_ypd34_qa.py"><code>tcm_vision_dataflow/workflows/dataflow2/scripts/qa/gen_ypd34_qa.py</code></a></td><td>药典三/四部 QA 生成</td></tr>
+<tr><td><a href="../tcm_vision_dataflow/workflows/dataflow2/scripts/vqa/"><code>tcm_vision_dataflow/workflows/dataflow2/scripts/vqa/</code></a></td><td>带图书籍与图像 VQA 生成脚本集合</td></tr>
+<tr><td><a href="../tcm_vision_dataflow/workflows/dataflow_runtime/"><code>tcm_vision_dataflow/workflows/dataflow_runtime/</code></a></td><td>DataFlow 框架源码</td></tr></tbody></table>
+
+  <h2>产物</h2>
+  <table><thead><tr><th>路径</th><th>说明</th></tr></thead><tbody><tr><td><a href="../tcm_vision_dataflow/data/medical_books_qa/"><code>tcm_vision_dataflow/data/medical_books_qa/</code></a></td><td>教材/医学书籍 QA 输出</td></tr>
+<tr><td><a href="../tcm_vision_dataflow/data/shezhen_vqa/"><code>tcm_vision_dataflow/data/shezhen_vqa/</code></a></td><td>舌诊 VQA 数据</td></tr>
+<tr><td><a href="../tcm_vision_dataflow/data/maizhen_vqa/"><code>tcm_vision_dataflow/data/maizhen_vqa/</code></a></td><td>脉诊/望诊相关 VQA 数据</td></tr>
+<tr><td><a href="../tcm_vision_dataflow/data/zhongyao_caotu_vqa/"><code>tcm_vision_dataflow/data/zhongyao_caotu_vqa/</code></a></td><td>中药草图 VQA 数据</td></tr>
+<tr><td><a href="../sft_data/jiaocai.jsonl"><code>sft_data/jiaocai.jsonl</code></a></td><td>教材文本 QA 转成的 SFT 数据</td></tr>
+<tr><td><a href="../sft_image_data/"><code>sft_image_data/</code></a></td><td>图文/望诊/舌诊等 SFT 图像数据</td></tr></tbody></table>
+
+  <h2>常用命令</h2>
+  <pre><code>cd tcm_vision_dataflow/workflows/dataflow2/scripts/qa
+python medical_pdf_to_qa_pipeline.py
+python ../vqa/gen_shezhen_vqa_final.py</code></pre>
+
+  <h2>环境变量</h2>
+  <p><code>DF_API_KEY</code>, <code>MINIMAX_API_URL</code>, <code>MINIMAX_MODEL</code>, <code>MEDICAL_BOOKS_DIR</code></p>
+</main>
+</body>
+</html>

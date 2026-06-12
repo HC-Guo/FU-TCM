@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第四部分：SFT、GRPO、评测与训练入口</title>
+  <style>
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #202124; background: #f8fafb; }
+    main { max-width: 1080px; margin: 0 auto; padding: 32px 20px 56px; }
+    a { color: #0b57d0; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h1 { font-size: 30px; margin: 0 0 10px; }
+    h2 { font-size: 20px; margin: 28px 0 12px; }
+    p { line-height: 1.7; }
+    table { width: 100%; border-collapse: collapse; background: white; border: 1px solid #d9dee5; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #edf0f2; font-size: 14px; vertical-align: top; }
+    th { background: #eef3f8; font-weight: 650; }
+    code { background: #eef0f3; padding: 2px 5px; border-radius: 4px; }
+    pre { background: #202124; color: #f8fafd; padding: 14px; overflow: auto; border-radius: 6px; }
+    .nav { margin-bottom: 18px; color: #5f6368; }
+    .note { background: #fff7db; border: 1px solid #ead487; padding: 12px 14px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="nav"><a href="../index.html">TCM_final 索引</a> / <a href="workflow_overview.html">流程总览</a></div>
+  <h1>第四部分：SFT、GRPO、评测与训练入口</h1>
+  <p>把前面三部分产物汇入 SFT、多模态 SFT、冷启动和 GRPO 数据，并连接 LLaMA-Factory、verl、reward 和评测脚本。</p>
+  <p class="note">生成时间：2026-06-12 22:45:06。路径均相对于项目根目录。</p>
+
+  <h2>输入与来源</h2>
+  <table><thead><tr><th>路径</th><th>作用</th></tr></thead><tbody><tr><td><a href="../sft_data/"><code>sft_data/</code></a></td><td>文本 SFT 数据：古籍、教材、辨证、身份数据等</td></tr>
+<tr><td><a href="../sft_image_data/"><code>sft_image_data/</code></a></td><td>图像/图文 SFT 数据</td></tr>
+<tr><td><a href="../sft_merged/"><code>sft_merged/</code></a></td><td>合并后的多模态 SFT 数据</td></tr>
+<tr><td><a href="../grpodata/"><code>grpodata/</code></a></td><td>辨证 GRPO、coldstart、train/test 数据</td></tr>
+<tr><td><a href="../benchmark/"><code>benchmark/</code></a></td><td>评测集、图像评测和医生盲测材料</td></tr></tbody></table>
+
+  <h2>脚本与处理</h2>
+  <table><thead><tr><th>路径</th><th>作用</th></tr></thead><tbody><tr><td><a href="../prepare_tcm_multimodal_data.py"><code>prepare_tcm_multimodal_data.py</code></a></td><td>准备/合并多模态训练数据</td></tr>
+<tr><td><a href="../merge_identity_overwrite_sft.py"><code>merge_identity_overwrite_sft.py</code></a></td><td>合并身份认知 SFT 数据</td></tr>
+<tr><td><a href="../llamafactory_qwen35/"><code>llamafactory_qwen35/</code></a></td><td>Qwen3.5 / LLaMA-Factory 训练配置</td></tr>
+<tr><td><a href="../convert_bianzheng_to_verl_grpo.py"><code>convert_bianzheng_to_verl_grpo.py</code></a></td><td>辨证数据转 verl GRPO 格式</td></tr>
+<tr><td><a href="../reward_functions.py"><code>reward_functions.py</code></a></td><td>GRPO reward 函数</td></tr>
+<tr><td><a href="../generate_coldstart_400.py"><code>generate_coldstart_400.py</code></a></td><td>生成 coldstart 采样数据</td></tr>
+<tr><td><a href="../remove_coldstart_from_train.py"><code>remove_coldstart_from_train.py</code></a></td><td>从训练集剔除 coldstart 样本</td></tr>
+<tr><td><a href="../run_tcm_grpo_smoke.sh"><code>run_tcm_grpo_smoke.sh</code></a></td><td>GRPO smoke 测试</td></tr>
+<tr><td><a href="../run_tcm_grpo_smoke_hf.sh"><code>run_tcm_grpo_smoke_hf.sh</code></a></td><td>HuggingFace 版本 GRPO smoke 测试</td></tr>
+<tr><td><a href="../eval_qwen35.py"><code>eval_qwen35.py</code></a></td><td>本地模型评测</td></tr>
+<tr><td><a href="../eval_qwen35_vllm.py"><code>eval_qwen35_vllm.py</code></a></td><td>vLLM 评测</td></tr></tbody></table>
+
+  <h2>产物</h2>
+  <table><thead><tr><th>路径</th><th>说明</th></tr></thead><tbody><tr><td><a href="../llamafactory_qwen35/qwen35_9b_full_sft_ds3.yaml"><code>llamafactory_qwen35/qwen35_9b_full_sft_ds3.yaml</code></a></td><td>SFT 训练配置</td></tr>
+<tr><td><a href="../grpodata/verl/bianzheng_grpo_train.jsonl"><code>grpodata/verl/bianzheng_grpo_train.jsonl</code></a></td><td>verl GRPO 训练数据</td></tr>
+<tr><td><a href="../grpodata/verl/bianzheng_grpo_test.jsonl"><code>grpodata/verl/bianzheng_grpo_test.jsonl</code></a></td><td>verl GRPO 测试数据</td></tr>
+<tr><td><a href="../benchmark/"><code>benchmark/</code></a></td><td>评测输入与结果承载目录</td></tr></tbody></table>
+
+  <h2>常用命令</h2>
+  <pre><code>python prepare_tcm_multimodal_data.py
+python convert_bianzheng_to_verl_grpo.py
+bash run_tcm_grpo_smoke.sh
+python eval_qwen35.py</code></pre>
+
+  <h2>环境变量</h2>
+  <p><code>TCM_PROJECT_DIR</code>, <code>TCM_MODEL_PATH</code>, <code>TCM_BENCHMARK_DIR</code>, <code>OPENAI_API_KEY</code></p>
+</main>
+</body>
+</html>

@@ -1,0 +1,2626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>舌下络脉诊法图谱 VQA 数据集</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:#f5f6f7;color:#333;line-height:1.6}
+.header{background:linear-gradient(135deg,#1a5f3f 0%,#2d8a5e 100%);color:white;padding:24px 32px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.15)}
+.header h1{font-size:24px;font-weight:600;margin-bottom:8px}
+.header-stats{display:flex;gap:24px;font-size:14px;opacity:.9}
+.search-bar{padding:16px 32px;background:white;border-bottom:1px solid #e8e8e8;position:sticky;top:85px;z-index:99}
+.search-bar input{width:100%;max-width:600px;padding:10px 16px;border:1px solid #d0d7de;border-radius:8px;font-size:14px;outline:none}
+.search-bar input:focus{border-color:#2d8a5e}
+.container{display:flex;max-width:1400px;margin:0 auto}
+.sidebar{width:200px;padding:20px 16px;position:sticky;top:153px;height:calc(100vh - 153px);overflow-y:auto}
+.sidebar h3{font-size:13px;color:#666;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-left:8px}
+.nav-item{display:block;padding:8px 12px;border-radius:6px;color:#555;text-decoration:none;font-size:14px;margin-bottom:4px;cursor:pointer;transition:all .2s}
+.nav-item:hover{background:#e8f5ee;color:#1a5f3f}
+.nav-item.active{background:#1a5f3f;color:white}
+.main{flex:1;padding:20px 24px 40px}
+.section{margin-bottom:32px}
+.section-title{font-size:20px;font-weight:600;color:#1a5f3f;padding:12px 16px;background:white;border-radius:8px;margin-bottom:16px;border-left:4px solid #2d8a5e;box-shadow:0 1px 3px rgba(0,0,0,0.06);scroll-margin-top:160px}
+.card{background:white;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.08);margin-bottom:16px;overflow:hidden;transition:box-shadow .2s}
+.card:hover{box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+.card-header{display:flex;align-items:center;gap:12px;padding:12px 20px;background:#f8faf9;border-bottom:1px solid #edf0ef}
+.card-caption{font-weight:600;color:#1a5f3f;font-size:15px;flex-shrink:0}
+.card-context{font-size:13px;color:#666;flex:1}
+.card-body{display:flex;gap:20px;padding:20px}
+.card-image{flex-shrink:0}
+.card-image img{width:280px;height:200px;object-fit:contain;border-radius:8px;background:#f5f5f5;border:1px solid #eee}
+.card-qa{flex:1;min-width:0}
+.qa-item{padding:10px 14px;background:#f8faf9;border-radius:8px;margin-bottom:8px}
+.qa-item:last-child{margin-bottom:0}
+.qa-question{font-weight:500;color:#333;font-size:14px;margin-bottom:4px}
+.qa-answer{color:#2d8a5e;font-size:14px;font-weight:500}
+.qa-type{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;background:#e8f5ee;color:#1a5f3f;margin-left:8px}
+.no-result{text-align:center;padding:60px 20px;color:#999;font-size:16px}
+.highlight{background:#fff3cd;padding:0 2px;border-radius:2px}
+.empty{display:none}
+@media(max-width:900px){.sidebar{display:none}.card-body{flex-direction:column}.card-image img{width:100%;height:auto}}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>舌下络脉诊法图谱 — VQA 数据集</h1>
+<div class="header-stats"><span>94 张图片</span><span>417 组问答</span><span>5 个章节</span></div>
+</div>
+<div class="search-bar"><input type="text" id="searchInput" placeholder="搜索问题、答案或描述..." oninput="doSearch()"></div>
+<div class="container">
+<nav class="sidebar">
+<h3>章节导航</h3>
+<a class="nav-item" data-sec="sec-0" onclick="scrollToSection('sec-0')">一、长络脉</a>
+<a class="nav-item" data-sec="sec-1" onclick="scrollToSection('sec-1')">二、短络脉</a>
+<a class="nav-item" data-sec="sec-2" onclick="scrollToSection('sec-2')">三、粗络脉</a>
+<a class="nav-item" data-sec="sec-3" onclick="scrollToSection('sec-3')">四、细络脉</a>
+<a class="nav-item" data-sec="sec-4" onclick="scrollToSection('sec-4')">五、怒张形络脉</a>
+</nav>
+<main class="main" id="mainContent">
+<div class="section" id="sec-0">
+<div class="section-title">一、长络脉 <span style="color:#888;font-size:14px;font-weight:400;margin-left:8px;">(17 张图片)</span></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图1</span>
+<span class="card-context">粗长络脉，两络脉迂曲粗张饱满，延伸至舌尖，右侧络脉多枝叉，左侧络脉曲张隆起且舌根部呈结节状，舌下络脉呈暗蓝色，舌质偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/ab195d45435b63cfcea0c102bc00cafc6650fe6e57c4b846cb20038b0b023270.jpg" alt="图1" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迂曲粗张饱满，延伸至舌尖，右侧络脉多枝叉，左侧络脉曲张隆起且舌根部呈结节状</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 暗蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 呈结节状</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图2</span>
+<span class="card-context">怒张形长络脉，两络脉迂曲怒张超过舌尖至舌下肉阜连线的3/5，且延至舌尖，舌根部呈枝叉状，络脉周围伴少量细丝状络脉，舌尖部络脉偏紫红，舌根部络脉呈蓝黑色，舌质偏红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/5b4a16e13fb441d56785af19c8a01fdf4c03268647ae771de8771b8cfdcc3ada.jpg" alt="图2" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迂曲怒张，超过舌尖至舌下肉阜连线的3/5，且延至舌尖；舌根部呈枝叉状；络脉周围伴少量细丝状络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌尖部络脉偏紫红，舌根部络脉呈蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌质偏红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌根部呈枝叉状</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图3</span>
+<span class="card-context">粗长络脉，两络脉曲张且饱满呈圆柱状，超过舌尖至舌下肉阜连线的4/5，舌根部多枝叉，舌尖部伴紫红色细络，络脉呈黑色，舌质偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/8da6d30d86e90724292f23560c2e7eac5b309053e90bd44c27aca213626b8c19.jpg" alt="图3" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉曲张且饱满呈圆柱状，超过舌尖至舌下肉阜连线的4/5，舌根部多枝叉，舌尖部伴紫红色细络</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌根部多枝叉</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图6</span>
+<span class="card-context">粗长络脉，舌下两络脉超过舌尖至舌下肉阜连线的3/5，中部明显隆起，左侧络脉伴有瘀结，络脉呈蓝黑色，舌质偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/8d3b18476d9a85dd5bb58173b978cc2ac76e59c5a3dcdc8c54984db9417c4d5b.jpg" alt="图6" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌下两络脉超过舌尖至舌下肉阜连线的3/5，中部明显隆起，左侧络脉伴有瘀结</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图7</span>
+<span class="card-context">长络脉，两络脉隐隐可见，延伸至舌尖部，舌根部伴少量瘀斑，络脉颜色较浅，舌质淡红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/10ebb59cc4d064553a4dacfeab67735831ff8de45e16bbdcb99fc41a4de173da.jpg" alt="图7" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉隐隐可见，延伸至舌尖部，舌根部伴少量瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 络脉颜色较浅</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌质淡红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌根部伴少量瘀斑</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图8</span>
+<span class="card-context">长、粗、迂曲络脉，两络脉饱满、弯曲且有枝叉，延至舌尖，络脉呈蓝色，靠舌尖部呈紫蓝色，舌质暗紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/c492c7532a6c11a43eb80f81e50586f56c5d4e7a9725bf8bf8a633c2336f5980.jpg" alt="图8" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 长络脉、粗络脉、迂曲络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉饱满、弯曲且有枝叉，延至舌尖</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 络脉呈蓝色，靠舌尖部呈紫蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌质暗紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图9</span>
+<span class="card-context">弥漫形长络脉、迂曲络脉，多枝叉，伴有瘀斑瘀点，且有白膜覆盖，络脉呈青紫色，舌质偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/5b3d3f2db349d790f7af732aca20da1be2f07119e422250d7862c185d71b455d.jpg" alt="图9" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 弥漫形长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 迂曲络脉，多枝叉，伴有瘀斑瘀点，且有白膜覆盖</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 青紫色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏紫色</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图10</span>
+<span class="card-context">怒张形长络脉，两络脉粗长迂曲，状似蚯蚓，超过舌尖至舌下肉阜连线的3/5，舌根部及舌中部多枝叉，周围伴瘀斑，络脉呈青黑色，舌质偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/8c667e2b44d2f8f0b288947c7e6a2c4c6c573f884eff08330684bdf6dadce21b.jpg" alt="图10" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉粗长迂曲，状似蚯蚓，超过舌尖至舌下肉阜连线的3/5，舌根部及舌中部多枝叉，周围伴瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 青黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图11</span>
+<span class="card-context">长络脉，舌下两络脉延至舌尖，且靠舌尖部多枝叉，根部及中部粗张饱满，呈结节状，络脉呈青蓝色，舌质偏红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/0ba83899ea6dead5d80e54716c258d621f473bd70d0051ee60547a1df4017f84.jpg" alt="图11" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌下两络脉延至舌尖，靠近舌尖部位有很多枝叉，根部及中部粗张饱满，呈结节状</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 青蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 根部粗张饱满，呈结节状</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图12</span>
+<span class="card-context">长、粗络脉, 左侧络脉较右侧更加饱满且隆起呈结节状, 两络脉周围伴紫红色细纹络, 络脉呈青黑色, 舌质偏红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/0c6c914a391af86bdbda68c775c99dfe8bba806671c8dce80b423bc734f8b596.jpg" alt="图12" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 长、粗络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 左侧络脉较右侧更加饱满且隆起呈结节状，两络脉周围伴紫红色细纹络</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 青黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏红</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">一、长络脉</span>
+<span class="card-context">长、迁曲络脉，舌下两络脉超过舌尖至舌下肉阜连线的3/5，络脉迁曲饱满，左侧隆起呈结节状，右侧隆起呈柱状，两络脉对称有如海马，根部伴有白色囊泡，络脉呈蓝黑色，舌质偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/28a65b3a08c3175e82e1fe9f65cb503679dbea01375c41b782046042f2a802c3.jpg" alt="一、长络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌下两络脉超过舌尖至舌下肉阜连线的3/5，络脉迁曲饱满，左侧隆起呈结节状，右侧隆起呈柱状，两络脉对称有如海马</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 伴有白色囊泡</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图14</span>
+<span class="card-context">长、粗络脉，两络脉增粗怒张延伸至舌尖，且右侧络脉多处隆起呈串珠状，两络脉周围伴红色微细络，络脉呈蓝黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/e7801782125a4c188cd56a26b82b838bf180d02b8576d6be7818bff639fec7d8.jpg" alt="图14" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 长、粗络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉增粗怒张延伸至舌尖，右侧络脉多处隆起呈串珠状，两络脉周围伴红色微细络</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图15</span>
+<span class="card-context">长络脉，舌下两络脉粗长延伸至舌尖，且络脉周围伴少量红色细丝状络脉，舌根部伴横状络脉，络脉呈深蓝色，舌质淡红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/e3b7625904b81a6aea55840cc5914ca43a89c1f49f1e3a35ec827d8b0da77616.jpg" alt="图15" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌下两络脉粗长延伸至舌尖，且络脉周围伴少量红色细丝状络脉，舌根部伴横状络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 深蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌根部伴横状络脉</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图16</span>
+<span class="card-context">长络脉，舌下两络脉粗长超过舌尖至舌下肉阜连线的3/5，且隆起呈串珠状，络脉周围伴少量红色出血斑点，络脉根部瘀阻呈囊泡状，且有白膜覆盖，络脉呈蓝黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/ff61ca007ec7450b08c11990abea91485fcbf8a5f7707f58f2b7e96621682b8a.jpg" alt="图16" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗长超过舌尖至舌下肉阜连线的3/5，且隆起呈串珠状，络脉周围伴少量红色出血斑点</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 瘀阻呈囊泡状，且有白膜覆盖</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图17</span>
+<span class="card-context">长络脉、双侧不对等络脉，舌下两络脉粗长饱满延伸至舌尖，且右侧络脉伴侧枝，舌根部两络脉有白膜覆盖，络脉呈蓝紫色，舌质淡红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/a0ae963358a91a614b760f3010e3da092d9671b43f7decda6def2103dc0a92d0.jpg" alt="图17" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 长络脉、双侧不对等络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌下两络脉粗长饱满延伸至舌尖，右侧络脉伴侧枝</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝紫色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡红色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌根部两络脉有白膜覆盖</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图18</span>
+<span class="card-context">长、粗络脉，舌下两络脉粗长饱满且隆起呈结节状，络脉呈蓝黑色，舌质淡红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/df120007d961432de7efe321b2f743185fe63c31ed0f93f46ca627749041eb33.jpg" alt="图18" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 长、粗络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌下两络脉粗长饱满且隆起呈结节状</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡红</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图19</span>
+<span class="card-context">长络脉，舌下两络脉增粗扩张且隆起呈结节状，且伴多枝叉，络脉周围多蓝紫色瘀斑点，络脉呈蓝黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/cb0c591a9ba3f8c474eae8498b9961402bdc77d4ce6fb967d98286d647c966a3.jpg" alt="图19" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌下两络脉增粗扩张且隆起呈结节状，且伴多枝叉，络脉周围多蓝紫色瘀斑点</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+</div></div></div>
+</div>
+<div class="section" id="sec-1">
+<div class="section-title">二、短络脉 <span style="color:#888;font-size:14px;font-weight:400;margin-left:8px;">(10 张图片)</span></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">二、短络脉</span>
+<span class="card-context">短粗络脉，右侧络脉不及舌尖至舌下肉阜连线的2/5，左侧络脉稍长至舌中部，两络脉周围伴紫色细小络脉，舌根部两络脉迂曲怒张，络脉色偏暗，舌质偏红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/151dbd46fb2966caa34bd81d6c0de7be3c0f1265a3fd2cc3e3297b1e1fb165d4.jpg" alt="二、短络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 短粗络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 右侧络脉不及舌尖至舌下肉阜连线的2/5，左侧络脉稍长至舌中部，两络脉周围伴紫色细小络脉，舌根部两络脉迂曲怒张</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏暗</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌根部两络脉迂曲怒张</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图22</span>
+<span class="card-context">短粗络脉，两络脉迂曲扩张，左侧络脉伴有横叉，右侧络脉舌根部隆起呈结节状，舌尖部少量红色瘀斑，络脉呈蓝色，舌质紫红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/b2aa28011292cc5a5814836f04955db6026dc635c52e2cfc96629760b2c9cc15.jpg" alt="图22" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 短粗络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迂曲扩张，左侧络脉伴有横叉，舌尖部少量红色瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 右侧络脉舌根部隆起呈结节状</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图23</span>
+<span class="card-context">短粗络脉，两络脉粗张仅位于舌根部，舌中部伴紫色细丝络脉，络脉颜色根部呈暗蓝色，舌质淡红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/7636ffaa950f56f8687de5347bdab9f0bc011701af3c8839f2b2804bb489dbe5.jpg" alt="图23" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 短粗络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉粗张仅位于舌根部，舌中部伴紫色细丝络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 根部呈暗蓝色，舌中部伴紫色细丝络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡红</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">二、短络脉</span>
+<span class="card-context">短络脉，两络脉不及舌尖至舌下肉阜连线的2/5，仅位于舌根部，且两侧粗细不均，络脉周围伴红色出血状细络，络脉呈浅蓝色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/935dfa2193ec01d47546b962a5606a66830b82e5374c058d3c70045c7871382f.jpg" alt="二、短络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 短络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉不及舌尖至舌下肉阜连线的2/5，仅位于舌根部，且两侧粗细不均，络脉周围伴红色出血状细络</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 浅蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 仅位于舌根部，两侧粗细不均</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">二、短络脉</span>
+<span class="card-context">短络脉，两络脉短粗仅位于舌根部，舌中部伴紫红色细络脉，呈枝叉状，延伸至舌尖，络脉呈青紫色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/2cf59260f4cc5ce2df122f0ea306374b13fb9ce78a516855e7d1bf2aab1d8c5e.jpg" alt="二、短络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 短络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉短粗，仅位于舌根部；舌中部伴紫红色细络脉，呈枝叉状，延伸至舌尖</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 主干呈青紫色，细络脉呈紫红色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌质淡紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图26</span>
+<span class="card-context">短粗络脉，两络脉仅达舌尖至舌下肉阜连线的2/5，满布舌根部，且舌尖部伴少量瘀斑，络脉呈淡紫色，舌质偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/1850e39256781d31a55f09af5d4bd142dade83071948e5ebd3ca4ca6872a7204.jpg" alt="图26" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 短粗络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉仅达舌尖至舌下肉阜连线的2/5，满布舌根部，且舌尖部伴少量瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 满布舌根部</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图27</span>
+<span class="card-context">短络脉，两络脉宽粗迁曲仅达舌尖至舌下肉阜连线的2/5，弥漫于舌根部，络脉呈蓝色，舌质淡红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/fa36834cdc4d83c05b8d4bf7a2897cc67f721f45cd26d513737baccfbdd84985.jpg" alt="图27" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 短络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉宽粗迁曲仅达舌尖至舌下肉阜连线的2/5，弥漫于舌根部</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 弥漫于舌根部</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">二、短络脉</span>
+<span class="card-context">短络脉，两络脉根部宽粗饱满，且伴有瘀点，中部伴紫红色细小纹理络脉，络脉呈深蓝色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/7d1332b60f4654388750abc773f06a9f40351ec906749eafa55fb06a902b00c7.jpg" alt="二、短络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 短络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉根部宽粗饱满，且伴有瘀点</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 深蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉根部宽粗饱满，且伴有瘀点，中部伴紫红色细小纹理络脉</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">二、短络脉</span>
+<span class="card-context">中短络脉、双侧不对称络脉，两络脉粗短左右不均，且右侧络脉呈双叉形，左侧络脉单枝形，络脉深蓝，舌质暗红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/7aac60f378346d9edf9ae2115cbb2babd1ee412e892b65ff244af890b62a3b62.jpg" alt="二、短络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 中短络脉、双侧不对称络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉粗短左右不均，右侧络脉呈双叉形，左侧络脉单枝形</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 深蓝</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 暗红</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">二、短络脉</span>
+<span class="card-context">短络脉，两络脉粗细不等，且仅达舌尖至舌下肉阜连线的2/5，舌根部络脉扩张迂曲，舌中部及舌尖部伴紫红色细丝状微小络脉，络脉呈蓝色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/672d89391dd4dcf0ce99562e1634c90b40236e99fd1c2f9bae9c05830c0ed77b.jpg" alt="二、短络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 短络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉粗细不等，长度仅达舌尖至舌下肉阜连线的2/5，舌根部络脉扩张迂曲，舌中部及舌尖部伴紫红色细丝状微小络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+</div></div></div>
+</div>
+<div class="section" id="sec-2">
+<div class="section-title">三、粗络脉 <span style="color:#888;font-size:14px;font-weight:400;margin-left:8px;">(21 张图片)</span></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图32</span>
+<span class="card-context">粗、长络脉，两络脉饱满怒张，延伸至舌尖，有枝叉，络脉周围多紫红色瘀斑，络脉呈蓝色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/df64750ff25b17827fe9702b1af2c6544fafb6c7c21c35acabf02a59752d44de.jpg" alt="图32" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗、长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉饱满怒张，延伸至舌尖，有枝叉，络脉周围多紫红色瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图33</span>
+<span class="card-context">粗络脉、怒张形络脉，两络脉迂曲怒张，隆起呈圆柱状，伴枝叉，络脉周围有散在红色瘀点，络脉呈蓝色，舌质淡红偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/7eaeeb3c63922a2b02bdb672040a0fedaf7593f7a8a1fbd83a2686b47570d1c1.jpg" alt="图33" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗络脉、怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迂曲怒张，隆起呈圆柱状，伴枝叉，络脉周围有散在红色瘀点</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡红偏紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图34</span>
+<span class="card-context">粗络脉，两络脉迂曲怒张，超过舌尖至舌下肉阜连线的3/5，根部隆起呈结节状，周围伴瘀斑，络脉呈蓝黑色，舌质偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/31513d4f0d9a4a7b755e2672072df65ae86fbca2d4f25a94881c702807f085f6.jpg" alt="图34" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迂曲怒张，超过舌尖至舌下肉阜连线的3/5，周围伴瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 根部隆起呈结节状</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图35</span>
+<span class="card-context">粗络脉、怒张形络脉，舌下络脉两增粗迂曲怒张，满布舌根部，舌尖部伴少量红色瘀斑，络脉呈青黑色，舌质暗紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/1ed99f37bacb2a8367797c6e2af746815a3203afd1bca04334ea2bc1be0e934b.jpg" alt="图35" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗络脉、怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌下络脉增粗迂曲怒张，满布舌根部，舌尖部伴少量红色瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 青黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 暗紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 满布舌根部</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">三、粗络脉</span>
+<span class="card-context">粗络脉，两络脉饱满隆起呈圆柱状，超过舌尖至舌下肉阜连线的3/5，多枝叉，舌尖部伴红色细丝络脉，少量红色出血点，且有白膜覆盖，络脉呈蓝黑色，舌质偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/b3f9426321c0f773de2baf4f72321c726bd31654b73ecb3e610b2d6e8f43454c.jpg" alt="三、粗络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉饱满隆起呈圆柱状，超过舌尖至舌下肉阜连线的3/5，多枝叉，舌尖部伴红色细丝络脉，少量红色出血点，且有白膜覆盖</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">三、粗络脉</span>
+<span class="card-context">粗、长络脉，两络脉增长怒张延伸至舌尖，靠舌尖部络脉呈枝叉形，左侧络脉较右侧更显怒张，舌根部络脉呈淡蓝色，舌尖部络脉呈紫红色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/b465cb538a95b13aa197969e7411a7f4ca9d052e4c5e3b4238f18f48cc7721ef.jpg" alt="三、粗络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗络脉、长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉增长怒张延伸至舌尖，靠舌尖部络脉呈枝叉形，左侧络脉较右侧更显怒张</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌根部络脉呈淡蓝色，舌尖部络脉呈紫红色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌质淡紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图38</span>
+<span class="card-context">粗络脉、怒张形络脉，两络脉粗张饱满，且隆起呈结节状，舌根部多枝叉，左络脉伴囊泡，舌尖部少量红色细丝状络脉，络脉呈青黑色，舌质偏红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/2308075656fc85018fd8612927ec8bcc8fa310c5cc6d2e37702f7905f2ce16f0.jpg" alt="图38" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗络脉、怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉粗张饱满，隆起呈结节状，舌根部多枝叉，左络脉伴囊泡，舌尖部少量红色细丝状络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 络脉呈青黑色，舌尖部少量红色细丝状络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌质偏红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌根部多枝叉，左络脉伴囊泡</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图39</span>
+<span class="card-context">粗、长、怒张形络脉，两络脉增粗迂曲，隆起呈结节状，多枝叉，满布舌腹面，根部伴囊泡，且有白膜覆盖，周围少量瘀斑，络脉呈青黑色，舌质紫红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/09575ca8ac73f78a2a3d60589598164c21f3eb5187d1317ec85c7d5977b913c6.jpg" alt="图39" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗、长、怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉增粗迂曲，隆起呈结节状，多枝叉，满布舌腹面</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 青黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 伴囊泡，且有白膜覆盖</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">三、粗络脉</span>
+<span class="card-context">粗、长络脉，两络脉饱满隆起呈圆柱状，舌根部伴结节，右侧络脉增长延伸至舌尖部，左侧络脉亦超过舌尖至舌下肉阜连线的3/5，络脉呈青蓝色，舌质偏红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/95587a591ed6f7397b5398bba62a7b184a14bbbdb74635abd51b881f79272056.jpg" alt="三、粗络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉饱满隆起呈圆柱状，右侧络脉增长延伸至舌尖部，左侧络脉亦超过舌尖至舌下肉阜连线的3/5</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 青蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 伴结节</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">三、粗络脉</span>
+<span class="card-context">粗络脉，两络脉根部迁曲怒张多枝叉，且伴有横叉，周围弥漫性紫红色出血斑，络脉呈蓝紫色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/a31f7d26cc500a774045c8a9850efda8a353f45df3b40e04c9d2aec9c61da1db.jpg" alt="三、粗络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉根部迁曲怒张多枝叉，且伴有横叉，周围弥漫性紫红色出血斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝紫色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 迁曲怒张多枝叉</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图42</span>
+<span class="card-context">粗络脉、怒张形络脉，两络脉增粗且迂曲怒张，延伸至舌尖部，伴枝叉，呈海马状，络脉周围伴紫红色细丝状络脉，且有少量瘀斑，络脉呈蓝黑色，舌质偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/eea663879a12cec850916f8badd90c2f1c89f2ce4a02d5209d8fe168abe5804c.jpg" alt="图42" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗络脉、怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉增粗且迂曲怒张，延伸至舌尖部，伴枝叉，呈海马状，络脉周围伴紫红色细丝状络脉，且有少量瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图43</span>
+<span class="card-context">粗、长络脉，两络脉粗细不等且均迂曲怒张呈结节状，靠舌尖部呈枝叉型，右侧络脉伴有横叉，舌尖部多紫红色细络，根部络脉呈蓝黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/e02f11ddd598bffcddec0bfbf1a054010b587a71cdfc2f3ee2ec5e558cd8d593.jpg" alt="图43" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗络脉、长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉粗细不等且均迂曲怒张呈结节状，靠舌尖部呈枝叉型，右侧络脉伴有横叉，舌尖部多紫红色细络</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌尖部呈紫红色，根部呈蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">三、粗络脉</span>
+<span class="card-context">粗络脉、迂曲络脉，状似佛手，舌根部则迂曲饱满呈串珠状，舌中部及舌尖部则多枝叉，且伴有少量红色瘀斑，络脉呈紫蓝色，舌质紫红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/44e82212fef5429d3cb39b8fa756b9c7d0c8561afe327a9f2a92934882b1f626.jpg" alt="三、粗络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗络脉、迂曲络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 状似佛手，舌中部及舌尖部则多枝叉，且伴有少量红色瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 迂曲饱满呈串珠状</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">三、粗络脉</span>
+<span class="card-context">粗络脉，两络脉增粗怒张饱满，且右侧伴枝叉，舌下两络脉偏短，不及舌尖至舌下肉阜连线的3/5，迂曲，络脉呈蓝黑色，舌质紫红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/13c60f56bffaedc111e4c3a580ded119dafcb429073cba62c90938d19fee3067.jpg" alt="三、粗络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉增粗怒张饱满，右侧伴枝叉，舌下两络脉偏短，不及舌尖至舌下肉阜连线的3/5，迂曲</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图46</span>
+<span class="card-context">粗长络脉，两络脉粗张饱满，超过舌尖至舌下肉阜连线的3/5，有枝叉，舌尖部伴少量紫红色瘀斑，络脉呈暗蓝色，舌质偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/134d0e003d047c398cf6c69208aa39b36366389d1c6d17d990c03134f459066b.jpg" alt="图46" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉粗张饱满，超过舌尖至舌下肉阜连线的3/5，有枝叉，舌尖部伴少量紫红色瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 暗蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">三、粗络脉</span>
+<span class="card-context">粗络脉，两络脉迁曲隆起呈结节状，且络脉周围伴少量瘀结及瘀斑点，络脉呈蓝黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/2b7c1d4c00a710927589ee31c269565556db688c2dbd5602f3e5b64e9ff22499.jpg" alt="三、粗络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迁曲隆起呈结节状，且络脉周围伴少量瘀结及瘀斑点</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图48</span>
+<span class="card-context">粗络脉，两络脉饱满隆起，主干外径大于 $2.7\mathrm{mm}$ ，且怒张呈结节状，络脉周围伴紫红色叶脉状细络，络脉呈蓝黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/7fa45a28ad0acd2e22f63c8bf90c2d206ebe8eaac72d0e1856c613249f423989.jpg" alt="图48" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉饱满隆起，主干外径大于2.7mm，且怒张呈结节状，络脉周围伴紫红色叶脉状细络</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">三、粗络脉</span>
+<span class="card-context">粗长络脉、串珠形络脉，两络脉粗张饱满隆起呈串珠状，形成多个结节，且舌根部有白膜覆盖，络脉周围伴少量紫色出血点，络脉呈蓝黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/0df8191fd881035be9dce1eac2476381f1475da1ead51d33f219e1765195c0a6.jpg" alt="三、粗络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗长络脉、串珠形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉粗张饱满隆起呈串珠状，形成多个结节，且舌根部有白膜覆盖，络脉周围伴少量紫色出血点</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 有白膜覆盖</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图50</span>
+<span class="card-context">粗络脉，两络脉粗张饱满多位于舌根部及舌中部，络脉周围伴大量紫红色细丝状络脉，络脉呈蓝黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/f87a4254cef61a1d030fa6a20e3b87a67b525e3a950f7fbe3b71368b0c04d462.jpg" alt="图50" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉粗张饱满，多位于舌根部及舌中部，络脉周围伴大量紫红色细丝状络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图51</span>
+<span class="card-context">粗长络脉，两络脉饱满隆起延至舌尖，且左侧络脉多枝叉，右侧络脉舌根部呈双络，络脉周围布满紫红色网状细小络脉，舌根部两络脉有白膜覆盖，络脉呈黑色，舌质紫红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/99166a96ccc55635faecbfc5ec33f38fb921389e24e313dc01f2dd02eba9bffb.jpg" alt="图51" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉饱满隆起延至舌尖，左侧络脉多枝叉，右侧络脉舌根部呈双络，络脉周围布满紫红色网状细小络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 右侧络脉舌根部呈双络，舌根部两络脉有白膜覆盖</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图52</span>
+<span class="card-context">粗络，两络脉宽粗弥漫于舌腹面，且呈不均匀分布，有白膜覆盖，络脉呈蓝黑色，舌质紫红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/ea61525d7b3150503f1becd0297a83031681170c430eeb17b1e0fe48c05c2eac.jpg" alt="图52" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 粗络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉宽粗弥漫于舌腹面，且呈不均匀分布，有白膜覆盖</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红色</div>
+</div>
+</div></div></div>
+</div>
+<div class="section" id="sec-3">
+<div class="section-title">四、细络脉 <span style="color:#888;font-size:14px;font-weight:400;margin-left:8px;">(14 张图片)</span></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图53</span>
+<span class="card-context">多支细小络脉，两络脉细小，且伴少量瘀点，络脉色偏暗，舌质淡红，多见于血瘀早期，循环障碍。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/a39baa726aad4e9933cb22a3146ce266e06f2547ea7fdaaeef10c959e2a25447.jpg" alt="图53" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 细络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 多支细小络脉，两络脉细小，且伴少量瘀点</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 络脉色偏暗</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌质淡红</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图54</span>
+<span class="card-context">细络脉，两络脉细小，且多枝叉，呈树形，络脉周围伴少量小瘀点，络脉呈青蓝色，舌质偏红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/6e0dd683e93be738504fba60a5fc5d1884a569f49f24d84cb84a585c9fe6a745.jpg" alt="图54" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 细络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉细小，且多枝叉，呈树形，络脉周围伴少量小瘀点</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 青蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏红</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图55</span>
+<span class="card-context">细长络脉，两络脉细长延至舌尖，左侧络脉靠舌尖部多枝叉，且伴紫色细小丝状络脉，络脉呈浅蓝色，舌质淡红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/65d3ec3e8a25bc6ce6162cef1ede716110f0bb0d73958f2504c057fe99d48661.jpg" alt="图55" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 细长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉细长延至舌尖，左侧络脉靠舌尖部多枝叉，且伴紫色细小丝状络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 浅蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡红</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图56</span>
+<span class="card-context">细长络脉、双侧不对等络脉，两络脉均细长延至舌尖，右侧络脉呈双枝状，左侧络脉呈单枝，且络脉周围伴叶脉状细络，络脉呈蓝色，舌质淡红、偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/622ee495d1ec4af510cf0c628e5e9aafc4ea88d4f7b4cf4ba3f4acfa86f76b26.jpg" alt="图56" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 细长络脉、双侧不对等络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉均细长延至舌尖，右侧络脉呈双枝状，左侧络脉呈单枝，且络脉周围伴叶脉状细络</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡红、偏紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图57</span>
+<span class="card-context">细长络脉，两络脉迁曲多枝延至舌尖，且络脉周围多红、紫色叶脉状细络，络脉呈蓝紫色，舌质淡红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/a92531b03678644fbf206ec73aad297c98145533f8c9a34a3713f6523ca151c6.jpg" alt="图57" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 细长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迁曲多枝延至舌尖，且络脉周围多红、紫色叶脉状细络</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝紫色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡红</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图58</span>
+<span class="card-context">细络脉、双侧不对等络脉，两络脉细短仅位于舌根部及舌中部，且左侧络脉多枝叉，络脉呈紫红色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/58b1621b331f792d3b0ae387a46639d5cf0cd58cacaa252f1d8de4e9b553e0f0.jpg" alt="图58" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 细络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉细短，仅位于舌根部及舌中部，且左侧络脉多枝叉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图59</span>
+<span class="card-context">细长络脉、树形络脉，两络脉细长延至舌尖，且多枝叉，状似树形，络脉呈紫红色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/8c9add850cb7bb8995382d58207e8232e3bfdcdfa542374d41a3b33212bad44f.jpg" alt="图59" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 细长络脉、树形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉细长延至舌尖，且多枝叉，状似树形</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图60</span>
+<span class="card-context">细络、短络，两络脉短细仅位于舌根部及舌中部，且络脉周围伴少量瘀血斑，络脉呈蓝紫色，舌质偏红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/ba119224e773d63b9e4688635baf3ea8a2d557b142a43e332edbe1f335b3908b.jpg" alt="图60" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 细络、短络</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉短细，仅位于舌根部及舌中部，络脉周围伴少量瘀血斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝紫色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏红</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图61</span>
+<span class="card-context">细络、树形络脉，两络脉主干外径不及 $2\mathrm{mm}$ ，且伴枝叉，呈树形，络脉呈紫色，舌质淡红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/f07c534be627c73f11e2863dcde7b857256a92b562feb074d4970707fc4c03c3.jpg" alt="图61" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 细络脉、树形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉主干外径不及2mm，且伴枝叉，呈树形</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡红</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图62</span>
+<span class="card-context">细络，两络脉细长延至舌尖，且伴横向络脉，络脉周围伴紫红色瘀点，络脉呈蓝色，舌质淡红紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/61dda466578a82386d4328a53a1e31cf84b2480390b773469e0f5b99bfae7698.jpg" alt="图62" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 细络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉细长，延伸至舌尖，伴横向络脉，络脉周围有紫红色瘀点</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡红紫色</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图63</span>
+<span class="card-context">细长络脉、双侧不对等络脉，两络脉细长呈树状，超过舌尖至舌下肉阜连线的3/5，络脉呈紫红色，舌质淡白。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/d7568b373b95655f2186fd7b8c9f88c7d4855a930c74697f26afc8f73feaa77c.jpg" alt="图63" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 细长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉细长呈树状，超过舌尖至舌下肉阜连线的3/5</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡白</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">四、细络脉</span>
+<span class="card-context">弥漫形细络、双侧不对等络脉，两络脉弥漫于舌根部，且络脉周围伴紫色瘀斑点，左侧络脉隆起呈结节状，络脉呈蓝黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/69b7b490056eb57de2d114f243642976d54b261314183889420d882222551c36.jpg" alt="四、细络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 弥漫形细络</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 双侧不对等络脉，两络脉弥漫于舌根部，络脉周围伴紫色瘀斑点，左侧络脉隆起呈结节状</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">四、细络脉</span>
+<span class="card-context">细络、串珠形络脉，两络脉根部隆起呈结节状，长短适中，舌尖部及络脉周围多紫红色细络，络脉呈蓝黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/a704af2da79e30eb99926f680c708f0ffaede0261ae9d324cb9cfe40b652b885.jpg" alt="四、细络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 细络、串珠形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉根部隆起呈结节状，长短适中，舌尖部及络脉周围多紫红色细络</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉根部隆起呈结节状</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图66</span>
+<span class="card-context">紫红色叶脉状微细络脉，络脉根部伴淡蓝色瘀结，舌质偏红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/35f9e1a4e6de50503981ae03c5eb8e56b0363326c3ba5ed4e985a47f5385a9c4.jpg" alt="图66" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 细络脉（微细络脉）</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红色叶脉状微细络脉，络脉根部伴淡蓝色瘀结</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红色（根部伴淡蓝色瘀结）</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌质偏红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 伴淡蓝色瘀结</div>
+</div>
+</div></div></div>
+</div>
+<div class="section" id="sec-4">
+<div class="section-title">五、怒张形络脉 <span style="color:#888;font-size:14px;font-weight:400;margin-left:8px;">(32 张图片)</span></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图67</span>
+<span class="card-context">怒张形络脉，两络脉宽粗迂曲怒张，多枝叉，且舌根部怒张明显，络脉周围伴红色细丝状络脉，络脉呈蓝紫色，舌质紫红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/f0d0d59a84355b4ad6098200d786cf90d2e8a6ab9808ba93fd61ead5595c26a9.jpg" alt="图67" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉宽粗迂曲怒张，多枝叉，舌根部怒张明显，络脉周围伴红色细丝状络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝紫色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌根部怒张明显</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">五、怒张形络脉</span>
+<span class="card-context">怒张形络脉，两络脉迁曲饱满怒张呈盘龙状，多枝叉，弥漫及舌腹面，舌根部伴囊泡，舌尖部多紫红色瘀血点，络脉呈青紫色，舌质紫红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/dcf1bb7cfde2eaadbee9f286688a25ebd45d8bd640c641f2790c1c3b60c560f9.jpg" alt="五、怒张形络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迁曲饱满怒张呈盘龙状，多枝叉，弥漫及舌腹面</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 青紫色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 伴囊泡</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">五、怒张形络脉</span>
+<span class="card-context">怒张形络脉，两络脉迁曲怒张，饱满隆起呈生姜状，且多枝叉，周围伴少量瘀斑，络脉呈黑色，舌质偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/071c4d38a2dd08534ec4f56f532b4f3f18f38995d225d3de5d23b713921802f8.jpg" alt="五、怒张形络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迁曲怒张，饱满隆起呈生姜状，且多枝叉，周围伴少量瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图70</span>
+<span class="card-context">怒张形络脉，两络脉宽粗迁曲怒张，弥漫及舌腹面，呈飞凤状，多枝叉，且舌根部伴横叉形络脉，周围少量瘀斑，络脉呈青黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/5c6beef4167d1a2d2b852fb8a43697c9cd9dbf87efd811a8baf91518b977e567.jpg" alt="图70" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉宽粗迁曲怒张，弥漫及舌腹面，呈飞凤状，多枝叉，且舌根部伴横叉形络脉，周围少量瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 青黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 伴横叉形络脉</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图71</span>
+<span class="card-context">怒张形络脉，两络脉迁曲怒张呈结节状，弥漫及舌腹面，舌尖部伴少量瘀斑，舌根部有白膜覆盖，络脉呈青蓝色，舌质红紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/2a835e508bdbabaa1c4f72ccd9477d72219235bf06d40e5acf99b51002c8bb3c.jpg" alt="图71" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迁曲怒张呈结节状，弥漫及舌腹面，舌尖部伴少量瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 青蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌质红紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌根部有白膜覆盖</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">五、怒张形络脉</span>
+<span class="card-context">怒张形络脉，两络脉增粗、迂曲怒张呈结节状，伴有串珠，右侧络脉周围多瘀斑，舌根部有囊泡，络脉呈深蓝色，舌质暗紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/1f55c4700ee510d3c2d7f28e53b2ef562f257cdf70d7f76379c8c36824df57b7.jpg" alt="五、怒张形络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉增粗、迂曲怒张呈结节状，伴有串珠，右侧络脉周围多瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 深蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 暗紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 有囊泡</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">五、怒张形络脉</span>
+<span class="card-context">怒张形络脉，两络脉迂曲怒张呈结节状，且舌根部伴横叉状络脉，右侧络脉较左侧络脉迁曲更加明显，两络脉周围伴瘀斑，舌根部有白膜覆盖，络脉呈蓝黑色，舌质偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/44a0b5008b88c5d3e6cf4f1fd45163b094cc091a72d7abafad78b0d2e60224d5.jpg" alt="五、怒张形络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迂曲怒张呈结节状，舌根部伴横叉状络脉，右侧络脉较左侧络脉迁曲更加明显，两络脉周围伴瘀斑，舌根部有白膜覆盖</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">五、怒张形络脉</span>
+<span class="card-context">怒张形络脉，两络脉迁曲怒张，且堆积隆起，伴有瘀结，舌中部有瘀斑，络脉呈蓝黑色，舌质偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/f1a1aab66ac68b437157238b95ebdbc3231ffa5e6cf2aec899668d3fb0db2ddc.jpg" alt="五、怒张形络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迁曲怒张，且堆积隆起，伴有瘀结，舌中部有瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">五、怒张形络脉</span>
+<span class="card-context">怒张形络脉，两络脉饱满怒张，满布于舌腹面，呈佛手状，络脉周围伴红色出血斑及蓝黑色瘀斑，络脉呈蓝黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/268d72d8f8c632ce9ef8d62853b938d323cad03c9cbefc5b9d21e76137dfc52c.jpg" alt="五、怒张形络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉饱满怒张，满布于舌腹面，呈佛手状，络脉周围伴红色出血斑及蓝黑色瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图76</span>
+<span class="card-context">怒张形络脉，两络脉饱满怒张满布于舌腹面，呈片状，且伴紫红色出血斑，络脉呈蓝黑色，舌质暗紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/810cb8fc7f670ad6c6bedb7bd9bfa1d3eb6fe65f12b5c59ea516daa20a7b31d0.jpg" alt="图76" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉饱满怒张满布于舌腹面，呈片状，且伴紫红色出血斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 暗紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图77</span>
+<span class="card-context">怒张形络脉、长络脉，舌下两络脉粗长怒张，多枝权，且满布于舌腹面，舌尖部伴紫色瘀斑，络脉整体似树形，且呈蓝黑色，舌质暗紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/7b36fa00ee5df1d1ef8950194479dfcc6a122f94e6be81e54b9d9cd8c5ba0cf2.jpg" alt="图77" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉、长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌下两络脉粗长怒张，多枝权，满布于舌腹面，舌尖部伴紫色瘀斑，络脉整体似树形</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 暗紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">五、怒张形络脉</span>
+<span class="card-context">怒张形络脉，两络脉迁曲宽粗饱满，弥漫及舌根部，且伴有多个横向络脉，周围多蓝色瘀斑，络脉呈蓝黑色，舌质紫红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/800132a9f2888f3aac949e8605bb7c36052f49b9d073cbd0a42cb38e94650d99.jpg" alt="五、怒张形络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迁曲宽粗饱满，弥漫及舌根部，且伴有多个横向络脉，周围多蓝色瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 弥漫及舌根部</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">五、怒张形络脉</span>
+<span class="card-context">怒张形络脉，两络脉怒张呈结节状，舌根部络脉瘀阻呈囊泡状，舌尖部伴少量红、蓝色瘀血点，络脉呈蓝黑色，舌质偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/b0e56f87a8c53ca03542eaae106fe1b1815bd98de19d7e9b63a27eb644ada5e9.jpg" alt="五、怒张形络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉怒张呈结节状，舌根部络脉瘀阻呈囊泡状，舌尖部伴少量红、蓝色瘀血点</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 瘀阻呈囊泡状</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">五、怒张形络脉</span>
+<span class="card-context">怒张形络脉、长络脉，两络脉粗长怒张延至舌尖，呈佛手状，且有白膜覆盖，络脉周围伴蓝紫色瘀斑，络脉呈蓝黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/59c0bfb37a6c0f8edb3184cdf009d3aa04edd8c96d2828aa08677a44ccc9c4db.jpg" alt="五、怒张形络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉、长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉粗长怒张延至舌尖，呈佛手状，且有白膜覆盖，络脉周围伴蓝紫色瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">五、怒张形络脉</span>
+<span class="card-context">怒张形络脉、双侧不对等络脉，两络脉粗长怒张延至舌尖，多枝叉，右部络脉周围伴深紫色瘀斑，且有少量紫红色细络，舌根部隆起呈囊泡状，络脉呈蓝黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/680927be1650cee026db4db92166e501f254f4fb5528da8a6568b1fb83174de3.jpg" alt="五、怒张形络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉、双侧不对等络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉粗长怒张延至舌尖，多枝叉，右部络脉周围伴深紫色瘀斑，且有少量紫红色细络</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌根部隆起呈囊泡状</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图82</span>
+<span class="card-context">怒张形络脉、长络脉，两络脉饱满怒张集中于舌腹面中部，且隆起呈串珠状，络脉周围伴紫红色瘀斑点，络脉呈蓝黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/578d50908f20df28f4dd4ceaaec836e750cc3fc7e967ba7bfbe1314ba2216ed0.jpg" alt="图82" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉、长络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉饱满怒张集中于舌腹面中部，且隆起呈串珠状，络脉周围伴紫红色瘀斑点</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图83</span>
+<span class="card-context">怒张形络脉，两络脉增粗饱满迁曲，遍及舌腹面，状似麦穗，且伴紫红色瘀点，络脉呈蓝黑色，舌质偏紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/30f83dd76f9543e3775d9438c0c1e68188215f732663b6acc7b04ce55805a731.jpg" alt="图83" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉增粗饱满迁曲，遍及舌腹面，状似麦穗，且伴紫红色瘀点</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 偏紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">五、怒张形络脉</span>
+<span class="card-context">怒张形络脉、串珠形络脉，两络脉怒张迁曲饱满呈结节状，且多枝叉，左侧络脉伴横向络脉，舌根部络脉有白膜覆盖，络脉周围伴紫红色细络，络脉呈紫黑色，舌质紫红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/d6aaf692d615d72a25e3abd7d337eeeebd522ef0edb6ca6b2872331e9d30601e.jpg" alt="五、怒张形络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉、串珠形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉怒张迁曲饱满呈结节状，且多枝叉，左侧络脉伴横向络脉，舌根部络脉有白膜覆盖，络脉周围伴紫红色细络</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌根部络脉有白膜覆盖</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">五、怒张形络脉</span>
+<span class="card-context">怒张形络脉、囊泡形络脉，舌下两络脉怒张饱满呈结节状，遍及舌腹面，舌根部隆起呈囊泡状，且有白膜覆盖，络脉呈蓝黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/4229e543f61ce0bea2c0fbaf1613dc19bd4879531b8ac6a8ba9d4292398ba9d3.jpg" alt="五、怒张形络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉、囊泡形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张饱满呈结节状，遍及舌腹面</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 隆起呈囊泡状，且有白膜覆盖</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图86</span>
+<span class="card-context">迁曲络脉，两络脉弯曲且多枝叉，呈佛手状，左侧络脉隆起呈结节状，两络脉周围多红色细小络脉，络脉呈蓝紫色，舌质紫红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/5fae8b6229a2f04c3c0d9f755b6f426b47ff4886a55c450e600ea3b5725e6fb2.jpg" alt="图86" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 迁曲络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉弯曲且多枝叉，呈佛手状，左侧络脉隆起呈结节状，两络脉周围多红色细小络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝紫色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红色</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图87</span>
+<span class="card-context">迁曲络脉，两络脉迁曲延伸至舌尖，且弥漫至舌腹面，舌根部络脉隆起呈结节状，舌中部及舌尖部络脉呈树形，且络脉周围多红色细丝状络脉，络脉呈暗蓝色，舌质紫红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/f9b04a6da70d94a66b333dce9688f3f8c2238b4bb1a9dd6242ef6b8c7561d70a.jpg" alt="图87" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 迁曲络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迁曲延伸至舌尖，且弥漫至舌腹面，舌根部络脉隆起呈结节状，舌中部及舌尖部络脉呈树形，络脉周围多红色细丝状络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 暗蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌根部络脉隆起呈结节状</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">五、怒张形络脉</span>
+<span class="card-context">迁曲络脉，两络脉弯曲饱满延伸至舌尖部，多枝叉，络脉周围伴红色细丝状络脉，络脉呈紫蓝色，舌质暗紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/279b7523d92b2800b7f2659c16058859e6501bd8237d795961830b6b1864fbaf.jpg" alt="五、怒张形络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉弯曲饱满延伸至舌尖部，多枝叉，络脉周围伴红色细丝状络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 暗紫</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">五、怒张形络脉</span>
+<span class="card-context">迁曲络脉，两络脉弯曲隆起呈结节状，弥漫于舌腹面，多枝叉，呈黑凤型，且伴紫红色瘀斑，络脉呈青黑色，舌质紫红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/07ada84d2795d4654bd24e7e0ce10add7ab4a04b9b6a7ffee7624745ac609fdc.jpg" alt="五、怒张形络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉弯曲隆起呈结节状，弥漫于舌腹面，多枝叉，呈黑凤型，且伴紫红色瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 青黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红色</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图90</span>
+<span class="card-context">迁曲络脉，两络脉迁曲饱满呈结节状，且左侧络脉瘀结满布舌尖部，伴出血斑，络脉呈青黑色，舌质紫红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/a4e032d64b4d880f7d986c04ba2ac6af1bb8c6acfe3bf6a163a1e64235654a30.jpg" alt="图90" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 迁曲络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迁曲饱满呈结节状，左侧络脉瘀结满布舌尖部，伴出血斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 青黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图91</span>
+<span class="card-context">迁曲络脉，两络脉迁曲隆起呈结节状，延伸至舌尖，多枝叉，舌根部伴横向络脉，舌尖部络脉周围少量瘀点，舌下络脉呈青蓝色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/ba8649265190c693ee08c3ab93c53edbc9b22a47177c1f44cb78c4731cce1331.jpg" alt="图91" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 迁曲络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迁曲隆起呈结节状，延伸至舌尖，多枝叉，舌尖部络脉周围少量瘀点</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 青蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌根部伴横向络脉</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图92</span>
+<span class="card-context">迁曲络脉，两络脉扩张迁曲隆起呈结节状，且右侧较之左侧更甚，舌根部有白膜覆盖，络脉呈蓝色，舌质淡红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/3685ff12e15a1593767312828e9e08dc46df14a94e97fc3aea1a515102336b5b.jpg" alt="图92" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 迁曲络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉扩张迁曲隆起呈结节状，且右侧较之左侧更甚</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡红</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌根部有白膜覆盖</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">五、怒张形络脉</span>
+<span class="card-context">迁曲络脉，两络脉迁曲怒张，多枝叉，满布舌腹面，呈佛手状，靠舌尖部伴瘀斑，舌根部有白膜覆盖，络脉呈青黑色，舌质淡暗。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/553d259a333bb58e107713348467c7a2dcfb54e1f2e969d41df644daf945ebe0.jpg" alt="五、怒张形络脉" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 怒张形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迁曲怒张，多枝叉，满布舌腹面，呈佛手状，靠舌尖部伴瘀斑，舌根部有白膜覆盖</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 青黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡暗</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 有白膜覆盖</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图94</span>
+<span class="card-context">迁曲络脉，两络脉弯曲怒张呈结节状，超过舌尖至舌下肉阜连线的3/5，靠舌尖部多枝叉，络脉呈青黑色，舌质淡红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/4712dd9f93a557f8bcdd098cabe8a65f86e0d6834ef7e141836e96c9965d1530.jpg" alt="图94" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 迁曲络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉弯曲怒张呈结节状，超过舌尖至舌下肉阜连线的3/5，靠舌尖部多枝叉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 青黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡红</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图96</span>
+<span class="card-context">迁曲络脉，两络脉迁曲饱满，隆起呈结节状，且舌根部伴囊泡，多枝叉，络脉周围多紫红色细丝状络脉，络脉呈蓝色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/cba0b2f42708a33b00d7f7644a30cede2fb210fa7cb3b24614d5f585dc08075d.jpg" alt="图96" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 迁曲络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迁曲饱满，隆起呈结节状，舌根部伴囊泡，多枝叉，络脉周围多紫红色细丝状络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 伴囊泡</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图97</span>
+<span class="card-context">迁曲络脉，两络脉迁曲且多枝叉，遍布于舌下两侧，舌根部多横向络脉，络脉呈蓝黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/90ce3c2b745c222c92ae0379b81e890ca08c596ad4b3de3de6ab5674ab365994.jpg" alt="图97" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 迁曲络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迁曲且多枝叉，遍布于舌下两侧，舌根部多横向络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉根部有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 舌根部多横向络脉</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图98</span>
+<span class="card-context">迁曲络脉，两络脉增粗、扩张、迁曲，且伴横向络脉，络脉呈蓝黑色，舌质紫红。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/d5e034a2a91289e7fc8bc523283909d75ea9e1e22f0567cf0777d2d51598770d.jpg" alt="图98" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 迁曲络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉增粗、扩张、迁曲，且伴横向络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 紫红</div>
+</div>
+</div></div></div>
+<div class="card">
+<div class="card-header">
+<span class="card-caption">图99</span>
+<span class="card-context">迁曲络脉、串珠形络脉，两络脉迁曲，多枝叉，左侧络脉隆起呈串珠状，且两络脉周围多紫红色细丝状络脉，舌根部伴红色瘀斑，络脉呈蓝黑色，舌质淡紫。</span>
+</div>
+<div class="card-body">
+<div class="card-image"><img src="images/20527d4f2d8c06d0882587bcde2dec314ce430157f499b4e4c437a3826d9b283.jpg" alt="图99" loading="lazy"></div>
+<div class="card-qa">
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉属于哪种类型？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 迁曲络脉、串珠形络脉</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉有什么特征？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 两络脉迁曲，多枝叉，左侧络脉隆起呈串珠状，且两络脉周围多紫红色细丝状络脉，舌根部伴红色瘀斑</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌下络脉是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 蓝黑色</div>
+</div>
+<div class="qa-item">
+<div class="qa-question">Q: 图中舌质是什么颜色？<span class="qa-type">visual_feature</span></div>
+<div class="qa-answer">A: 淡紫</div>
+</div>
+</div></div></div>
+</div>
+</main></div>
+<script>
+function doSearch(){
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  document.querySelectorAll('.section').forEach(sec => {
+    let secVisible = false;
+    sec.querySelectorAll('.card').forEach(card => {
+      const text = card.innerText.toLowerCase();
+      if (text.includes(q)) { card.classList.remove('empty'); secVisible = true; }
+      else { card.classList.add('empty'); }
+    });
+    sec.style.display = secVisible ? '' : 'none';
+  });
+  // highlight
+  document.querySelectorAll('.highlight').forEach(el => {
+    const parent = el.parentNode;
+    parent.replaceChild(document.createTextNode(el.textContent), el);
+    parent.normalize();
+  });
+  if (q) {
+    const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');
+    document.querySelectorAll('.card-context, .qa-question, .qa-answer').forEach(el => {
+      if (el.closest('.empty')) return;
+      el.innerHTML = el.textContent.replace(re, m => '<span class="highlight">'+m+'</span>');
+    });
+  }
+}
+function scrollToSection(id){
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+}
+// 默认激活第一个
+if(document.querySelector('.nav-item')) document.querySelector('.nav-item').classList.add('active');
+</script>
+</body>
+</html>

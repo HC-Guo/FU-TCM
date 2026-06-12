@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TCM_final 架构总览</title>
+  <style>
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #202124; background: #f7f8fa; }
+    main { max-width: 1180px; margin: 0 auto; padding: 32px 20px 56px; }
+    h1 { font-size: 32px; margin: 0 0 8px; }
+    h2 { font-size: 20px; margin: 30px 0 12px; }
+    p { line-height: 1.7; }
+    a { color: #0b57d0; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code { background: #eef0f3; padding: 2px 5px; border-radius: 4px; }
+    pre { background: #202124; color: #f8fafd; padding: 14px; overflow: auto; border-radius: 6px; line-height: 1.45; }
+    .note { background: #fff7db; border: 1px solid #ead487; padding: 12px 14px; border-radius: 6px; }
+    .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 18px 0 8px; }
+    .card { background: white; border: 1px solid #d9dee5; border-radius: 6px; padding: 14px; min-height: 132px; }
+    .card b { display: block; margin-bottom: 8px; }
+    .small { color: #5f6368; font-size: 13px; line-height: 1.55; }
+    table { width: 100%; border-collapse: collapse; background: white; border: 1px solid #d9dee5; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #edf0f2; font-size: 14px; vertical-align: top; }
+    th { background: #eef3f8; font-weight: 650; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<main>
+  <h1>TCM_final 架构总览</h1>
+  <p>生成时间：2026-06-12 22:48:36。这是一个面向 Fu-TCM 的数据工程与训练工程目录：前半段把古籍、教材、图文书籍和病例加工成训练/评测数据，后半段进入 SFT、GRPO、评测与训练配置。</p>
+  <p class="note">更细的流程页见 <a href="workflow_overview.html">workflow_overview.html</a>；根目录入口见 <a href="../index.html">index.html</a>。</p>
+
+  <h2>总体分层</h2>
+  <div class="grid">
+    <div class="card"><b>原始数据层</b><span class="small">古籍 QA 输出、教材 PDF、带图书籍、图像材料、两类病例原始数据。</span></div>
+    <div class="card"><b>抽取与扩写层</b><span class="small">古籍 QA 生成/清洗，教材 PDF QA，图文 VQA，病例结构化辨证扩写与复核。</span></div>
+    <div class="card"><b>数据产物层</b><span class="small">文本 SFT、图文 SFT、多模态合并、GRPO/coldstart、benchmark。</span></div>
+    <div class="card"><b>训练与评测层</b><span class="small">LLaMA-Factory SFT、verl GRPO、reward、smoke 测试和 Qwen3.5 评测。</span></div>
+  </div>
+
+  <h2>架构图</h2>
+  <pre><code>原始数据层
+  ├─ qa_output/                              古籍分类 QA 生成结果
+  ├─ tcm_vision_dataflow/source_books/       教材 PDF、EPUB、带图书籍
+  ├─ tcm_vision_dataflow/data/               图文/VQA 数据
+  ├─ mlzy_reasoning/名老中医/                 名老中医病例 CSV/XLSX
+  └─ meta_reasoning/data/raw/                meta reasoning 病案 JSON
+
+抽取与扩写层
+  ├─ scripts/generate/                       古籍 QA 生成
+  ├─ scripts/process/                        古籍 QA 清洗与 SFT 转换
+  ├─ tcm_vision_dataflow/.../scripts/qa/     教材 PDF QA
+  ├─ tcm_vision_dataflow/.../scripts/vqa/    带图书籍/图像 VQA
+  ├─ mlzy_reasoning/scripts/                 名老中医病例扩写、复核、prepare
+  └─ meta_reasoning/scripts/                 meta reasoning 病例扩写、复核
+
+数据产物层
+  ├─ sft_data/                               文本 SFT：古籍、教材、辨证、身份等
+  ├─ sft_image_data/                         图文/视觉 SFT
+  ├─ sft_merged/                             合并后的多模态 SFT
+  ├─ grpodata/                               辨证推理、coldstart、GRPO train/test
+  └─ benchmark/                              评测集与医生盲测材料
+
+训练与评测层
+  ├─ llamafactory_qwen35/                    SFT 训练配置
+  ├─ convert_bianzheng_to_verl_grpo.py       GRPO 格式转换
+  ├─ reward_functions.py                     GRPO reward
+  ├─ run_tcm_grpo_smoke*.sh                  GRPO smoke 测试
+  └─ eval_qwen35*.py                         模型评测</code></pre>
+
+  <h2>四条主数据流</h2>
+  <table>
+    <thead><tr><th>数据流</th><th>链路</th><th>主要产物</th></tr></thead>
+    <tbody>
+      <tr><td>古籍 QA</td><td><code>scripts/generate</code> -> <code>qa_output</code> -> <code>scripts/process</code></td><td><code>sft_data/guji700*.json*</code></td></tr>
+      <tr><td>教材 PDF / 图文 VQA</td><td><code>tcm_vision_dataflow</code> -> DataFlow QA/VQA 脚本</td><td><code>sft_data/jiaocai.jsonl</code>、<code>sft_image_data</code></td></tr>
+      <tr><td>病例推理扩写</td><td><code>mlzy_reasoning</code> + <code>meta_reasoning</code> -> 结构化辨证复核</td><td><code>grpodata/bianzheng_*</code></td></tr>
+      <tr><td>SFT / GRPO / 评测</td><td><code>sft_data</code> + <code>sft_image_data</code> + <code>grpodata</code></td><td><code>llamafactory_qwen35</code>、<code>grpodata/verl</code>、<code>benchmark</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>核心入口</h2>
+  <table>
+    <thead><tr><th>入口</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td><a href="workflow_overview.html"><code>docs/workflow_overview.html</code></a></td><td>四段流程总览</td></tr>
+      <tr><td><a href="workflow_manifest.tsv"><code>docs/workflow_manifest.tsv</code></a></td><td>路径清单</td></tr>
+      <tr><td><a href="01_guji_qa.html"><code>docs/01_guji_qa.html</code></a></td><td>古籍 QA</td></tr>
+      <tr><td><a href="02_pdf_vqa.html"><code>docs/02_pdf_vqa.html</code></a></td><td>教材 PDF QA 与图文 VQA</td></tr>
+      <tr><td><a href="03_reasoning_expansion.html"><code>docs/03_reasoning_expansion.html</code></a></td><td>病例推理扩写</td></tr>
+      <tr><td><a href="04_sft_grpo.html"><code>docs/04_sft_grpo.html</code></a></td><td>SFT / GRPO / 评测训练</td></tr>
+    </tbody>
+  </table>
+</main>
+</body>
+</html>

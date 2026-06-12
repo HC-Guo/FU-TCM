@@ -1,0 +1,9 @@
+{
+  "book_name": "舌诊全息论",
+  "anchor_type": "text_figure_anchor_first",
+  "section_title": "（二）舌纹案例全息试解析",
+  "image_path": "images/017fe97da0739ae2e034b1aa639f342bed15b539bbf105f456501434676cc032.jpg",
+  "image_caption": "图3-46",
+  "context_text": "图3-46 子宫肌瘤案例\n如图3-46～图3-60。",
+  "figure_id": "3-46"
+}

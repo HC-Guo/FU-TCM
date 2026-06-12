@@ -1,0 +1,916 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>医生测试分层抽样样例包 20260610</title>
+  <style>
+    :root { --bg:#f7f4ee; --paper:#fffdf9; --ink:#1f241f; --muted:#636b60; --line:#ded5c8; --accent:#7b3f2c; --accent2:#2f6756; --soft:#efe7db; --ok:#ecf7ee; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; line-height:1.62; }
+    .page { max-width:1120px; margin:0 auto; padding:38px 22px 64px; }
+    .hero { border-bottom:2px solid var(--line); padding-bottom:18px; margin-bottom:26px; }
+    h1 { margin:0 0 8px; font-size:30px; letter-spacing:0; }
+    h2 { margin:34px 0 14px; font-size:22px; color:var(--accent); }
+    p { margin:8px 0; }
+    code { background:#eee4d7; border-radius:4px; padding:1px 5px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.92em; }
+    table { border-collapse:collapse; width:100%; background:var(--paper); border:1px solid var(--line); margin:12px 0 18px; font-size:14px; }
+    th,td { border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top; }
+    th { background:var(--soft); }
+    .summary-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:16px 0; }
+    .metric { background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:13px; }
+    .num { font-size:28px; font-weight:800; color:var(--accent); }
+    .label { color:var(--muted); font-size:13px; }
+    .note { background:#fff0d4; border:1px solid #edd19a; border-radius:8px; padding:12px 14px; margin:14px 0; }
+    .question-card { background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:15px; margin:13px 0; break-inside:avoid; }
+    .q-head { display:flex; gap:10px; align-items:flex-start; margin-bottom:8px; }
+    .q-no { min-width:46px; color:var(--accent); font-weight:800; }
+    .tag { display:inline-block; border:1px solid var(--line); background:#fbf6ed; border-radius:999px; padding:2px 8px; margin:2px 3px 2px 0; font-size:12px; color:var(--muted); }
+    .question-text { white-space:normal; font-weight:600; }
+    .options { margin:8px 0 10px; padding-left:24px; }
+    .options li { margin:4px 0; padding:3px 6px; border-radius:6px; }
+    .options li.correct { background:var(--ok); border:1px solid #b8dfc0; }
+    .opt { display:inline-block; min-width:22px; font-weight:700; color:var(--accent2); }
+    .answer { margin-top:8px; padding:8px 10px; border-left:4px solid var(--accent2); background:#f0f6f2; }
+    .small { color:var(--muted); font-size:13px; }
+    img { max-width:260px; max-height:220px; display:block; border:1px solid var(--line); border-radius:8px; margin:8px 0 10px; background:#fff; }
+    .image-missing { color:#8b4a2f; }
+    @media (max-width:780px) { .page{padding:26px 14px 48px;} .summary-grid{grid-template-columns:1fr 1fr;} .q-head{display:block;} table{font-size:13px;} }
+    @media print { body{background:#fff;} .question-card{page-break-inside:avoid;} }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="hero">
+      <h1>医生测试分层抽样样例包</h1>
+      <p class="small">随机种子：<code>20260610</code>；生成日期：2026-06-10；来源目录：<code>./benchmark</code></p>
+      <div class="note"><strong>说明：</strong>这是审阅版，包含正确答案和分层标签，便于检查抽样是否合理。正式给医生作答前应导出盲测版，并重新平衡 A/B/C/D 选项位置。</div>
+    </div>
+
+    <h2>抽样概览</h2>
+    <div class="summary-grid">
+      <div class="metric"><div class="num">60</div><div class="label">正式样例题数</div></div>
+      <div class="metric"><div class="num">24</div><div class="label">辨证医案题</div></div>
+      <div class="metric"><div class="num">24</div><div class="label">辨证答案组合数</div></div>
+      <div class="metric"><div class="num">11</div><div class="label">视觉图片来源系列数</div></div>
+    </div>
+    <table>
+      <thead><tr><th>Bench 分布</th><th>题数</th></tr></thead>
+      <tbody><tr><td>辨证医案</td><td>24</td></tr><tr><td>方药知识</td><td>20</td></tr><tr><td>视觉图文</td><td>16</td></tr></tbody>
+    </table>
+    <table>
+      <thead><tr><th>辨证类别</th><th>题数</th></tr></thead>
+      <tbody><tr><td>standard</td><td>14</td></tr><tr><td>colloquial</td><td>10</td></tr></tbody>
+    </table>
+    <table>
+      <thead><tr><th>辨证证型数量</th><th>题数</th></tr></thead>
+      <tbody><tr><td>1证型</td><td>14</td></tr><tr><td>2证型</td><td>8</td></tr><tr><td>3证型</td><td>2</td></tr></tbody>
+    </table>
+    <table>
+      <thead><tr><th>视觉类别</th><th>题数</th></tr></thead>
+      <tbody><tr><td>舌诊</td><td>7</td></tr><tr><td>面诊</td><td>3</td></tr><tr><td>脉诊</td><td>4</td></tr><tr><td>其他</td><td>2</td></tr></tbody>
+    </table>
+
+    <h2>一、辨证医案：24 题（答案证型组合不重复）</h2>
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#1</div>
+        <div><span class="tag">辨证医案</span><span class="tag">standard</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">简单</span><span class="tag">纯文本</span><span class="tag">1证型</span></div>
+      </div>
+      
+      <p class="question-text">患者，男，22岁。主诉：未婚同居3个月无规律房事早泄，射精潜伏时间1分钟左右，房事每周0-4次、每月3-4次。症状：口干燥症，遗精，夜寐良好，小便通调，大便。望闻切诊：表情自然，面色少华，精神尚可，形体正常；语声正常，气息平，无异常气味；舌质淡，舌边齿痕，舌苔腻微黄；脉细。<br>该患者最可能的中医证型是：<br>A. 肝肾两亏证<br>B. 脾胃虚弱证<br>C. 脾肾两虚证<br>D. 脾肾气虚证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>肝肾两亏证</li><li class=""><span class="opt">B</span>脾胃虚弱证</li><li class=" correct"><span class="opt">C</span>脾肾两虚证</li><li class=""><span class="opt">D</span>脾肾气虚证</li></ol>
+      <div class="answer">答案：<strong>C</strong> 脾肾两虚证</div>
+      <p class="small"><strong>证型列表：</strong>脾肾两虚证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V2_687302　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#2</div>
+        <div><span class="tag">辨证医案</span><span class="tag">standard</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">简单</span><span class="tag">纯文本</span><span class="tag">1证型</span></div>
+      </div>
+      
+      <p class="question-text">患者，女，87岁。主诉：主  诉：阵发性心慌1年余，加重10天。。症状：阵发性心慌，偶胸闷，无咳嗽、咳痰，无恶心、呕吐，偶自觉头晕，无胸痛，睡眠质量一般，饭量少，大便难下，夜尿频。。望闻切诊：中医望闻切诊：表情自然，面色红润，形体正常,动静姿态，语气清,气息平；无异常气味,舌暗、少苔,舌下络脉无迂曲，脉结。<br>该患者最可能的中医证型是：<br>A. 气虚血瘀证<br>B. 气血两亏证<br>C. 气阴两虚证<br>D. 气阴不足证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>气虚血瘀证</li><li class=""><span class="opt">B</span>气血两亏证</li><li class=" correct"><span class="opt">C</span>气阴两虚证</li><li class=""><span class="opt">D</span>气阴不足证</li></ol>
+      <div class="answer">答案：<strong>C</strong> 气阴两虚证</div>
+      <p class="small"><strong>证型列表：</strong>气阴两虚证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V1_000461　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#3</div>
+        <div><span class="tag">辨证医案</span><span class="tag">standard</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">简单</span><span class="tag">纯文本</span><span class="tag">1证型</span></div>
+      </div>
+      
+      <p class="question-text">患者，男，31岁。主诉：房事举而欠坚半年。症状：感觉可，早泄14天后，夜寐良好，小便通调，大便成形1日1-2行。望闻切诊：表情自然，面色少华，神态倦怠，形体正常；语声正常，气息平，无异常气味；舌质红，舌边齿痕，苔黄腻；脉弦滑。<br>该患者最可能的中医证型是：<br>A. 肝郁气滞证<br>B. 痰热郁肝证<br>C. 肝阳不足证<br>D. 肝阴不足证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>肝郁气滞证</li><li class=""><span class="opt">B</span>痰热郁肝证</li><li class=""><span class="opt">C</span>肝阳不足证</li><li class=" correct"><span class="opt">D</span>肝阴不足证</li></ol>
+      <div class="answer">答案：<strong>D</strong> 肝阴不足证</div>
+      <p class="small"><strong>证型列表：</strong>肝阴不足证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V2_744725　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#4</div>
+        <div><span class="tag">辨证医案</span><span class="tag">standard</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">简单</span><span class="tag">纯文本</span><span class="tag">1证型</span></div>
+      </div>
+      
+      <p class="question-text">患者，女，84岁。主诉：主  诉：阵发性胸闷、憋气6年，加重伴双下肢水肿7天。。症状：阵发性胸闷、憋气，双下肢明显乏力，体力活动明显受限，稍有体力活动即觉胸闷、憋气明显加重，呼吸困难，休息约10分钟可逐渐自行缓解，夜间难以平卧，头痛，胸痛伴后背胀痛，咳嗽、咳黄痰，腹胀，无明显头晕，无腹痛，无恶心、呕吐，无发热，纳差，眠一般，小便可，大便干6日一行。。望闻切诊：中医望闻切诊：表情淡漠，面色少华，形体正常,语气清,气息平；无异常气味,舌淡，苔薄黄，脉弦细涩。<br>该患者最可能的中医证型是：<br>A. 气阴两虚证<br>B. 气滞血结证<br>C. 气滞痰阻证<br>D. 气滞血瘀证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>气阴两虚证</li><li class=""><span class="opt">B</span>气滞血结证</li><li class=""><span class="opt">C</span>气滞痰阻证</li><li class=" correct"><span class="opt">D</span>气滞血瘀证</li></ol>
+      <div class="answer">答案：<strong>D</strong> 气滞血瘀证</div>
+      <p class="small"><strong>证型列表：</strong>气滞血瘀证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V1_000057　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#5</div>
+        <div><span class="tag">辨证医案</span><span class="tag">standard</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">简单</span><span class="tag">纯文本</span><span class="tag">1证型</span></div>
+      </div>
+      
+      <p class="question-text">患者，男，49岁。主诉：反复尿频1年。症状：夜尿，尿痛，易怒，反复尿频，乏力，烦躁，咽喉发干，疲乏，寐差梦多，夜尿3次，大便易溏1日2行。望闻切诊：表情烦躁，面色少华，形体正常；语声正常，气息平，口中无异常气味；舌质淡红，苔腻微黄；脉弦。<br>该患者最可能的中医证型是：<br>A. 肝胆湿热气滞证<br>B. 肝郁脾虚证<br>C. 肝脾不调证<br>D. 脾肾阳虚证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>肝胆湿热气滞证</li><li class=" correct"><span class="opt">B</span>肝郁脾虚证</li><li class=""><span class="opt">C</span>肝脾不调证</li><li class=""><span class="opt">D</span>脾肾阳虚证</li></ol>
+      <div class="answer">答案：<strong>B</strong> 肝郁脾虚证</div>
+      <p class="small"><strong>证型列表：</strong>肝郁脾虚证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V2_2584118　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#6</div>
+        <div><span class="tag">辨证医案</span><span class="tag">standard</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">简单</span><span class="tag">纯文本</span><span class="tag">1证型</span></div>
+      </div>
+      
+      <p class="question-text">患者，男，25岁。主诉：左丸隐痛反复6年。症状：隐痛，尿色变黄，口干口苦，肿胀，夜寐良好，大便成形1日1行。望闻切诊：表情自然，面色偏暗，形体正常，左侧睾丸略有肿胀；语声正常，气息平，无异常气味；舌质红，苔薄黄，舌下脉络稍有迂曲；脉弦细。<br>该患者最可能的中医证型是：<br>A. 肝气郁滞证<br>B. 肝经郁热证<br>C. 肝郁血瘀证<br>D. 肝血瘀阻证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>肝气郁滞证</li><li class=""><span class="opt">B</span>肝经郁热证</li><li class=" correct"><span class="opt">C</span>肝郁血瘀证</li><li class=""><span class="opt">D</span>肝血瘀阻证</li></ol>
+      <div class="answer">答案：<strong>C</strong> 肝郁血瘀证</div>
+      <p class="small"><strong>证型列表：</strong>肝郁血瘀证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V2_1207395　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#7</div>
+        <div><span class="tag">辨证医案</span><span class="tag">standard</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">简单</span><span class="tag">纯文本</span><span class="tag">1证型</span></div>
+      </div>
+      
+      <p class="question-text">患者，男，37岁。主诉：主  诉：血压升高10余年。。症状：血压152/93mmhg，无胸闷、胸痛，无头晕、头痛，无口干、口苦，胃脘不适，偶胃酸，纳眠可，二便调。。望闻切诊：中医望闻切诊：表情自然，面色红润，形体正常，动静姿态，语气清，气息平，无异常气味，舌质红，苔黄腻，脉弦细。<br>该患者最可能的中医证型是：<br>A. 肝经郁热证<br>B. 肝火上扰证<br>C. 肝阳上亢证<br>D. 肝阳化风证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>肝经郁热证</li><li class=""><span class="opt">B</span>肝火上扰证</li><li class=" correct"><span class="opt">C</span>肝阳上亢证</li><li class=""><span class="opt">D</span>肝阳化风证</li></ol>
+      <div class="answer">答案：<strong>C</strong> 肝阳上亢证</div>
+      <p class="small"><strong>证型列表：</strong>肝阳上亢证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V1_000738　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#8</div>
+        <div><span class="tag">辨证医案</span><span class="tag">standard</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">简单</span><span class="tag">纯文本</span><span class="tag">1证型</span></div>
+      </div>
+      
+      <p class="question-text">患者，男，34岁。主诉：尿频急痛反复1周。症状：尿频，尿急，尿痛，大便或成形或溏1日1-3行夜寐良好，大便或成形或溏1日1-3行夜寐良好。望闻切诊：表情自然，面色略红，形体正常；语声正常，气息平，无异常气味；舌质红、苔黄腻；脉弦。<br>该患者最可能的中医证型是：<br>A. 湿热下注证<br>B. 湿热蕴毒证<br>C. 湿热中阻证<br>D. 湿热内蕴证</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>湿热下注证</li><li class=""><span class="opt">B</span>湿热蕴毒证</li><li class=""><span class="opt">C</span>湿热中阻证</li><li class=""><span class="opt">D</span>湿热内蕴证</li></ol>
+      <div class="answer">答案：<strong>A</strong> 湿热下注证</div>
+      <p class="small"><strong>证型列表：</strong>湿热下注证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V2_2604407　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#9</div>
+        <div><span class="tag">辨证医案</span><span class="tag">standard</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">中等</span><span class="tag">纯文本</span><span class="tag">2证型</span></div>
+      </div>
+      
+      <p class="question-text">患者，男，44岁。主诉：主  诉：发现血压升高2年余。症状：偶有左侧肢体麻木不利，无头晕头痛，无胸闷胸痛，无咳嗽咳痰，无恶心呕吐，纳可眠差，二便调。。望闻切诊：中医望闻切诊：表情自然，面色少华，形体正常,语气清,气息平；无异常气味,舌红苔水滑，脉滑。<br>该患者最可能的中医证型是：<br>A. 阳脱证、气滞痰凝证<br>B. 气虚痰滞证、气虚湿困证<br>C. 阳脱证、气结血瘀证<br>D. 阳虚水停证、气虚血瘀证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>阳脱证、气滞痰凝证</li><li class=""><span class="opt">B</span>气虚痰滞证、气虚湿困证</li><li class=""><span class="opt">C</span>阳脱证、气结血瘀证</li><li class=" correct"><span class="opt">D</span>阳虚水停证、气虚血瘀证</li></ol>
+      <div class="answer">答案：<strong>D</strong> 阳虚水停证、气虚血瘀证</div>
+      <p class="small"><strong>证型列表：</strong>阳虚水停证、气虚血瘀证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V1_001316　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#10</div>
+        <div><span class="tag">辨证医案</span><span class="tag">standard</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">中等</span><span class="tag">纯文本</span><span class="tag">2证型</span></div>
+      </div>
+      
+      <p class="question-text">患者，男，37岁。主诉：房事举而易萎1年。。症状：焦虑性抑郁症，性冷淡，大便不成形。望闻切诊：精神萎靡，面色淡白少华，形体偏胖，表情忧郁；语声低怯，气息平，无异常气味；舌胖质淡，舌边齿痕，舌苔白滑；脉弦细。<br>该患者最可能的中医证型是：<br>A. 心肺气阴两虚证、热炽心肺证<br>B. 肝阴不足证、肺肾阴虚证<br>C. 肝肾兼证、心肾阴虚阳亢证<br>D. 脾肾两虚证、肝郁兼夹证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>心肺气阴两虚证、热炽心肺证</li><li class=""><span class="opt">B</span>肝阴不足证、肺肾阴虚证</li><li class=""><span class="opt">C</span>肝肾兼证、心肾阴虚阳亢证</li><li class=" correct"><span class="opt">D</span>脾肾两虚证、肝郁兼夹证</li></ol>
+      <div class="answer">答案：<strong>D</strong> 脾肾两虚证、肝郁兼夹证</div>
+      <p class="small"><strong>证型列表：</strong>脾肾两虚证、肝郁兼夹证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V2_1660771　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#11</div>
+        <div><span class="tag">辨证医案</span><span class="tag">standard</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">中等</span><span class="tag">纯文本</span><span class="tag">2证型</span></div>
+      </div>
+      
+      <p class="question-text">患者，男，46岁。主诉：主  诉：阵发性头晕1年，加重2天。症状：头晕，无黑蒙、无头痛、无视物模糊，伴胸闷，无肩背部不适,饮食可，寐差，大便溏，1日2-4次，小便可。。望闻切诊：中医望闻切诊：表情自然，面色红润，形体正常,动静姿态，语气清,气息平；无异常气味,舌红、苔白腻,舌下络脉无异常，脉弦数。<br>该患者最可能的中医证型是：<br>A. 痰热搏结证、肝经寒实证<br>B. 痰火壅结证、痰热上蒙证<br>C. 肝阳上亢证、痰湿痹阻证<br>D. 胆腑虫扰证、痰热犯鼻证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>痰热搏结证、肝经寒实证</li><li class=""><span class="opt">B</span>痰火壅结证、痰热上蒙证</li><li class=" correct"><span class="opt">C</span>肝阳上亢证、痰湿痹阻证</li><li class=""><span class="opt">D</span>胆腑虫扰证、痰热犯鼻证</li></ol>
+      <div class="answer">答案：<strong>C</strong> 肝阳上亢证、痰湿痹阻证</div>
+      <p class="small"><strong>证型列表：</strong>肝阳上亢证、痰湿痹阻证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V1_000638　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#12</div>
+        <div><span class="tag">辨证医案</span><span class="tag">standard</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">中等</span><span class="tag">纯文本</span><span class="tag">2证型</span></div>
+      </div>
+      
+      <p class="question-text">患者，男，46岁。主诉：主  诉：发作性头晕、头痛7月余，阵发性胸痛2天。。症状：阵发性胸痛，持续数分钟，休息后缓解，无头晕头痛，无视物旋转，无恶心呕吐，纳眠可，二便可。。望闻切诊：中医望闻切诊：表情自然，面色红润，形体正常，动静姿态，语气清，气息平，无异常气味，舌红苔薄白，脉弦。<br>该患者最可能的中医证型是：<br>A. 肝阳上亢证、气阴两虚证<br>B. 肝经证、肝瘀化热证<br>C. 肝郁血热证、气虚水停证<br>D. 气虚血脱证、肝经证</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>肝阳上亢证、气阴两虚证</li><li class=""><span class="opt">B</span>肝经证、肝瘀化热证</li><li class=""><span class="opt">C</span>肝郁血热证、气虚水停证</li><li class=""><span class="opt">D</span>气虚血脱证、肝经证</li></ol>
+      <div class="answer">答案：<strong>A</strong> 肝阳上亢证、气阴两虚证</div>
+      <p class="small"><strong>证型列表：</strong>肝阳上亢证、气阴两虚证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V1_000760　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#13</div>
+        <div><span class="tag">辨证医案</span><span class="tag">standard</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">中等</span><span class="tag">纯文本</span><span class="tag">2证型</span></div>
+      </div>
+      
+      <p class="question-text">患者，男，48岁。主诉：尿不尽、尿分叉1年。症状：烦躁，尿频，尿流分叉，易怒，性欲减退或缺失，尿不尽，灼热感，口干口苦，夜寐差易醒，小便时灼热感，大便成形一日1-3行。望闻切诊：表情烦躁，面色偏红，形体正常，乏力；语声偏高，气息平，口中有异味；舌质红，舌边齿痕，舌苔腻厚黄；脉细无力。<br>该患者最可能的中医证型是：<br>A. 痰热郁肝证、心肝血虚证<br>B. 胆经实热证、肝郁兼夹证<br>C. 肝经湿热证、肺脾湿热证<br>D. 劳伤心脾证、心热胆虚证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>痰热郁肝证、心肝血虚证</li><li class=""><span class="opt">B</span>胆经实热证、肝郁兼夹证</li><li class=" correct"><span class="opt">C</span>肝经湿热证、肺脾湿热证</li><li class=""><span class="opt">D</span>劳伤心脾证、心热胆虚证</li></ol>
+      <div class="answer">答案：<strong>C</strong> 肝经湿热证、肺脾湿热证</div>
+      <p class="small"><strong>证型列表：</strong>肝经湿热证、肺脾湿热证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V2_165671　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#14</div>
+        <div><span class="tag">辨证医案</span><span class="tag">standard</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">疑难</span><span class="tag">纯文本</span><span class="tag">3证型</span></div>
+      </div>
+      
+      <p class="question-text">患者，男，46岁。主诉：房事举而欠坚伴早泄16年。。症状：反复尿频，易怒，口苦，尿不尽，焦虑状态，夜尿，早泄，不适，腹痛，腹部隐痛，口干口苦，焦虑，尿频，大便不成形。望闻切诊：表情焦虑，面色偏红，形体正常；语声正常，气息平，口气偏重；舌质红，舌苔黄腻，舌边有齿痕；脉弦细。<br>该患者最可能的中医证型是：<br>A. 肝胆湿热瘀滞证、肝胆气虚证、胃热肠寒证<br>B. 肝经湿热证、肝郁湿热证、肝脾湿热证<br>C. 胃肠气滞证、肺肝风热犯目证、肝木犯胃证<br>D. 胃热肠寒证、相火妄动证、水寒射肺证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>肝胆湿热瘀滞证、肝胆气虚证、胃热肠寒证</li><li class=" correct"><span class="opt">B</span>肝经湿热证、肝郁湿热证、肝脾湿热证</li><li class=""><span class="opt">C</span>胃肠气滞证、肺肝风热犯目证、肝木犯胃证</li><li class=""><span class="opt">D</span>胃热肠寒证、相火妄动证、水寒射肺证</li></ol>
+      <div class="answer">答案：<strong>B</strong> 肝经湿热证、肝郁湿热证、肝脾湿热证</div>
+      <p class="small"><strong>证型列表：</strong>肝经湿热证、肝郁湿热证、肝脾湿热证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V2_229019　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#15</div>
+        <div><span class="tag">辨证医案</span><span class="tag">colloquial</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">简单</span><span class="tag">纯文本</span><span class="tag">1证型</span></div>
+      </div>
+      
+      <p class="question-text">患者男性，36岁，因房事难举10天就诊。近来常感口中发苦，小便次数增多，自觉性欲减退明显，整个人提不起兴致，已有焦虑抑郁状态2年，腹部时有胀气感，夜间睡眠尚可，大便不成形每日一次。查体见患者表情淡漠，面容缺乏生气，面色偏暗，体型正常，说话声音低沉，气息平稳，无异常气味，舌体胖大、舌质红、苔黄腻，脉象弦细。<br>该患者最可能的中医证型是：<br>A. 肝郁不舒证<br>B. 肝火旺盛证<br>C. 肝郁湿热证<br>D. 痰热郁肝证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>肝郁不舒证</li><li class=""><span class="opt">B</span>肝火旺盛证</li><li class=" correct"><span class="opt">C</span>肝郁湿热证</li><li class=""><span class="opt">D</span>痰热郁肝证</li></ol>
+      <div class="answer">答案：<strong>C</strong> 肝郁湿热证</div>
+      <p class="small"><strong>证型列表：</strong>肝郁湿热证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V2_2610494　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#16</div>
+        <div><span class="tag">辨证医案</span><span class="tag">colloquial</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">简单</span><span class="tag">纯文本</span><span class="tag">1证型</span></div>
+      </div>
+      
+      <p class="question-text">患者男，62岁，近5天来自觉头部麻胀不适，头皮发紧，偶有头晕，无恶心呕吐，无下肢水肿，右手指尖麻木，平躺时觉胸闷，饮食尚可，睡眠欠佳，二便正常。查体见表情自然，面色红润，形体正常，语气清晰，气息平稳，无异常气味，舌红、苔薄黄，舌下脉络无明显异常，脉弦数。<br>该患者最可能的中医证型是：<br>A. 心肝气血两虚证<br>B. 肝肾两虚证<br>C. 肝郁胆热证<br>D. 肝肾阴虚证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>心肝气血两虚证</li><li class=""><span class="opt">B</span>肝肾两虚证</li><li class=""><span class="opt">C</span>肝郁胆热证</li><li class=" correct"><span class="opt">D</span>肝肾阴虚证</li></ol>
+      <div class="answer">答案：<strong>D</strong> 肝肾阴虚证</div>
+      <p class="small"><strong>证型列表：</strong>肝肾阴虚证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V1_001437　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#17</div>
+        <div><span class="tag">辨证医案</span><span class="tag">colloquial</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">简单</span><span class="tag">纯文本</span><span class="tag">1证型</span></div>
+      </div>
+      
+      <p class="question-text">患者女，64岁，发作性胸闷反复发作十余年，一小时前加重并伴有头晕前来就诊。平素发作时感胸闷、心慌，偶有一过性黑矇，头部沉重感明显，无胸痛，无恶心呕吐，饮食睡眠尚可，二便正常。查体见表情自然，面色红润，形体正常，动静姿态如常，语气清晰，气息平稳，无异常气味，舌红、苔黄腻，脉弦细。<br>该患者最可能的中医证型是：<br>A. 痰湿蒙神证<br>B. 痰热蕴结证<br>C. 痰瘀内阻证<br>D. 痰浊化火证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>痰湿蒙神证</li><li class=" correct"><span class="opt">B</span>痰热蕴结证</li><li class=""><span class="opt">C</span>痰瘀内阻证</li><li class=""><span class="opt">D</span>痰浊化火证</li></ol>
+      <div class="answer">答案：<strong>B</strong> 痰热蕴结证</div>
+      <p class="small"><strong>证型列表：</strong>痰热蕴结证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V1_000982　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#18</div>
+        <div><span class="tag">辨证医案</span><span class="tag">colloquial</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">简单</span><span class="tag">纯文本</span><span class="tag">1证型</span></div>
+      </div>
+      
+      <p class="question-text">患者男性，70岁，30余年来反复出现阵发性头晕，近3天症状加重前来就诊。他诉说头晕发作时并不伴有头痛，但常感到乏力、烦躁，口干明显，有反酸现象，性情容易心急，饮食和睡眠尚可，大小便正常。查体见患者表情自然，面色红润，形体正常，动静姿态无异常，语气清晰，气息平稳，未闻及异常气味，舌红、苔白腻，舌下络脉未见异常，脉象滑。<br>该患者最可能的中医证型是：<br>A. 痰食互结证<br>B. 痰湿痹阻证<br>C. 痰湿阻胞证<br>D. 痰热壅肺证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>痰食互结证</li><li class=" correct"><span class="opt">B</span>痰湿痹阻证</li><li class=""><span class="opt">C</span>痰湿阻胞证</li><li class=""><span class="opt">D</span>痰热壅肺证</li></ol>
+      <div class="answer">答案：<strong>B</strong> 痰湿痹阻证</div>
+      <p class="small"><strong>证型列表：</strong>痰湿痹阻证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V1_001176　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#19</div>
+        <div><span class="tag">辨证医案</span><span class="tag">colloquial</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">简单</span><span class="tag">纯文本</span><span class="tag">1证型</span></div>
+      </div>
+      
+      <p class="question-text">患者男，78岁，一年余前开始出现阵发性胸闷，活动后加重，休息后可缓解，近十余天来症状明显加重。平时偶有咳嗽咳痰，无发热，无恶心呕吐，饮食睡眠尚可，大小便正常。查体见表情自然，面色红润，形体正常，动静姿态如常，语气清晰，气息平稳，无异常气味，舌红，苔白腻，脉结代。<br>该患者最可能的中医证型是：<br>A. 阳虚兼夹证<br>B. 阳虚痰阻证<br>C. 阳虚血瘀证<br>D. 阳虚水停证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>阳虚兼夹证</li><li class=""><span class="opt">B</span>阳虚痰阻证</li><li class=""><span class="opt">C</span>阳虚血瘀证</li><li class=" correct"><span class="opt">D</span>阳虚水停证</li></ol>
+      <div class="answer">答案：<strong>D</strong> 阳虚水停证</div>
+      <p class="small"><strong>证型列表：</strong>阳虚水停证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V1_001279　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#20</div>
+        <div><span class="tag">辨证医案</span><span class="tag">colloquial</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">简单</span><span class="tag">纯文本</span><span class="tag">1证型</span></div>
+      </div>
+      
+      <p class="question-text">患者男性，76岁，十多年前发现血压升高，近一个多月来血压控制欠佳，时有升高，尤其午后明显，收缩压可达170-180mmHg，偶尔出现头晕头痛，无恶心呕吐，无胸痛胸闷，饮食睡眠尚可，小便频繁，大便正常。查体见患者表情自然，面色红润，形体正常，动静姿态自如，语气清晰，气息平稳，无异常气味，舌红、苔白厚，舌下脉络青紫，脉濡细。<br>该患者最可能的中医证型是：<br>A. 痰瘀互结证<br>B. 痰瘀阻络证<br>C. 痰浊上扰证<br>D. 痰湿瘀滞证</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>痰瘀互结证</li><li class=""><span class="opt">B</span>痰瘀阻络证</li><li class=""><span class="opt">C</span>痰浊上扰证</li><li class=""><span class="opt">D</span>痰湿瘀滞证</li></ol>
+      <div class="answer">答案：<strong>A</strong> 痰瘀互结证</div>
+      <p class="small"><strong>证型列表：</strong>痰瘀互结证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V1_000270　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#21</div>
+        <div><span class="tag">辨证医案</span><span class="tag">colloquial</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">中等</span><span class="tag">纯文本</span><span class="tag">2证型</span></div>
+      </div>
+      
+      <p class="question-text">患者男，36岁，因尿频、尿不尽伴失眠前来就诊，病程约三年。自述近五年来容易疲乏、急躁易怒，夜尿增多，腰酸，射精困难，曾诊断前列腺炎。近半月尿频加重，食欲欠佳，乏力明显，口干口苦，口中有臭气，大便不成形、日行一次，夜间睡眠欠佳。查体见表情急躁，面色偏红，形体正常，语声正常，气息平，口中有臭气。舌质红，苔黄腻；脉弦细，左关弦劲。<br>该患者最可能的中医证型是：<br>A. 肝胃阴虚气滞证、脾胃气阴两虚证<br>B. 胃肠实热证、肝火上扰证<br>C. 肝脾湿热证、肝郁不舒证<br>D. 心肺火旺证、脾胃阴虚证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>肝胃阴虚气滞证、脾胃气阴两虚证</li><li class=""><span class="opt">B</span>胃肠实热证、肝火上扰证</li><li class=" correct"><span class="opt">C</span>肝脾湿热证、肝郁不舒证</li><li class=""><span class="opt">D</span>心肺火旺证、脾胃阴虚证</li></ol>
+      <div class="answer">答案：<strong>C</strong> 肝脾湿热证、肝郁不舒证</div>
+      <p class="small"><strong>证型列表：</strong>肝脾湿热证、肝郁不舒证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V2_2502600　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#22</div>
+        <div><span class="tag">辨证医案</span><span class="tag">colloquial</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">中等</span><span class="tag">纯文本</span><span class="tag">2证型</span></div>
+      </div>
+      
+      <p class="question-text">患者男性，73岁，二十年来反复出现憋闷不适，近三年症状加重。平时常感憋闷、气短乏力，但无胸痛、心慌，也不头晕头痛。眼睛时有干涩胀感，耳鸣耳聋，双膝关节酸痛。饮食尚可，偶有反酸，睡眠一般，大小便正常。查体见患者表情自然，面色红润，体型正常，语声清晰，呼吸平稳，无异常气味，舌红、苔白腻，舌下络脉无异常，脉弦数。<br>该患者最可能的中医证型是：<br>A. 痰瘀阻滞证、痰蒙心神证<br>B. 痰蒙心神证、痰浊闭肺证<br>C. 痰瘀互结证、肝阳上亢证<br>D. 胆气虚寒证、痰热阴虚证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>痰瘀阻滞证、痰蒙心神证</li><li class=""><span class="opt">B</span>痰蒙心神证、痰浊闭肺证</li><li class=" correct"><span class="opt">C</span>痰瘀互结证、肝阳上亢证</li><li class=""><span class="opt">D</span>胆气虚寒证、痰热阴虚证</li></ol>
+      <div class="answer">答案：<strong>C</strong> 痰瘀互结证、肝阳上亢证</div>
+      <p class="small"><strong>证型列表：</strong>痰瘀互结证、肝阳上亢证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V1_000205　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#23</div>
+        <div><span class="tag">辨证医案</span><span class="tag">colloquial</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">中等</span><span class="tag">纯文本</span><span class="tag">2证型</span></div>
+      </div>
+      
+      <p class="question-text">患者男，50岁，房事难举已有12年。平素口中有臭气，腰部酸软，口干口苦，情感一般，白天精神困倦但夜间睡眠欠佳，小便通调，大便不成形、易便溏，日行2至3次。诊见表情自然，面色少华，神态倦怠，形体正常，语声正常，气息平，口中可闻臭气；舌胖大，舌尖红，舌边有齿痕，苔白腻；脉细。<br>该患者最可能的中医证型是：<br>A. 肝郁血虚证、肝热血瘀证<br>B. 肺胃风热证、心肾阳虚证<br>C. 肺肾两虚证、肝火湿热上攻证<br>D. 肝郁脾虚证、肝郁湿热证</p>
+      <ol class="options"><li class=""><span class="opt">A</span>肝郁血虚证、肝热血瘀证</li><li class=""><span class="opt">B</span>肺胃风热证、心肾阳虚证</li><li class=""><span class="opt">C</span>肺肾两虚证、肝火湿热上攻证</li><li class=" correct"><span class="opt">D</span>肝郁脾虚证、肝郁湿热证</li></ol>
+      <div class="answer">答案：<strong>D</strong> 肝郁脾虚证、肝郁湿热证</div>
+      <p class="small"><strong>证型列表：</strong>肝郁脾虚证、肝郁湿热证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V2_780488　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#24</div>
+        <div><span class="tag">辨证医案</span><span class="tag">colloquial</span><span class="tag">辨证分型 / 医案推理</span><span class="tag">疑难</span><span class="tag">纯文本</span><span class="tag">3证型</span></div>
+      </div>
+      
+      <p class="question-text">患者男，28岁，曾于上次就诊时稍有好转，停诊已有1年。现觉口中有臭味，身体疲乏无力，腰背酸痛，时有胀痛，口干口苦，心悸不安，精神状态差，觉醒不佳，夜间睡眠差、容易醒，平素焦虑，自觉功能减退，小便通调，大便成形、日行一次。查体见表情焦虑，面色少华，神疲倦怠，形体正常，语声低怯，气息平，口中有臭气，舌质淡红、边有齿痕、苔薄，脉弦细。<br>该患者最可能的中医证型是：<br>A. 肝脾湿热证、肝郁阴虚证、肝郁脾虚证<br>B. 肝郁不舒证、肝经风热证、肝虚证<br>C. 肝气乘脾证、血虚肝瘀证、肝气郁滞证<br>D. 肝郁气滞证、心肾兼证、肺脾气虚证</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>肝脾湿热证、肝郁阴虚证、肝郁脾虚证</li><li class=""><span class="opt">B</span>肝郁不舒证、肝经风热证、肝虚证</li><li class=""><span class="opt">C</span>肝气乘脾证、血虚肝瘀证、肝气郁滞证</li><li class=""><span class="opt">D</span>肝郁气滞证、心肾兼证、肺脾气虚证</li></ol>
+      <div class="answer">答案：<strong>A</strong> 肝脾湿热证、肝郁阴虚证、肝郁脾虚证</div>
+      <p class="small"><strong>证型列表：</strong>肝脾湿热证、肝郁阴虚证、肝郁脾虚证</p>
+      
+      <p class="small"><strong>ID：</strong>TCM_V2_2620452　<strong>来源文件：</strong><code>bianzheng_mcq_test.json</code></p>
+    </div>
+    <h2>二、方药知识：20 题</h2>
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#25</div>
+        <div><span class="tag">方药知识</span><span class="tag">药方</span><span class="tag">立法处方 / 方剂组成</span><span class="tag">简单</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">解烧酒毒方的药物组成和用法是什么？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>锅盖上气水一杯，灌下即醒</li><li class=""><span class="opt">B</span>绿豆汤一碗，浓煎服用</li><li class=""><span class="opt">C</span>蜂蜜水一杯，凉服解酒</li><li class=""><span class="opt">D</span>甘草水适量，缓缓咽下</li></ol>
+      <div class="answer">答案：<strong>A</strong> 锅盖上气水一杯，灌下即醒</div>
+      
+      <p class="small"><strong>原始问题：</strong>解烧酒毒方的药物组成和用法是什么？</p>
+      <p class="small"><strong>ID：</strong>text_药方_251　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#26</div>
+        <div><span class="tag">方药知识</span><span class="tag">药方</span><span class="tag">立法处方 / 方剂组成</span><span class="tag">中等</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">枳实芍药散的组成和主治是什么？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>来源于《金匮要略》，由枳实、芍药各等分组成，主治产后腹痛烦满不得卧</li><li class=""><span class="opt">B</span>来源于《伤寒论》，由枳实、芍药各等分组成，主治产后腹痛</li><li class=""><span class="opt">C</span>来源于《金匮要略》，由枳实、香附各等分组成，主治产后腹痛烦满不得卧</li><li class=""><span class="opt">D</span>来源于《太平惠民和剂局方》，由枳实、芍药各等分组成，主治产后腹痛</li></ol>
+      <div class="answer">答案：<strong>A</strong> 来源于《金匮要略》，由枳实、芍药各等分组成，主治产后腹痛烦满不得卧</div>
+      
+      <p class="small"><strong>原始问题：</strong>枳实芍药散的来源、组成和主治是什么？</p>
+      <p class="small"><strong>ID：</strong>text_药方_268　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#27</div>
+        <div><span class="tag">方药知识</span><span class="tag">药方</span><span class="tag">立法处方 / 主治功效/应用</span><span class="tag">中等</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">防己散的主要功效主治是？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>热风毒去湿气</li><li class=""><span class="opt">B</span>风寒湿痹祛风散寒</li><li class=""><span class="opt">C</span>清热泻火凉血解毒</li><li class=""><span class="opt">D</span>补气养血健脾益胃</li></ol>
+      <div class="answer">答案：<strong>A</strong> 热风毒去湿气</div>
+      
+      <p class="small"><strong>原始问题：</strong>防己散的功效主治是什么？</p>
+      <p class="small"><strong>ID：</strong>text_药方_118　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#28</div>
+        <div><span class="tag">方药知识</span><span class="tag">药方</span><span class="tag">立法处方 / 主治功效/应用</span><span class="tag">中等</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">治疗食积腹痛常用的小承气汤中，枳实采用的炮制方法是？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>麸炒</li><li class=""><span class="opt">B</span>清炒</li><li class=""><span class="opt">C</span>炒焦</li><li class=""><span class="opt">D</span>生用</li></ol>
+      <div class="answer">答案：<strong>A</strong> 麸炒</div>
+      
+      <p class="small"><strong>原始问题：</strong>治疗食痛先用的小承气汤中枳实的炮制方法是什么？</p>
+      <p class="small"><strong>ID：</strong>text_药方_68　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#29</div>
+        <div><span class="tag">方药知识</span><span class="tag">药方</span><span class="tag">立法处方 / 煎服/用法</span><span class="tag">简单</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">甘麦大枣汤的正确煎煮方法是？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>以水六升，煮取三升</li><li class=""><span class="opt">B</span>以水三升，煮取一升</li><li class=""><span class="opt">C</span>以水八升，煮取四升</li><li class=""><span class="opt">D</span>以水五升，煮取二升</li></ol>
+      <div class="answer">答案：<strong>A</strong> 以水六升，煮取三升</div>
+      
+      <p class="small"><strong>原始问题：</strong>甘草小麦大枣汤如何制作？</p>
+      <p class="small"><strong>ID：</strong>text_药方_184　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#30</div>
+        <div><span class="tag">方药知识</span><span class="tag">药方</span><span class="tag">立法处方 / 煎服/用法</span><span class="tag">简单</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">痢疾通治方的煎煮方法是什么？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>用水一盏半，煎至六分，去滓</li><li class=""><span class="opt">B</span>用水二盏，煎至八分，去滓</li><li class=""><span class="opt">C</span>用水一盏，煎至五分，温服</li><li class=""><span class="opt">D</span>用水一盏半，煎至七分，去滓</li></ol>
+      <div class="answer">答案：<strong>A</strong> 用水一盏半，煎至六分，去滓</div>
+      
+      <p class="small"><strong>原始问题：</strong>痢疾通治方的煎煮方法是什么？</p>
+      <p class="small"><strong>ID：</strong>text_药方_4　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#31</div>
+        <div><span class="tag">方药知识</span><span class="tag">药方</span><span class="tag">立法处方 / 立法处方/治则</span><span class="tag">中等</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">治疗少阳头痛应选用哪种药物为主？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>柴胡</li><li class=""><span class="opt">B</span>川芎</li><li class=""><span class="opt">C</span>羌活</li><li class=""><span class="opt">D</span>白芷</li></ol>
+      <div class="answer">答案：<strong>A</strong> 柴胡</div>
+      
+      <p class="small"><strong>原始问题：</strong>治疗少阳头痛用什么药物为主？</p>
+      <p class="small"><strong>ID：</strong>text_药方_59　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#32</div>
+        <div><span class="tag">方药知识</span><span class="tag">药方</span><span class="tag">立法处方 / 立法处方/治则</span><span class="tag">中等</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">治疗小儿因积生热、生痰的首选方剂是：</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>二陈汤加升麻、葛根、白芍、人参、五味子</li><li class=""><span class="opt">B</span>保和丸</li><li class=""><span class="opt">C</span>清金化痰汤</li><li class=""><span class="opt">D</span>肥儿丸</li></ol>
+      <div class="answer">答案：<strong>A</strong> 二陈汤加升麻、葛根、白芍、人参、五味子</div>
+      
+      <p class="small"><strong>原始问题：</strong>治疗小儿因积生热、生痰用何方剂？</p>
+      <p class="small"><strong>ID：</strong>text_药方_8　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#33</div>
+        <div><span class="tag">方药知识</span><span class="tag">药方</span><span class="tag">立法处方 / 相似方/加减辨析</span><span class="tag">疑难</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">治疗“胃血上吐下利”的方剂包含以下哪组药物？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>犀角盘、茜根炭、丹皮、玫瑰花、鲜地、淡芩、怀牛膝、藕汁、黑栀、东白芍、丝瓜络、车前草</li><li class=""><span class="opt">B</span>当归、川芎、白芍、熟地、党参、白术、茯苓、炙甘草</li><li class=""><span class="opt">C</span>黄连、黄芩、黄柏、栀子、大黄、芒硝、石膏、知母</li><li class=""><span class="opt">D</span>陈皮、半夏、茯苓、甘草、白术、党参、木香、砂仁</li></ol>
+      <div class="answer">答案：<strong>A</strong> 犀角盘、茜根炭、丹皮、玫瑰花、鲜地、淡芩、怀牛膝、藕汁、黑栀、东白芍、丝瓜络、车前草</div>
+      
+      <p class="small"><strong>原始问题：</strong>「胃血上吐下利」方剂包含哪些药物？</p>
+      <p class="small"><strong>ID：</strong>text_药方_270　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#34</div>
+        <div><span class="tag">方药知识</span><span class="tag">药方</span><span class="tag">立法处方 / 相似方/加减辨析</span><span class="tag">疑难</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">下列哪组药物为半金散的全部组成？</p>
+      <ol class="options"><li class=""><span class="opt">A</span>乌蛇肉、天麻、全蝎</li><li class=""><span class="opt">B</span>乌蛇肉、僵蚕、珍珠</li><li class=" correct"><span class="opt">C</span>乌蛇肉、天麻、全蝎、僵蚕、朱砂、龙脑</li><li class=""><span class="opt">D</span>乌蛇肉、天麻、蜈蚣、僵蚕、朱砂</li></ol>
+      <div class="answer">答案：<strong>C</strong> 乌蛇肉、天麻、全蝎、僵蚕、朱砂、龙脑</div>
+      
+      <p class="small"><strong>原始问题：</strong>半金散的组成药物有哪些？</p>
+      <p class="small"><strong>ID：</strong>text_药方_35　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#35</div>
+        <div><span class="tag">方药知识</span><span class="tag">中药</span><span class="tag">知识问答 / 性味归经</span><span class="tag">简单</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">中药酥的性味是什么？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>味甘，气微寒</li><li class=""><span class="opt">B</span>味甘，气温</li><li class=""><span class="opt">C</span>味咸，气微寒</li><li class=""><span class="opt">D</span>味辛，气平</li></ol>
+      <div class="answer">答案：<strong>A</strong> 味甘，气微寒</div>
+      
+      <p class="small"><strong>原始问题：</strong>酥的性味是什么？</p>
+      <p class="small"><strong>ID：</strong>text_中药_317　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#36</div>
+        <div><span class="tag">方药知识</span><span class="tag">中药</span><span class="tag">知识问答 / 性味归经</span><span class="tag">简单</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">关于白僵蚕的性味和功效，下列描述正确的是？</p>
+      <ol class="options"><li class=""><span class="opt">A</span>味酸咸性温，能软坚散结、滋阴降火</li><li class=" correct"><span class="opt">B</span>味辛苦气薄，轻浮而升，能胜风除湿、清热解郁</li><li class=""><span class="opt">C</span>味甘淡性平，能健脾祛湿、利水消肿</li><li class=""><span class="opt">D</span>味咸苦性寒，能清热泻火、凉血解毒</li></ol>
+      <div class="answer">答案：<strong>B</strong> 味辛苦气薄，轻浮而升，能胜风除湿、清热解郁</div>
+      
+      <p class="small"><strong>原始问题：</strong>白僵蚕的性味和功效是什么？</p>
+      <p class="small"><strong>ID：</strong>text_中药_306　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#37</div>
+        <div><span class="tag">方药知识</span><span class="tag">中药</span><span class="tag">知识问答 / 功效主治</span><span class="tag">简单</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">关于朴硝品质的判断，以下哪项是正确的？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>色青白者佳，黄者伤人，赤者杀人</li><li class=""><span class="opt">B</span>色黄者佳，青白者伤人，赤者杀人</li><li class=""><span class="opt">C</span>色赤者佳，青白者伤人，黄者杀人</li><li class=""><span class="opt">D</span>各色朴硝品质相同，仅形态不同</li></ol>
+      <div class="answer">答案：<strong>A</strong> 色青白者佳，黄者伤人，赤者杀人</div>
+      
+      <p class="small"><strong>原始问题：</strong>不同颜色的朴硝品质有何区别？</p>
+      <p class="small"><strong>ID：</strong>text_中药_287　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#38</div>
+        <div><span class="tag">方药知识</span><span class="tag">中药</span><span class="tag">知识问答 / 功效主治</span><span class="tag">中等</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">关于獭肝治疗鬼疰的制备方法和服用剂量，以下哪项是正确的？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>獭肝一具，阴干杵末，服方寸匕，日三，未知再作</li><li class=""><span class="opt">B</span>獭肝一具，烘干研细，服一钱，日二，连服七日</li><li class=""><span class="opt">C</span>獭肝数枚，酒浸服用，服二方寸匕，日一</li><li class=""><span class="opt">D</span>獭肝捣泥，生用内服，服半钱，日三，不效加倍</li></ol>
+      <div class="answer">答案：<strong>A</strong> 獭肝一具，阴干杵末，服方寸匕，日三，未知再作</div>
+      
+      <p class="small"><strong>原始问题：</strong>獭肝作为治疗鬼疰的药物，其制备方法和服用剂量是什么？</p>
+      <p class="small"><strong>ID：</strong>text_中药_237　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#39</div>
+        <div><span class="tag">方药知识</span><span class="tag">中药</span><span class="tag">知识问答 / 炮制</span><span class="tag">简单</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">冬青叶浓煎洗眼方的适应症及制法正确的是？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>主治赤眼，洗净冬青叶，入盐少许，浓煎，乘热洗之</li><li class=""><span class="opt">B</span>主治白内障，冬青叶浓煎后内服</li><li class=""><span class="opt">C</span>主治夜盲症，冬青叶捣烂外敷眼部</li><li class=""><span class="opt">D</span>主治目干涩，冬青叶煎水放凉后洗眼</li></ol>
+      <div class="answer">答案：<strong>A</strong> 主治赤眼，洗净冬青叶，入盐少许，浓煎，乘热洗之</div>
+      
+      <p class="small"><strong>原始问题：</strong>冬青叶浓煎洗眼方主治什么眼疾？制法要点是什么？</p>
+      <p class="small"><strong>ID：</strong>text_中药_149　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#40</div>
+        <div><span class="tag">方药知识</span><span class="tag">中药</span><span class="tag">知识问答 / 炮制</span><span class="tag">简单</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">香附子的炮制方法是？</p>
+      <ol class="options"><li class=""><span class="opt">A</span>香附子醋炙</li><li class=""><span class="opt">B</span>香附子生用</li><li class=" correct"><span class="opt">C</span>香附子麸炒舂去毛</li><li class=""><span class="opt">D</span>香附子酒炙</li></ol>
+      <div class="answer">答案：<strong>C</strong> 香附子麸炒舂去毛</div>
+      
+      <p class="small"><strong>原始问题：</strong>香附子的炮制方法是什么？</p>
+      <p class="small"><strong>ID：</strong>text_中药_82　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#41</div>
+        <div><span class="tag">方药知识</span><span class="tag">中药</span><span class="tag">知识问答 / 配伍</span><span class="tag">中等</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">竹沥与姜汁配伍后主要用于治疗哪个部位的痰症？</p>
+      <ol class="options"><li class=""><span class="opt">A</span>痰在四肢者</li><li class=" correct"><span class="opt">B</span>痰在皮里膜外者</li><li class=""><span class="opt">C</span>痰在胸间者</li><li class=""><span class="opt">D</span>痰在肺中者</li></ol>
+      <div class="answer">答案：<strong>B</strong> 痰在皮里膜外者</div>
+      
+      <p class="small"><strong>原始问题：</strong>竹沥与姜汁配伍后能治疗哪些部位的痰症？</p>
+      <p class="small"><strong>ID：</strong>text_中药_133　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#42</div>
+        <div><span class="tag">方药知识</span><span class="tag">中药</span><span class="tag">知识问答 / 配伍</span><span class="tag">中等</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">巴豆与杏仁配伍主要用于治疗下列哪种病症？</p>
+      <ol class="options"><li class=""><span class="opt">A</span>咳嗽气喘</li><li class=""><span class="opt">B</span>寒积便秘</li><li class=" correct"><span class="opt">C</span>飞尸鬼疰</li><li class=""><span class="opt">D</span>水肿胀满</li></ol>
+      <div class="answer">答案：<strong>C</strong> 飞尸鬼疰</div>
+      
+      <p class="small"><strong>原始问题：</strong>巴豆与杏仁配伍可治疗什么病症？</p>
+      <p class="small"><strong>ID：</strong>text_中药_330　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#43</div>
+        <div><span class="tag">方药知识</span><span class="tag">中药</span><span class="tag">知识问答 / 冷门药/文献记载</span><span class="tag">疑难</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">《必用方》竹沥汤中使用的独活有什么特征要求？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>黄色如鬼眼者</li><li class=""><span class="opt">B</span>外皮灰褐色者</li><li class=""><span class="opt">C</span>质地坚实沉重者</li><li class=""><span class="opt">D</span>切片炒炭后使用</li></ol>
+      <div class="answer">答案：<strong>A</strong> 黄色如鬼眼者</div>
+      
+      <p class="small"><strong>原始问题：</strong>《必用方》竹沥汤中使用的独活有什么特征要求？</p>
+      <p class="small"><strong>ID：</strong>text_中药_187　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#44</div>
+        <div><span class="tag">方药知识</span><span class="tag">中药</span><span class="tag">知识问答 / 冷门药/文献记载</span><span class="tag">疑难</span><span class="tag">纯文本</span></div>
+      </div>
+      
+      <p class="question-text">古代方书中记载&quot;杵牡鼠肝及脑涂之&quot;主要用于治疗下列哪种病症？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>治疗医工针人，针折在肉中不出的症状</li><li class=""><span class="opt">B</span>治疗皮肤溃烂、疮疡不愈的症状</li><li class=""><span class="opt">C</span>治疗骨折、跌打损伤的症状</li><li class=""><span class="opt">D</span>治疗小儿惊风、癫痫的症状</li></ol>
+      <div class="answer">答案：<strong>A</strong> 治疗医工针人，针折在肉中不出的症状</div>
+      
+      <p class="small"><strong>原始问题：</strong>杵牡鼠肝及脑涂之可治疗什么病症？</p>
+      <p class="small"><strong>ID：</strong>text_中药_235　<strong>来源文件：</strong><code>tcm_benchmark_v4.json</code></p>
+    </div>
+    <h2>三、视觉图文：16 题</h2>
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#45</div>
+        <div><span class="tag">视觉图文</span><span class="tag">舌诊</span><span class="tag">舌象/面象/脉象识别</span><span class="tag">简单</span><span class="tag">图文</span><span class="tag">来源：望舌诊病与中医简易治疗</span></div>
+      </div>
+      <img src="./sft_merged/images/望舌诊病与中医简易治疗_56d24f9253a2b81369e4d67070f3405442753fec4503f0b456169ffd0bb4d9ad.jpg" alt="望舌诊病与中医简易治疗">
+      <p class="question-text">图中所示的舌色属于下列哪种情况？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>舌质淡红</li><li class=""><span class="opt">B</span>舌质红</li><li class=""><span class="opt">C</span>舌质淡白</li><li class=""><span class="opt">D</span>舌质紫暗</li></ol>
+      <div class="answer">答案：<strong>A</strong> 舌质淡红</div>
+      
+      
+      <p class="small"><strong>ID：</strong>vision_398　<strong>来源文件：</strong><code>tcm_benchmark_vision_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#46</div>
+        <div><span class="tag">视觉图文</span><span class="tag">舌诊</span><span class="tag">舌象/面象/脉象识别</span><span class="tag">简单</span><span class="tag">图文</span><span class="tag">来源：中医舌诊彩色图谱中英文对照龚一萍</span></div>
+      </div>
+      <img src="./sft_merged/images/中医舌诊彩色图谱中英文对照龚一萍_25e6194a46e424f2bebfdfc1aecc91ab026b321cecccaa7b1825c6edaaa9a935.jpg" alt="中医舌诊彩色图谱中英文对照龚一萍">
+      <p class="question-text">图中剥落苔的形成机理是什么？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>胃气阴两虚，津液不能上布，舌苔失养而剥落</li><li class=""><span class="opt">B</span>热入营血，耗伤营阴，舌红绛无苔</li><li class=""><span class="opt">C</span>湿热蕴结，熏蒸舌面，苔黄腻垢浊</li><li class=""><span class="opt">D</span>脾虚湿盛，浊气上泛，苔厚腻黏滑</li></ol>
+      <div class="answer">答案：<strong>A</strong> 胃气阴两虚，津液不能上布，舌苔失养而剥落</div>
+      
+      
+      <p class="small"><strong>ID：</strong>vision_78　<strong>来源文件：</strong><code>tcm_benchmark_vision_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#47</div>
+        <div><span class="tag">视觉图文</span><span class="tag">舌诊</span><span class="tag">舌象/面象/脉象识别</span><span class="tag">简单</span><span class="tag">图文</span><span class="tag">来源：温病舌诊图谱</span></div>
+      </div>
+      <img src="./sft_merged/images/温病舌诊图谱_3493161284fb8f58a83367317e32bc440644b34e8b65571f0130ac63e60b5a84.jpg" alt="温病舌诊图谱">
+      <p class="question-text">图中所示的舌象主要有哪些特征？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>舌绛干燥，舌面皱缩</li><li class=""><span class="opt">B</span>舌淡苔白，舌体胖大</li><li class=""><span class="opt">C</span>舌红少津，苔黄干燥</li><li class=""><span class="opt">D</span>舌紫暗红，有瘀点瘀斑</li></ol>
+      <div class="answer">答案：<strong>A</strong> 舌绛干燥，舌面皱缩</div>
+      
+      
+      <p class="small"><strong>ID：</strong>vision_24　<strong>来源文件：</strong><code>tcm_benchmark_vision_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#48</div>
+        <div><span class="tag">视觉图文</span><span class="tag">舌诊</span><span class="tag">舌象/面象/脉象识别</span><span class="tag">简单</span><span class="tag">图文</span><span class="tag">来源：中医舌诊彩色图谱汉英对照</span></div>
+      </div>
+      <img src="./sft_merged/images/中医舌诊彩色图谱汉英对照_bec25c0d6050abae66c2d18d6b1d100c4af927ab621465669f6ec145c8bc2e63.jpg" alt="中医舌诊彩色图谱汉英对照">
+      <p class="question-text">图中舌象的特征是什么？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>伸舌时舌体偏向一侧</li><li class=""><span class="opt">B</span>舌体板硬强直，运动不灵</li><li class=""><span class="opt">C</span>舌体松散无力，不能紧缩</li><li class=""><span class="opt">D</span>舌体蜷曲不能伸长</li></ol>
+      <div class="answer">答案：<strong>A</strong> 伸舌时舌体偏向一侧</div>
+      
+      
+      <p class="small"><strong>ID：</strong>vision_322　<strong>来源文件：</strong><code>tcm_benchmark_vision_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#49</div>
+        <div><span class="tag">视觉图文</span><span class="tag">舌诊</span><span class="tag">图像 + 病证/治法综合推理</span><span class="tag">中等</span><span class="tag">多模态综合</span><span class="tag">来源：中医望诊与舌诊彩色图解</span></div>
+      </div>
+      <img src="./sft_merged/images/中医望诊与舌诊彩色图解_4c5189bd44c91c5730ff13191c797408f1f56c6af330fa3892c376d1c6a037b2.jpg" alt="中医望诊与舌诊彩色图解">
+      <p class="question-text">图中所示为胸痹气虚血瘀证的舌象表现，针对该证候类型应当如何把握治则治法？</p>
+      <ol class="options"><li class=""><span class="opt">A</span>温阳散寒，活血化瘀</li><li class=""><span class="opt">B</span>清热化痰，活血止痛</li><li class=""><span class="opt">C</span>益气养阴，活血通脉</li><li class=" correct"><span class="opt">D</span>行气活血，通脉止痛</li></ol>
+      <div class="answer">答案：<strong>D</strong> 行气活血，通脉止痛</div>
+      
+      
+      <p class="small"><strong>ID：</strong>vision_2　<strong>来源文件：</strong><code>tcm_benchmark_vision_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#50</div>
+        <div><span class="tag">视觉图文</span><span class="tag">舌诊</span><span class="tag">图像 + 病证/治法综合推理</span><span class="tag">中等</span><span class="tag">多模态综合</span><span class="tag">来源：中医舌诊临床图解</span></div>
+      </div>
+      <img src="./sft_merged/images/中医舌诊临床图解_a36f6d178c184ee62ffc8ca96ca07ef67fbb3ed74e59a89b502b41a3dd34df41.jpg" alt="中医舌诊临床图解">
+      <p class="question-text">该图所示舌象的临床意义是什么？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>心气充足、胃气旺盛，气血调和，多见于正常人或外感病初起</li><li class=""><span class="opt">B</span>心火亢盛、胃阴亏损，常见于热病后期或阴虚火旺证</li><li class=""><span class="opt">C</span>心气不足、脾胃虚寒，多见于久病体虚或阳虚患者</li><li class=""><span class="opt">D</span>心经热盛、胃肠实热，常见于里实热证或便秘患者</li></ol>
+      <div class="answer">答案：<strong>A</strong> 心气充足、胃气旺盛，气血调和，多见于正常人或外感病初起</div>
+      
+      
+      <p class="small"><strong>ID：</strong>vision_212　<strong>来源文件：</strong><code>tcm_benchmark_vision_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#51</div>
+        <div><span class="tag">视觉图文</span><span class="tag">舌诊</span><span class="tag">图像 + 病证/治法综合推理</span><span class="tag">中等</span><span class="tag">多模态综合</span><span class="tag">来源：中医望诊彩色图谱</span></div>
+      </div>
+      <img src="./sft_merged/images/中医望诊彩色图谱_08a16e5c96820b7bde35301acc6c1e8908a8bc3772b0fd158da0b7bb48c983fe.jpg" alt="中医望诊彩色图谱">
+      <p class="question-text">图中所示舌象通常提示与下列哪类疾病相关？</p>
+      <ol class="options"><li class=""><span class="opt">A</span>恶性肿瘤（如肺癌、肝癌等）</li><li class=""><span class="opt">B</span>内分泌代谢性疾病（如糖尿病、甲状腺功能亢进等）</li><li class=""><span class="opt">C</span>急性感染性疾病（如肺结核、肺炎等）</li><li class=" correct"><span class="opt">D</span>多种慢性疾病（如冠心病、慢性支气管炎、肺气肿、慢性胃炎等）</li></ol>
+      <div class="answer">答案：<strong>D</strong> 多种慢性疾病（如冠心病、慢性支气管炎、肺气肿、慢性胃炎等）</div>
+      
+      
+      <p class="small"><strong>ID：</strong>vision_339　<strong>来源文件：</strong><code>tcm_benchmark_vision_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#52</div>
+        <div><span class="tag">视觉图文</span><span class="tag">面诊</span><span class="tag">舌象/面象/脉象识别</span><span class="tag">简单</span><span class="tag">图文</span><span class="tag">来源：中西医结合望诊启迪</span></div>
+      </div>
+      <img src="./sft_merged/images/中西医结合望诊启迪_9522a35ba6811a50ebdfeefcfb2cd6e5da6bab81044de090501431de9c900921.jpg" alt="中西医结合望诊启迪">
+      <p class="question-text">图中患者的面部望诊可见什么特征？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>双侧额颞部颜面皮肤黯斑</li><li class=""><span class="opt">B</span>面色潮红，面颊部血痣密布</li><li class=""><span class="opt">C</span>鼻翼两侧油腻，痤疮样丘疹</li><li class=""><span class="opt">D</span>颧骨部位皮肤萎缩，弹性降低</li></ol>
+      <div class="answer">答案：<strong>A</strong> 双侧额颞部颜面皮肤黯斑</div>
+      
+      
+      <p class="small"><strong>ID：</strong>vision_198　<strong>来源文件：</strong><code>tcm_benchmark_vision_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#53</div>
+        <div><span class="tag">视觉图文</span><span class="tag">面诊</span><span class="tag">舌象/面象/脉象识别</span><span class="tag">简单</span><span class="tag">图文</span><span class="tag">来源：望诊之钥_十字面形诊治法</span></div>
+      </div>
+      <img src="./sft_merged/images/望诊之钥_十字面形诊治法_a99e32597a9a95a0089ec289b28d64bb209d97417a441315772d5fbbeb794bfc.jpg" alt="望诊之钥_十字面形诊治法">
+      <p class="question-text">图中所示面形者在临床上容易出现哪些健康问题或疾病倾向？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>肾功能衰退</li><li class=""><span class="opt">B</span>肝气郁结</li><li class=""><span class="opt">C</span>心肺气虚</li><li class=""><span class="opt">D</span>脾胃湿热</li></ol>
+      <div class="answer">答案：<strong>A</strong> 肾功能衰退</div>
+      
+      
+      <p class="small"><strong>ID：</strong>vision_261　<strong>来源文件：</strong><code>tcm_benchmark_vision_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#54</div>
+        <div><span class="tag">视觉图文</span><span class="tag">面诊</span><span class="tag">图像 + 病证/治法综合推理</span><span class="tag">中等</span><span class="tag">多模态综合</span><span class="tag">来源：中西医结合望诊启迪</span></div>
+      </div>
+      <img src="./sft_merged/images/中西医结合望诊启迪_80018f10c5557d11ed7a0fbf408be966306e070887a612e9fc85205621a7cfcb.jpg" alt="中西医结合望诊启迪">
+      <p class="question-text">图中所示的口周皱纹具有什么临床意义？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>脾开窍于口，其华在唇，唇周多皱纹，提示脾的运化功能不足</li><li class=""><span class="opt">B</span>心其华在面，面色晦暗无华，提示心血亏虚</li><li class=""><span class="opt">C</span>肝主疏泄，眉间出现竖纹，提示肝气郁结</li><li class=""><span class="opt">D</span>肾开窍于耳，耳垂出现深纹，提示肾精不足</li></ol>
+      <div class="answer">答案：<strong>A</strong> 脾开窍于口，其华在唇，唇周多皱纹，提示脾的运化功能不足</div>
+      
+      
+      <p class="small"><strong>ID：</strong>vision_189　<strong>来源文件：</strong><code>tcm_benchmark_vision_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#55</div>
+        <div><span class="tag">视觉图文</span><span class="tag">脉诊</span><span class="tag">舌象/面象/脉象识别</span><span class="tag">简单</span><span class="tag">图文</span><span class="tag">来源：中医脉诊临床图解</span></div>
+      </div>
+      <img src="./sft_merged/images/中医脉诊临床图解_451cb7d266a30b5f6997f2117a9010893d68b3ed3f5098900c8a3f5ba502933e.jpg" alt="中医脉诊临床图解">
+      <p class="question-text">图中所示脉象图，脉动周期t在0.48~0.8秒，脉率91~120次/分钟，且脉管紧张度较高，呈端直以长如按琴弦状。该脉象图可能对应什么脉象？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>弦数脉：端直以长如按琴弦，且脉率快速（91-120次/分钟）</li><li class=""><span class="opt">B</span>濡脉：脉细软而浮，细软无力，重按始得</li><li class=""><span class="opt">C</span>滑脉：往来流利，如珠走盘，应指圆滑</li><li class=""><span class="opt">D</span>涩脉：往来艰涩，如轻刀刮竹，节律不匀</li></ol>
+      <div class="answer">答案：<strong>A</strong> 弦数脉：端直以长如按琴弦，且脉率快速（91-120次/分钟）</div>
+      
+      
+      <p class="small"><strong>ID：</strong>vision_151　<strong>来源文件：</strong><code>tcm_benchmark_vision_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#56</div>
+        <div><span class="tag">视觉图文</span><span class="tag">脉诊</span><span class="tag">舌象/面象/脉象识别</span><span class="tag">疑难</span><span class="tag">图文</span><span class="tag">来源：舌下络脉诊法图谱_袁红霞</span></div>
+      </div>
+      <img src="./sft_merged/images/舌下络脉诊法图谱_袁红霞_935dfa2193ec01d47546b962a5606a66830b82e5374c058d3c70045c7871382f.jpg" alt="舌下络脉诊法图谱_袁红霞">
+      <p class="question-text">图中舌下络脉有什么特征？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>两络脉不及舌尖至舌下肉阜连线的2/5，仅位于舌根部，且两侧粗细不均，络脉周围伴红色出血状细络</li><li class=""><span class="opt">B</span>两络脉超过舌尖至舌下肉阜连线的3/4，延伸至舌尖附近，两侧粗细均匀，络脉周围无出血点</li><li class=""><span class="opt">C</span>两络脉长度约占舌尖至舌下肉阜连线的1/2，分布于舌根至舌中，两侧粗细均匀，络脉周围伴淡色点状物</li><li class=""><span class="opt">D</span>两络脉不及舌尖至舌下肉阜连线的1/5，位于舌根部，络脉迂曲扩张呈串珠样，色泽暗红，伴陈旧性出血点</li></ol>
+      <div class="answer">答案：<strong>A</strong> 两络脉不及舌尖至舌下肉阜连线的2/5，仅位于舌根部，且两侧粗细不均，络脉周围伴红色出血状细络</div>
+      
+      
+      <p class="small"><strong>ID：</strong>vision_389　<strong>来源文件：</strong><code>tcm_benchmark_vision_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#57</div>
+        <div><span class="tag">视觉图文</span><span class="tag">脉诊</span><span class="tag">舌象/面象/脉象识别</span><span class="tag">疑难</span><span class="tag">图文</span><span class="tag">来源：中医脉诊临床图解</span></div>
+      </div>
+      <img src="./sft_merged/images/中医脉诊临床图解_e44bbb0ae816127a309c869ca50e4110309d2a2beaefb85611e4454e7b3f006d.jpg" alt="中医脉诊临床图解">
+      <p class="question-text">该脉象图有什么特征？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>主波升支较陡，降支急促，重搏波起点下降，波峰抬高，三波峰清晰；脉动周期t不等，t值之差&gt;0.12秒，脉波之间有多个插入性小波，大小不等，脉率&gt;90次/分钟</li><li class=""><span class="opt">B</span>脉来迟缓，一息三至，节律规整，主波宽大，升支与降支对称，脉道充盈</li><li class=""><span class="opt">C</span>往来流利，应指圆滑，如珠走盘，主波陡峭，降支舒缓，节律均匀，脉率约75次/分钟</li><li class=""><span class="opt">D</span>端直以长，如按琴弦，脉道绷紧，主波形态规整，重搏波隐约可见，节律整齐，脉率约80次/分钟</li></ol>
+      <div class="answer">答案：<strong>A</strong> 主波升支较陡，降支急促，重搏波起点下降，波峰抬高，三波峰清晰；脉动周期t不等，t值之差&gt;0.12秒，脉波之间有多个插入性小波，大小不等，脉率&gt;90次/分钟</div>
+      
+      
+      <p class="small"><strong>ID：</strong>vision_135　<strong>来源文件：</strong><code>tcm_benchmark_vision_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#58</div>
+        <div><span class="tag">视觉图文</span><span class="tag">脉诊</span><span class="tag">图像 + 病证/治法综合推理</span><span class="tag">疑难</span><span class="tag">多模态综合</span><span class="tag">来源：中医脉诊临床图解</span></div>
+      </div>
+      <img src="./sft_merged/images/中医脉诊临床图解_25e2189905945a0b779b026a2fea96166f6c94f9b48f740bd7efe9cd6b56d129.jpg" alt="中医脉诊临床图解">
+      <p class="question-text">该脉象图有什么临床意义？</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>多见于里证，亦可见于正常人。实证为邪实内郁、气滞血阻所致，脉沉而有力；虚证为气血不足或阳虚气乏，脉沉而无力</li><li class=""><span class="opt">B</span>多见于外感病初期在表，邪正相争于肌表，脉浮而有力为表实，浮而无力为表虚</li><li class=""><span class="opt">C</span>多见于寒证，因阳气失宣，或阳气亏虚，脉道失于温运而拘急，脉来迟缓无力</li><li class=""><span class="opt">D</span>多见于热证，因热盛加速血行，脉来急促，或因虚阳外越，脉数而无力</li></ol>
+      <div class="answer">答案：<strong>A</strong> 多见于里证，亦可见于正常人。实证为邪实内郁、气滞血阻所致，脉沉而有力；虚证为气血不足或阳虚气乏，脉沉而无力</div>
+      
+      
+      <p class="small"><strong>ID：</strong>vision_146　<strong>来源文件：</strong><code>tcm_benchmark_vision_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#59</div>
+        <div><span class="tag">视觉图文</span><span class="tag">其他</span><span class="tag">舌象/面象/脉象识别</span><span class="tag">简单</span><span class="tag">图文</span><span class="tag">来源：中西医结合望诊启迪</span></div>
+      </div>
+      <img src="./sft_merged/images/中西医结合望诊启迪_0bc7580c84f7fb1a56baa77485bac7f221a1839f6a7db091dc64561c3238b57b.jpg" alt="中西医结合望诊启迪">
+      <p class="question-text">图中望诊所见为</p>
+      <ol class="options"><li class=" correct"><span class="opt">A</span>上下唇周多纵褶</li><li class=""><span class="opt">B</span>口唇色淡苍白</li><li class=""><span class="opt">C</span>口唇红赤肿痛</li><li class=""><span class="opt">D</span>口角流涎</li></ol>
+      <div class="answer">答案：<strong>A</strong> 上下唇周多纵褶</div>
+      
+      
+      <p class="small"><strong>ID：</strong>vision_195　<strong>来源文件：</strong><code>tcm_benchmark_vision_v4.json</code></p>
+    </div>
+
+    <div class="question-card">
+      <div class="q-head">
+        <div class="q-no">#60</div>
+        <div><span class="tag">视觉图文</span><span class="tag">其他</span><span class="tag">图像 + 病证/治法综合推理</span><span class="tag">中等</span><span class="tag">多模态综合</span><span class="tag">来源：中医望诊与舌诊彩色图解</span></div>
+      </div>
+      <img src="./sft_merged/images/中医望诊与舌诊彩色图解_a3b41527e3a93cf1289c9ef743b6555136f21cd7a730774bc6845cd501cd98f6.jpg" alt="中医望诊与舌诊彩色图解">
+      <p class="question-text">该图所示指甲白斑的临床意义是什么？</p>
+      <ol class="options"><li class=""><span class="opt">A</span>肝郁气滞，血行不畅</li><li class=" correct"><span class="opt">B</span>脾胃亏虚，气血生化不足</li><li class=""><span class="opt">C</span>心火亢盛，阴虚火旺</li><li class=""><span class="opt">D</span>肾阳不足，水湿内停</li></ol>
+      <div class="answer">答案：<strong>B</strong> 脾胃亏虚，气血生化不足</div>
+      
+      
+      <p class="small"><strong>ID：</strong>vision_191　<strong>来源文件：</strong><code>tcm_benchmark_vision_v4.json</code></p>
+    </div>
+  </div>
+</body>
+</html>

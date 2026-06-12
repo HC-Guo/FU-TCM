@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第一部分：古籍 QA 对提取处理</title>
+  <style>
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #202124; background: #f8fafb; }
+    main { max-width: 1080px; margin: 0 auto; padding: 32px 20px 56px; }
+    a { color: #0b57d0; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h1 { font-size: 30px; margin: 0 0 10px; }
+    h2 { font-size: 20px; margin: 28px 0 12px; }
+    p { line-height: 1.7; }
+    table { width: 100%; border-collapse: collapse; background: white; border: 1px solid #d9dee5; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #edf0f2; font-size: 14px; vertical-align: top; }
+    th { background: #eef3f8; font-weight: 650; }
+    code { background: #eef0f3; padding: 2px 5px; border-radius: 4px; }
+    pre { background: #202124; color: #f8fafd; padding: 14px; overflow: auto; border-radius: 6px; }
+    .nav { margin-bottom: 18px; color: #5f6368; }
+    .note { background: #fff7db; border: 1px solid #ead487; padding: 12px 14px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="nav"><a href="../index.html">TCM_final 索引</a> / <a href="workflow_overview.html">流程总览</a></div>
+  <h1>第一部分：古籍 QA 对提取处理</h1>
+  <p>从中医古籍分类文本生成 QA，对结果清洗、去重、合并，并转换为 SFT 可用格式。</p>
+  <p class="note">生成时间：2026-06-12 22:45:06。路径均相对于项目根目录。</p>
+
+  <h2>输入与来源</h2>
+  <table><thead><tr><th>路径</th><th>作用</th></tr></thead><tbody><tr><td><a href="../scripts/generate/"><code>scripts/generate/</code></a></td><td>7 类古籍 QA 生成脚本</td></tr>
+<tr><td><a href="../qa_output/"><code>qa_output/</code></a></td><td>按 herbal/formulas/classics/clinical/diagnostics/wellness/theory 分类的生成结果</td></tr></tbody></table>
+
+  <h2>脚本与处理</h2>
+  <table><thead><tr><th>路径</th><th>作用</th></tr></thead><tbody><tr><td><a href="../scripts/generate/generate_qa_01.py"><code>scripts/generate/generate_qa_01.py</code></a></td><td>中药类 QA 生成</td></tr>
+<tr><td><a href="../scripts/generate/generate_qa_02.py"><code>scripts/generate/generate_qa_02.py</code></a></td><td>方剂类 QA 生成</td></tr>
+<tr><td><a href="../scripts/generate/generate_qa_03.py"><code>scripts/generate/generate_qa_03.py</code></a></td><td>经典类 QA 生成</td></tr>
+<tr><td><a href="../scripts/generate/generate_qa_04.py"><code>scripts/generate/generate_qa_04.py</code></a></td><td>临床类 QA 生成</td></tr>
+<tr><td><a href="../scripts/generate/generate_qa_05.py"><code>scripts/generate/generate_qa_05.py</code></a></td><td>诊断类 QA 生成</td></tr>
+<tr><td><a href="../scripts/generate/generate_qa_06.py"><code>scripts/generate/generate_qa_06.py</code></a></td><td>养生类 QA 生成</td></tr>
+<tr><td><a href="../scripts/generate/generate_qa_07.py"><code>scripts/generate/generate_qa_07.py</code></a></td><td>理论类 QA 生成</td></tr>
+<tr><td><a href="../scripts/process/clean_and_export.py"><code>scripts/process/clean_and_export.py</code></a></td><td>清洗并导出 QA</td></tr>
+<tr><td><a href="../scripts/process/convert_to_sft_format.py"><code>scripts/process/convert_to_sft_format.py</code></a></td><td>转换为 SFT 数据格式</td></tr></tbody></table>
+
+  <h2>产物</h2>
+  <table><thead><tr><th>路径</th><th>说明</th></tr></thead><tbody><tr><td><a href="../sft_data/guji700.json"><code>sft_data/guji700.json</code></a></td><td>古籍 QA SFT 主数据</td></tr>
+<tr><td><a href="../sft_data/guji700_remaining.json"><code>sft_data/guji700_remaining.json</code></a></td><td>剩余古籍数据</td></tr>
+<tr><td><a href="../sft_data/guji700_sampled_1000.jsonl"><code>sft_data/guji700_sampled_1000.jsonl</code></a></td><td>抽样评测/转换用 JSONL</td></tr></tbody></table>
+
+  <h2>常用命令</h2>
+  <pre><code>python scripts/generate/generate_qa_01.py
+python scripts/process/clean_and_export.py
+python scripts/process/convert_to_sft_format.py</code></pre>
+
+  <h2>环境变量</h2>
+  <p><code>TCM_API_KEY</code>, <code>TCM_API_URL</code>, <code>TCM_MODEL</code></p>
+</main>
+</body>
+</html>

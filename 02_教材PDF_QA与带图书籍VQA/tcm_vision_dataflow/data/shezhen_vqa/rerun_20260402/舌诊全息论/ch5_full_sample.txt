@@ -1,0 +1,9 @@
+{
+  "book_name": "舌诊全息论",
+  "anchor_type": "text_figure_anchor_first",
+  "section_title": "二、运用全息舌诊诊断心系部分病证举例",
+  "image_path": "images/3e5b22bf9def76ede76823a1370cffab7f9a7da6a2672c5ee4f7d408fee590a2.jpg",
+  "image_caption": "图5-13",
+  "context_text": "图5-13 高血压、冠心病伴心律失常舌图 舌红绛，舌体紧张度高，津稠少，裂纹深苔黄腻，舌下腹面水湿弥漫，脉络瘀滞暗紫，下区尤显，提示水液代谢失常，血脉瘀滞不畅，舌边缘出现树枝样郁络，右侧心脏信息区郁络显著\n高血压患者（图5-13）以舌质红（包括边尖红）改变居多，舌苔的变化较少。",
+  "figure_id": "5-13"
+}
