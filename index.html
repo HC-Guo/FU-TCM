@@ -3,56 +3,66 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TCM_final 目录索引</title>
+  <title>FU-TCM Code Repository</title>
   <style>
-    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #202124; background: #f7f8fa; }
-    main { max-width: 1180px; margin: 0 auto; padding: 32px 20px 56px; }
-    a { color: #0b57d0; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    h1 { font-size: 32px; margin: 0 0 8px; }
-    h2 { font-size: 20px; margin: 30px 0 12px; }
-    p { line-height: 1.7; }
-    table { width: 100%; border-collapse: collapse; background: white; border: 1px solid #d9dee5; }
-    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #edf0f2; font-size: 14px; vertical-align: top; }
-    th { background: #eef3f8; font-weight: 650; }
-    code { background: #eef0f3; padding: 2px 5px; border-radius: 4px; }
-    .lead { max-width: 860px; }
-    .note { background: #fff7db; border: 1px solid #ead487; padding: 12px 14px; border-radius: 6px; }
+    :root { color-scheme: light; --ink: #18201d; --muted: #5c6a64; --line: #dce5e0; --green: #176b4d; --soft: #eef7f2; --paper: #fff; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: #f5f8f6; font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; padding: 56px 0 72px; }
+    h1 { margin: 0; font-size: clamp(2.2rem, 7vw, 4.8rem); line-height: 1; letter-spacing: -.055em; }
+    h2 { margin: 42px 0 14px; font-size: 1.35rem; }
+    p { max-width: 760px; }
+    a { color: var(--green); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    code { padding: .12em .38em; border-radius: 5px; background: #edf1ef; font-size: .9em; }
+    .eyebrow { margin-bottom: 12px; color: var(--green); font-size: .78rem; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; }
+    .lead { margin: 22px 0 30px; color: var(--muted); font-size: 1.15rem; }
+    .notice { padding: 18px 20px; border: 1px solid #9bc7b2; border-radius: 12px; background: var(--soft); }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .card { display: block; padding: 20px; border: 1px solid var(--line); border-radius: 12px; color: inherit; background: var(--paper); text-decoration: none; }
+    .card:hover { border-color: #8fb3a2; transform: translateY(-1px); }
+    .card strong { display: block; margin-bottom: 8px; color: var(--green); font-size: 1.05rem; }
+    .card span { color: var(--muted); }
+    table { width: 100%; border-collapse: collapse; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
+    th, td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #edf3f0; font-size: .86rem; }
+    tr:last-child td { border-bottom: 0; }
+    footer { margin-top: 44px; color: var(--muted); font-size: .9rem; }
+    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } table { display: block; overflow-x: auto; } }
   </style>
 </head>
 <body>
 <main>
-  <h1>TCM_final 目录索引</h1>
-  <p class="lead">生成时间：2026-06-12 22:45:05。目录按四段生产链路整理：古籍 QA，教材 PDF QA 与带图书籍 VQA，两类病例推理扩写，最后进入 SFT、GRPO 与评测。</p>
-  <p class="note">架构总览：<a href="docs/architecture_overview.html">docs/architecture_overview.html</a>；详细流程页：<a href="docs/workflow_overview.html">docs/workflow_overview.html</a>。普通 GitHub 仓库不能接收超过 100 MiB 的单个文件，请参考 <code>docs/large_files.tsv</code>。</p>
+  <div class="eyebrow">Traditional Chinese Medicine · Data Engineering · Model Training</div>
+  <h1>FU-TCM</h1>
+  <p class="lead">面向中医古籍、教材、图文书籍与病例推理的数据生产、SFT、GRPO 和评测代码仓库。</p>
 
-  <h2>流程主线</h2>
+  <section class="notice" aria-label="Data policy">
+    <strong>当前分支仅保留代码。</strong>
+    训练数据、原始书籍、生成结果、图像和评测样本已移除。运行脚本时请把私有数据放入 <a href=".gitignore"><code>.gitignore</code></a> 列出的本地目录，避免再次提交。
+  </section>
+
+  <h2>Workflow modules</h2>
+  <div class="grid">
+    <a class="card" href="01_classical_text_qa/"><strong>01 · Classical Text QA</strong><span>古籍 QA 生成、清洗与 SFT 格式转换。</span></a>
+    <a class="card" href="02_textbook_qa_and_book_vqa/"><strong>02 · Textbook QA &amp; Book VQA</strong><span>教材文本 QA、图文书籍 VQA 与 DataFlow 工作流。</span></a>
+    <a class="card" href="03_clinical_case_reasoning/"><strong>03 · Clinical Case Reasoning</strong><span>病例辨证推理转换、扩写和质量复核。</span></a>
+    <a class="card" href="04_sft_grpo_training_evaluation/"><strong>04 · SFT, GRPO &amp; Evaluation</strong><span>训练配置、数据转换、奖励函数和评测工具。</span></a>
+  </div>
+
+  <h2>Documentation</h2>
   <table>
-    <thead><tr><th>#</th><th>章节</th><th>目标</th></tr></thead>
-    <tbody><tr><td>1</td><td><a href="docs/01_guji_qa.html">第一部分：古籍 QA 对提取处理</a></td><td>从中医古籍分类文本生成 QA，对结果清洗、去重、合并，并转换为 SFT 可用格式。</td></tr>
-<tr><td>2</td><td><a href="docs/02_pdf_vqa.html">第二部分：教材 PDF QA 与带图书籍 VQA 提取处理</a></td><td>把教材 PDF 书籍抽成文本 QA，同时把带图书籍、舌诊、望诊、脉诊、中药草图等图文材料抽成 VQA。</td></tr>
-<tr><td>3</td><td><a href="docs/03_reasoning_expansion.html">第三部分：推理数据生成，两类病例数据扩写</a></td><td>把两类病例数据扩写/转换为结构化辨证推理数据，并进行四诊补足、证候参数复核和 train/test 切分。</td></tr>
-<tr><td>4</td><td><a href="docs/04_sft_grpo.html">第四部分：SFT、GRPO、评测与训练入口</a></td><td>把前面三部分产物汇入 SFT、多模态 SFT、冷启动和 GRPO 数据，并连接 LLaMA-Factory、verl、reward 和评测脚本。</td></tr></tbody>
+    <thead><tr><th>Page</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><a href="docs/architecture_overview.html">Architecture overview</a></td><td>代码与本地数据之间的分层关系。</td></tr>
+      <tr><td><a href="docs/workflow_overview.html">Workflow overview</a></td><td>四段工作流、入口脚本和预期本地目录。</td></tr>
+      <tr><td><a href="docs/01_guji_qa.html">Classical Text QA</a></td><td>古籍 QA 模块说明。</td></tr>
+      <tr><td><a href="docs/02_pdf_vqa.html">Textbook QA &amp; Book VQA</a></td><td>教材与图文数据工作流说明。</td></tr>
+      <tr><td><a href="docs/03_reasoning_expansion.html">Clinical Reasoning</a></td><td>病例推理模块说明。</td></tr>
+      <tr><td><a href="docs/04_sft_grpo.html">SFT &amp; GRPO</a></td><td>训练与评测模块说明。</td></tr>
+    </tbody>
   </table>
 
-  <h2>顶层结构</h2>
-  <table>
-    <thead><tr><th>名称</th><th>类型</th><th>大小</th></tr></thead>
-    <tbody><tr><td><a href=".env.example"><code>.env.example</code></a></td><td>file</td><td>160 B</td></tr><tr><td><a href=".gitignore"><code>.gitignore</code></a></td><td>file</td><td>220 B</td></tr><tr><td><a href=".venv"><code>.venv</code></a></td><td>dir</td><td>14.7 MB</td></tr><tr><td><a href="archives"><code>archives</code></a></td><td>dir</td><td>1019.4 MB</td></tr><tr><td><a href="benchmark"><code>benchmark</code></a></td><td>dir</td><td>30.3 MB</td></tr><tr><td><a href="convert_benchmark_to_mcq.py"><code>convert_benchmark_to_mcq.py</code></a></td><td>file</td><td>11.6 KB</td></tr><tr><td><a href="convert_bianzheng_to_mcq.py"><code>convert_bianzheng_to_mcq.py</code></a></td><td>file</td><td>18.3 KB</td></tr><tr><td><a href="convert_bianzheng_to_verl_grpo.py"><code>convert_bianzheng_to_verl_grpo.py</code></a></td><td>file</td><td>13.6 KB</td></tr><tr><td><a href="convert_image_benchmark_to_mcq.py"><code>convert_image_benchmark_to_mcq.py</code></a></td><td>file</td><td>12.3 KB</td></tr><tr><td><a href="docs"><code>docs</code></a></td><td>dir</td><td>70.5 KB</td></tr><tr><td><a href="download_model.sh"><code>download_model.sh</code></a></td><td>file</td><td>104 B</td></tr><tr><td><a href="eval_qwen35.py"><code>eval_qwen35.py</code></a></td><td>file</td><td>20.2 KB</td></tr><tr><td><a href="eval_qwen35_vllm.py"><code>eval_qwen35_vllm.py</code></a></td><td>file</td><td>19.2 KB</td></tr><tr><td><a href="generate_bianzheng_mcq_coldstart.py"><code>generate_bianzheng_mcq_coldstart.py</code></a></td><td>file</td><td>32.0 KB</td></tr><tr><td><a href="generate_coldstart_400.py"><code>generate_coldstart_400.py</code></a></td><td>file</td><td>5.0 KB</td></tr><tr><td><a href="grpodata"><code>grpodata</code></a></td><td>dir</td><td>31.2 MB</td></tr><tr><td><a href="identity_generation"><code>identity_generation</code></a></td><td>dir</td><td>279.4 KB</td></tr><tr><td><a href="index.html"><code>index.html</code></a></td><td>file</td><td>8.3 KB</td></tr><tr><td><a href="llamafactory_qwen35"><code>llamafactory_qwen35</code></a></td><td>dir</td><td>10.1 KB</td></tr><tr><td><a href="merge_identity_overwrite_sft.py"><code>merge_identity_overwrite_sft.py</code></a></td><td>file</td><td>2.9 KB</td></tr><tr><td><a href="meta_reasoning"><code>meta_reasoning</code></a></td><td>dir</td><td>10.0 MB</td></tr><tr><td><a href="mlzy_reasoning"><code>mlzy_reasoning</code></a></td><td>dir</td><td>74.9 MB</td></tr><tr><td><a href="normalize_bianzheng_syndromes_to_tree.py"><code>normalize_bianzheng_syndromes_to_tree.py</code></a></td><td>file</td><td>13.2 KB</td></tr><tr><td><a href="prepare_tcm_multimodal_data.py"><code>prepare_tcm_multimodal_data.py</code></a></td><td>file</td><td>4.9 KB</td></tr><tr><td><a href="qa_output"><code>qa_output</code></a></td><td>dir</td><td>821.7 MB</td></tr><tr><td><a href="README.md"><code>README.md</code></a></td><td>file</td><td>2.1 KB</td></tr><tr><td><a href="remove_coldstart_from_train.py"><code>remove_coldstart_from_train.py</code></a></td><td>file</td><td>3.3 KB</td></tr><tr><td><a href="requirements_eval.txt"><code>requirements_eval.txt</code></a></td><td>file</td><td>42 B</td></tr><tr><td><a href="requirements_eval_vllm.txt"><code>requirements_eval_vllm.txt</code></a></td><td>file</td><td>60 B</td></tr><tr><td><a href="reward_functions.py"><code>reward_functions.py</code></a></td><td>file</td><td>15.4 KB</td></tr><tr><td><a href="run_tcm_grpo_smoke.sh"><code>run_tcm_grpo_smoke.sh</code></a></td><td>file</td><td>11.6 KB</td></tr><tr><td><a href="run_tcm_grpo_smoke_hf.sh"><code>run_tcm_grpo_smoke_hf.sh</code></a></td><td>file</td><td>6.8 KB</td></tr><tr><td><a href="scripts"><code>scripts</code></a></td><td>dir</td><td>126.4 KB</td></tr><tr><td><a href="sft_data"><code>sft_data</code></a></td><td>dir</td><td>746.7 MB</td></tr><tr><td><a href="sft_image_data"><code>sft_image_data</code></a></td><td>dir</td><td>1.4 GB</td></tr><tr><td><a href="sft_merged"><code>sft_merged</code></a></td><td>dir</td><td>1.5 GB</td></tr><tr><td><a href="tcm_vision_dataflow"><code>tcm_vision_dataflow</code></a></td><td>dir</td><td>2.5 GB</td></tr><tr><td><a href="zhenghou_btree.json"><code>zhenghou_btree.json</code></a></td><td>file</td><td>300.8 KB</td></tr></tbody>
-  </table>
-
-  <h2>超过 100 MiB 的文件</h2>
-  <table>
-    <thead><tr><th>路径</th><th>大小</th></tr></thead>
-    <tbody><tr><td><a href="archives/sft_merged.zip"><code>archives/sft_merged.zip</code></a></td><td>1011.4 MB</td></tr>
-<tr><td><a href="tcm_vision_dataflow/archives/舌诊带图书籍.zip"><code>tcm_vision_dataflow/archives/舌诊带图书籍.zip</code></a></td><td>757.1 MB</td></tr>
-<tr><td><a href="sft_merged/tcm_sft_merged.json"><code>sft_merged/tcm_sft_merged.json</code></a></td><td>560.7 MB</td></tr>
-<tr><td><a href="sft_data/guji700.json"><code>sft_data/guji700.json</code></a></td><td>358.5 MB</td></tr>
-<tr><td><a href="sft_data/guji700_remaining.json"><code>sft_data/guji700_remaining.json</code></a></td><td>329.5 MB</td></tr>
-<tr><td><a href="tcm_vision_dataflow/data/medical_books_qa/all_books_qa_final.jsonl"><code>tcm_vision_dataflow/data/medical_books_qa/all_books_qa_final.jsonl</code></a></td><td>223.7 MB</td></tr>
-<tr><td><a href="tcm_vision_dataflow/source_books/中医舌诊研究与临床应用 (许朝霞，王忆勤编者) (Z-Library).pdf"><code>tcm_vision_dataflow/source_books/中医舌诊研究与临床应用 (许朝霞，王忆勤编者) (Z-Library).pdf</code></a></td><td>127.2 MB</td></tr>
-<tr><td><a href="tcm_vision_dataflow/data/shezhen_vqa/舌诊数据.zip"><code>tcm_vision_dataflow/data/shezhen_vqa/舌诊数据.zip</code></a></td><td>115.8 MB</td></tr></tbody>
-  </table>
+  <footer>Repository paths use English names; documentation may remain bilingual.</footer>
 </main>
 </body>
 </html>

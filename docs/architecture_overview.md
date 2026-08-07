@@ -1,51 +1,35 @@
-# TCM_final 架构总览
+# FU-TCM architecture overview
 
-TCM_final 可以理解为一个面向 Fu-TCM 的数据工程与训练工程仓库：前半部分负责把古籍、教材、图文书籍和病例数据加工成训练/评测数据，后半部分负责 SFT、GRPO、评测与训练配置。
-
-## 分层架构
+FU-TCM separates versioned workflow code from local-only research data.
 
 ```text
-原始数据层
-  ├─ 古籍文本与分类输出：qa_output/
-  ├─ 教材 PDF、带图书籍、图像材料：tcm_vision_dataflow/source_books/、data/
-  ├─ 名老中医 CSV/XLSX：mlzy_reasoning/名老中医/
-  └─ meta reasoning 病案：meta_reasoning/data/raw/meta_reasoning.json
-
-抽取与扩写层
-  ├─ 古籍 QA 生成：scripts/generate/
-  ├─ 古籍 QA 清洗/SFT 转换：scripts/process/
-  ├─ 教材 PDF QA：tcm_vision_dataflow/workflows/dataflow2/scripts/qa/
-  ├─ 图文 VQA：tcm_vision_dataflow/workflows/dataflow2/scripts/vqa/
-  ├─ 名老中医病例扩写：mlzy_reasoning/scripts/
-  └─ meta reasoning 病例扩写：meta_reasoning/scripts/
-
-数据产物层
-  ├─ 文本 SFT：sft_data/
-  ├─ 图文 SFT：sft_image_data/
-  ├─ 多模态合并：sft_merged/
-  ├─ 推理/GRPO 数据：grpodata/
-  └─ 评测数据：benchmark/
-
-训练与评测层
-  ├─ SFT 配置：llamafactory_qwen35/
-  ├─ GRPO 转换：convert_bianzheng_to_verl_grpo.py
-  ├─ Reward：reward_functions.py
-  ├─ GRPO smoke：run_tcm_grpo_smoke*.sh
-  └─ 模型评测：eval_qwen35.py、eval_qwen35_vllm.py
+Local source data (ignored)
+  ├─ classical texts and generated QA checkpoints
+  ├─ textbooks, illustrated books, and extracted images
+  └─ clinical cases
+                 │
+                 ▼
+Versioned processing code
+  ├─ 01_classical_text_qa
+  ├─ 02_textbook_qa_and_book_vqa
+  └─ 03_clinical_case_reasoning
+                 │
+                 ▼
+Local model-ready data (ignored)
+  ├─ text and multimodal SFT datasets
+  ├─ structured reasoning and GRPO datasets
+  └─ evaluation samples and generated reports
+                 │
+                 ▼
+Versioned training and evaluation code
+  └─ 04_sft_grpo_training_evaluation
 ```
 
-## 四条主数据流
+## Design rules
 
-1. 古籍 QA 流：`scripts/generate/` -> `qa_output/` -> `scripts/process/` -> `sft_data/guji700*.json*`
-2. 教材/图文流：`tcm_vision_dataflow/source_books,data,results` -> DataFlow QA/VQA 脚本 -> `sft_data/jiaocai.jsonl`、`sft_image_data/`
-3. 病例推理流：`mlzy_reasoning/` + `meta_reasoning/` -> 结构化辨证扩写/复核 -> `grpodata/bianzheng_*`
-4. 训练评测流：`sft_data/` + `sft_image_data/` + `grpodata/` -> `llamafactory_qwen35/`、verl GRPO、`benchmark/`
+1. Repository paths use English names.
+2. Data-producing scripts and model configuration are versioned.
+3. Source data, generated records, images, archives, train/test splits, and benchmarks stay in ignored local directories.
+4. Secrets are supplied through environment variables and never committed.
 
-## 核心入口
-
-- 流程总览：`docs/workflow_overview.html`
-- 四段流程清单：`docs/workflow_manifest.tsv`
-- 古籍 QA：`docs/01_guji_qa.html`
-- 教材 PDF / 图文 VQA：`docs/02_pdf_vqa.html`
-- 病例推理扩写：`docs/03_reasoning_expansion.html`
-- SFT / GRPO：`docs/04_sft_grpo.html`
+See `workflow_overview.md` for executable entry points and `.gitignore` for the authoritative list of local-only paths.
