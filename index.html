@@ -1,24 +1,23 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="FU-TCM is a multimodal large language model for traditional Chinese medicine knowledge, visual understanding, and syndrome differentiation.">
+  <meta name="description" content="FU-TCM is a multimodal large-language-model family for knowledge, vision, and structured diagnostic reasoning in Traditional Chinese Medicine.">
   <link rel="icon" href="data:,">
   <title>FU-TCM · Traditional Chinese Medicine Large Language Model</title>
   <style>
     :root {
       color-scheme: light;
-      --ink: #14211b;
-      --muted: #627069;
-      --line: #d9e4de;
+      --ink: #122018;
+      --muted: #5b6a62;
+      --line: #d9e5de;
       --green: #176b4d;
       --green-dark: #0d4934;
-      --jade: #e4f3eb;
-      --blue: #eaf0fb;
-      --cream: #f8f4ea;
-      --paper: rgba(255, 255, 255, .93);
-      --shadow: 0 24px 70px rgba(28, 61, 46, .1);
+      --jade: #e8f5ee;
+      --cream: #faf6ec;
+      --paper: rgba(255, 255, 255, .94);
+      --shadow: 0 24px 70px rgba(28, 61, 46, .11);
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -26,8 +25,8 @@
       margin: 0;
       color: var(--ink);
       background:
-        radial-gradient(circle at 8% 2%, rgba(91, 170, 132, .2), transparent 29rem),
-        radial-gradient(circle at 94% 10%, rgba(206, 170, 98, .16), transparent 26rem),
+        radial-gradient(circle at 7% 0%, rgba(86, 169, 129, .22), transparent 31rem),
+        radial-gradient(circle at 96% 8%, rgba(209, 173, 97, .17), transparent 28rem),
         #f6f8f6;
       font: 16px/1.68 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
@@ -35,7 +34,7 @@
     code { padding: .12em .38em; border-radius: 5px; background: #edf2ef; font-size: .9em; overflow-wrap: anywhere; }
     .shell { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
     nav { display: flex; align-items: center; justify-content: space-between; padding: 24px 0; }
-    .brand { color: var(--ink); font-weight: 850; letter-spacing: -.04em; text-decoration: none; }
+    .brand { color: var(--ink); font-weight: 900; letter-spacing: -.04em; text-decoration: none; }
     .nav-links { display: flex; gap: 20px; font-size: .92rem; }
     .nav-links a { color: var(--muted); text-decoration: none; }
     .nav-links a:hover { color: var(--green); }
@@ -46,39 +45,39 @@
       padding: clamp(42px, 7vw, 80px);
       border: 1px solid rgba(103, 147, 126, .3);
       border-radius: 30px;
-      background: linear-gradient(135deg, rgba(255,255,255,.97), rgba(236,247,241,.92));
+      background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(236,247,241,.93));
       box-shadow: var(--shadow);
     }
     .hero::after {
-      content: "本草 · 四诊 · 辨证";
+      content: "KNOWLEDGE · VISION · REASONING";
       position: absolute;
-      right: -24px;
-      bottom: -14px;
-      color: rgba(23, 107, 77, .055);
-      font: 850 clamp(3.5rem, 10vw, 8rem)/1 serif;
+      right: -25px;
+      bottom: -8px;
+      color: rgba(23, 107, 77, .05);
+      font: 900 clamp(2.4rem, 7vw, 6rem)/1 sans-serif;
       white-space: nowrap;
       pointer-events: none;
     }
     .eyebrow { color: var(--green); font-size: .75rem; font-weight: 850; letter-spacing: .16em; text-transform: uppercase; }
     h1 { max-width: 850px; margin: 16px 0 0; font-size: clamp(3.4rem, 9vw, 7rem); line-height: .92; letter-spacing: -.065em; }
-    .lead { max-width: 820px; margin: 26px 0 0; color: #46564f; font-size: clamp(1.12rem, 2vw, 1.38rem); }
+    .lead { max-width: 870px; margin: 26px 0 0; color: #46564f; font-size: clamp(1.12rem, 2vw, 1.38rem); }
     .badges { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 28px; }
-    .badge { padding: 7px 11px; border: 1px solid var(--line); border-radius: 999px; color: var(--green-dark); background: rgba(255,255,255,.8); font-size: .78rem; font-weight: 760; }
+    .badge { padding: 7px 11px; border: 1px solid var(--line); border-radius: 999px; color: var(--green-dark); background: rgba(255,255,255,.82); font-size: .78rem; font-weight: 760; }
     .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
     .button { display: inline-flex; align-items: center; padding: 11px 16px; border: 1px solid var(--green); border-radius: 10px; font-weight: 760; text-decoration: none; }
     .button.primary { color: white; background: var(--green); }
     .button.secondary { color: var(--green); background: white; }
     main { padding: 34px 0 76px; }
-    h2 { margin: 54px 0 8px; font-size: clamp(1.7rem, 3vw, 2.35rem); letter-spacing: -.04em; }
-    .section-intro { max-width: 760px; margin: 0 0 22px; color: var(--muted); }
-    .model-panel { display: grid; grid-template-columns: 1.25fr .75fr; gap: 16px; }
-    .statement, .specs { padding: 26px; border: 1px solid var(--line); border-radius: 18px; background: var(--paper); }
-    .statement { font-size: 1.08rem; }
-    .statement p:first-child { margin-top: 0; }
-    .statement p:last-child { margin-bottom: 0; }
-    .specs dl { display: grid; grid-template-columns: auto 1fr; gap: 10px 18px; margin: 0; }
-    .specs dt { color: var(--muted); }
-    .specs dd { margin: 0; font-weight: 760; }
+    h2 { margin: 58px 0 8px; font-size: clamp(1.8rem, 3vw, 2.5rem); letter-spacing: -.045em; }
+    .section-intro { max-width: 800px; margin: 0 0 24px; color: var(--muted); }
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 24px; }
+    .metric { padding: 22px; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); }
+    .metric strong { display: block; color: var(--green); font-size: 1.75rem; letter-spacing: -.04em; }
+    .metric span { color: var(--muted); font-size: .9rem; }
+    .figure-card { margin: 26px 0 0; padding: clamp(12px, 3vw, 28px); border: 1px solid var(--line); border-radius: 22px; background: white; box-shadow: 0 16px 45px rgba(28, 61, 46, .07); }
+    .figure-card a { display: block; }
+    .figure-card img { display: block; width: min(900px, 100%); height: auto; margin: 0 auto; }
+    .figure-card figcaption { max-width: 840px; margin: 18px auto 0; color: var(--muted); text-align: center; font-size: .9rem; }
     .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
     .card { min-height: 165px; padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--paper); box-shadow: 0 8px 24px rgba(31,62,48,.04); }
     a.card { position: relative; display: block; color: inherit; text-decoration: none; transition: .18s ease; }
@@ -87,10 +86,11 @@
     .card strong { display: block; margin: 9px 0 8px; font-size: 1.18rem; letter-spacing: -.015em; }
     .card p { margin: 0; color: var(--muted); }
     .card-arrow { position: absolute; right: 22px; bottom: 18px; color: var(--green); font-size: 1.25rem; }
-    .training-flow { display: grid; grid-template-columns: repeat(7, auto); align-items: center; gap: 8px; overflow-x: auto; padding: 20px; border: 1px solid var(--line); border-radius: 18px; background: var(--paper); }
-    .flow-step { min-width: 140px; padding: 16px; border-radius: 12px; text-align: center; background: var(--cream); font-weight: 760; }
+    .training-flow { display: grid; grid-template-columns: repeat(9, auto); align-items: center; gap: 8px; overflow-x: auto; padding: 20px; border: 1px solid var(--line); border-radius: 18px; background: var(--paper); }
+    .flow-step { min-width: 138px; padding: 16px; border-radius: 12px; text-align: center; background: var(--cream); font-weight: 760; }
     .flow-step.model { color: white; background: var(--green); }
     .flow-arrow { color: #8aa397; font-size: 1.2rem; }
+    .notice { margin-top: 18px; padding: 17px 20px; border-left: 4px solid var(--green); border-radius: 4px 14px 14px 4px; color: #46564f; background: var(--jade); }
     table { width: 100%; border-spacing: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); }
     th, td { padding: 13px 15px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
     th { color: var(--green-dark); background: #edf4f0; font-size: .82rem; letter-spacing: .04em; text-transform: uppercase; }
@@ -99,7 +99,7 @@
     @media (max-width: 760px) {
       .nav-links { display: none; }
       .hero { border-radius: 22px; }
-      .model-panel, .grid { grid-template-columns: 1fr; }
+      .grid, .metrics { grid-template-columns: 1fr; }
       .training-flow { grid-template-columns: 1fr; }
       .flow-arrow { transform: rotate(90deg); text-align: center; }
       table { display: block; overflow-x: auto; }
@@ -112,7 +112,7 @@
     <nav aria-label="Primary navigation">
       <a class="brand" href="index.html">FU-TCM</a>
       <div class="nav-links">
-        <a href="#model">Model</a>
+        <a href="#overview">Overview</a>
         <a href="#capabilities">Capabilities</a>
         <a href="#training">Training</a>
         <a href="#code">Code</a>
@@ -122,71 +122,70 @@
     <section class="hero">
       <div class="eyebrow">Traditional Chinese Medicine Large Language Model</div>
       <h1>FU-TCM</h1>
-      <p class="lead">面向中医知识理解、多模态诊察与结构化辨证推理的中医大模型。</p>
+      <p class="lead">A multimodal model family that makes the path from four-examination evidence through intermediate <em>bianzheng</em> judgments to the final syndrome an explicit training target.</p>
       <div class="badges" aria-label="Model configuration">
-        <span class="badge">Qwen3.5-9B</span>
+        <span class="badge">FU-TCM-9B</span>
+        <span class="badge">FU-TCM-27B</span>
         <span class="badge">Text + Vision</span>
-        <span class="badge">Full SFT</span>
-        <span class="badge">GRPO Alignment</span>
+        <span class="badge">Full-parameter SFT</span>
+        <span class="badge">BGPO Alignment</span>
       </div>
       <div class="actions">
-        <a class="button primary" href="README.md">Model card</a>
-        <a class="button secondary" href="docs/training_overview.html">Training</a>
+        <a class="button primary" href="README.md">Read the model card</a>
+        <a class="button secondary" href="docs/training_overview.html">Explore training</a>
       </div>
     </section>
   </header>
 
   <main class="shell">
-    <section id="model">
-      <h2>Model overview</h2>
-      <p class="section-intro">FU-TCM 以 Qwen3.5-9B 为基座，通过中医领域监督微调与推理对齐，学习中医知识、多模态诊察信息和临床辨证过程之间的联系。</p>
-      <div class="model-panel">
-        <div class="statement">
-          <p>模型面向中医问答、医学图文理解和辨证推理任务。它可以结合古籍与教材知识、舌诊和面诊等视觉证据，以及病例中的望闻问切信息，形成结构化的证型判断。</p>
-          <p>核心实现包括 Qwen3.5-9B 全参数微调、面向中医辨证的 GRPO 奖励、Transformers/vLLM 推理以及中医专项评测。</p>
-        </div>
-        <div class="specs">
-          <dl>
-            <dt>Base</dt><dd>Qwen3.5-9B</dd>
-            <dt>Input</dt><dd>Text and image</dd>
-            <dt>SFT</dt><dd>Full parameter</dd>
-            <dt>Alignment</dt><dd>verl GRPO</dd>
-            <dt>Context</dt><dd>4,096 tokens</dd>
-          </dl>
-        </div>
+    <section id="overview">
+      <h2>Overview</h2>
+      <p class="section-intro">FU-TCM integrates TCM knowledge, visual understanding, and structured clinical-case reasoning. Domain SFT is followed by cold-start SFT and Bianzheng-Grounded Policy Optimization, with verifiable rewards for format, syndrome consistency, and intermediate-field fidelity.</p>
+      <div class="metrics" aria-label="Headline results">
+        <div class="metric"><strong>80.41%</strong><span>six-benchmark macro-average for FU-TCM-27B</span></div>
+        <div class="metric"><strong>5 / 6</strong><span>benchmarks led by FU-TCM-27B</span></div>
+        <div class="metric"><strong>r = 0.81</strong><span>model-level correlation between intermediate and final accuracy</span></div>
       </div>
+      <figure class="figure-card">
+        <a href="assets/fu-tcm-framework-overview.png">
+          <img src="assets/fu-tcm-framework-overview.png" alt="Three-panel overview of FU-TCM data sources, model training, BGPO rewards, and six-benchmark evaluation">
+        </a>
+        <figcaption>FU-TCM framework, training, and evaluation. Original overview figure from the paper; select the image to view it at full resolution.</figcaption>
+      </figure>
     </section>
 
     <section id="capabilities">
       <h2>Core capabilities</h2>
-      <p class="section-intro">能力设计围绕中医知识、视觉诊察和辨证推理展开。</p>
+      <p class="section-intro">The model is trained around three complementary capabilities required for multimodal TCM reasoning.</p>
       <div class="grid">
-        <article class="card"><span class="card-kicker">Knowledge</span><strong>中医知识理解</strong><p>理解古籍、方药、医理和教材内容，完成有依据的中医知识问答。</p></article>
-        <article class="card"><span class="card-kicker">Vision</span><strong>多模态诊察理解</strong><p>结合舌诊、面诊、中药图像及医学图文信息回答问题。</p></article>
-        <article class="card"><span class="card-kicker">Reasoning</span><strong>结构化辨证推理</strong><p>从四诊证据出发，分析八纲、脏腑、气血津液和病因要素。</p></article>
-        <article class="card"><span class="card-kicker">Clinical</span><strong>证型判断</strong><p>按照中医辨证逻辑组织推理过程，并输出明确的证型结果。</p></article>
+        <article class="card"><span class="card-kicker">Knowledge</span><strong>TCM knowledge understanding</strong><p>Answers questions grounded in classical works, textbooks, materia medica, formulas, theory, and clinical knowledge.</p></article>
+        <article class="card"><span class="card-kicker">Vision</span><strong>Multimodal understanding</strong><p>Connects textual context with tongue, face, herb, and other medical images.</p></article>
+        <article class="card"><span class="card-kicker">Reasoning</span><strong>Structured syndrome differentiation</strong><p>Represents the intermediate judgments linking four-examination evidence to a syndrome.</p></article>
+        <article class="card"><span class="card-kicker">Auditability</span><strong>Inspectable model outputs</strong><p>Exposes 30 structured fields so practitioner review is not limited to the final label.</p></article>
       </div>
     </section>
 
     <section id="training">
-      <h2>Training</h2>
-      <p class="section-intro">先通过全参数多模态 SFT 建立中医领域能力，再使用 GRPO 对辨证推理结构和证型判断进行对齐。</p>
+      <h2>Three-stage training</h2>
+      <p class="section-intro">The project moves from broad domain adaptation to structured case reasoning and then reward-based alignment.</p>
       <div class="training-flow" aria-label="FU-TCM training stages">
-        <div class="flow-step">Qwen3.5-9B</div><div class="flow-arrow">→</div>
-        <div class="flow-step">TCM Full SFT</div><div class="flow-arrow">→</div>
-        <div class="flow-step">Reasoning GRPO</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Base VLMs</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Domain SFT</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Cold-start SFT</div><div class="flow-arrow">→</div>
+        <div class="flow-step">BGPO</div><div class="flow-arrow">→</div>
         <div class="flow-step model">FU-TCM</div>
       </div>
+      <div class="notice"><strong>Research use:</strong> current results come from retrospective benchmarks. FU-TCM is intended for research and practitioner-reviewed decision support, not autonomous diagnosis.</div>
     </section>
 
     <section id="code">
-      <h2>Model code</h2>
-      <p class="section-intro">直接进入模型训练、推理对齐和评测代码。</p>
+      <h2>Core implementation</h2>
+      <p class="section-intro">Go directly to the model-training, policy-optimization, inference, and evaluation code.</p>
       <div class="grid">
-        <a class="card" href="sft_grpo_training_evaluation/llamafactory_qwen35/qwen35_9b_full_sft_ds3.yaml"><span class="card-kicker">Supervised training</span><strong>Full SFT</strong><p>LLaMA-Factory、DeepSpeed ZeRO-3 与 bf16 全参数训练配置。</p><span class="card-arrow">→</span></a>
-        <a class="card" href="sft_grpo_training_evaluation/reward_functions.py"><span class="card-kicker">Reasoning alignment</span><strong>GRPO Reward</strong><p>面向格式、证型和结构化辨证参数的领域奖励函数。</p><span class="card-arrow">→</span></a>
-        <a class="card" href="sft_grpo_training_evaluation/eval_qwen35.py"><span class="card-kicker">Inference</span><strong>Transformers Evaluation</strong><p>加载 FU-TCM 模型并执行文本与视觉任务评测。</p><span class="card-arrow">→</span></a>
-        <a class="card" href="sft_grpo_training_evaluation/eval_qwen35_vllm.py"><span class="card-kicker">Serving</span><strong>vLLM Evaluation</strong><p>通过 vLLM 后端进行批量推理与评测。</p><span class="card-arrow">→</span></a>
+        <a class="card" href="sft_grpo_training_evaluation/llamafactory_qwen35/qwen35_9b_full_sft_ds3.yaml"><span class="card-kicker">Supervised training</span><strong>Full-parameter SFT</strong><p>LLaMA-Factory, DeepSpeed ZeRO-3, and bf16 training configuration.</p><span class="card-arrow">→</span></a>
+        <a class="card" href="sft_grpo_training_evaluation/reward_functions.py"><span class="card-kicker">Reasoning alignment</span><strong>BGPO reward</strong><p>Verifiable rewards for format, syndrome consistency, and structured diagnostic fields.</p><span class="card-arrow">→</span></a>
+        <a class="card" href="sft_grpo_training_evaluation/eval_qwen35.py"><span class="card-kicker">Inference</span><strong>Transformers evaluation</strong><p>Text and vision evaluation with the Transformers backend.</p><span class="card-arrow">→</span></a>
+        <a class="card" href="sft_grpo_training_evaluation/eval_qwen35_vllm.py"><span class="card-kicker">Serving</span><strong>vLLM evaluation</strong><p>Batch inference and evaluation through the vLLM backend.</p><span class="card-arrow">→</span></a>
       </div>
     </section>
 
@@ -195,17 +194,17 @@
       <table>
         <thead><tr><th>Guide</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td><a href="docs/model_overview.html">Model overview</a></td><td>模型定位、能力与辨证推理设计。</td></tr>
-          <tr><td><a href="docs/training_overview.html">Training overview</a></td><td>全参数 SFT、GRPO 与评测阶段。</td></tr>
-          <tr><td><a href="docs/sft_grpo_evaluation.html">Training and evaluation reference</a></td><td>主要配置、奖励函数和执行入口。</td></tr>
-          <tr><td><a href="SECURITY.md">Security policy</a></td><td>密钥与敏感信息安全规则。</td></tr>
+          <tr><td><a href="docs/model_overview.html">Model overview</a></td><td>Model family, capabilities, and structured reasoning design.</td></tr>
+          <tr><td><a href="docs/training_overview.html">Training overview</a></td><td>Domain SFT, cold-start SFT, BGPO, and evaluation.</td></tr>
+          <tr><td><a href="docs/sft_grpo_evaluation.html">Training and evaluation reference</a></td><td>Main configuration, reward function, and executable entry points.</td></tr>
+          <tr><td><a href="SECURITY.md">Security policy</a></td><td>Credentials, sensitive data, and responsible disclosure.</td></tr>
         </tbody>
       </table>
     </section>
 
     <footer>
-      <span>FU-TCM · Multimodal large language model for Traditional Chinese Medicine</span>
-      <span>Qwen3.5-9B · Full SFT · GRPO</span>
+      <span>FU-TCM · Multimodal large language models for Traditional Chinese Medicine</span>
+      <span>9B · 27B · SFT · BGPO</span>
     </footer>
   </main>
 </body>

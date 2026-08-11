@@ -1,25 +1,17 @@
-# 面诊子工程
+# Facial-Inspection Prompt Module
 
-这个子目录专门处理面诊类图书，不与脉诊混用。
+This module is dedicated to facial-inspection books and must not be mixed with pulse-diagnosis sources.
 
-## 适用书籍
+## Target images
 
-- 面诊
-- 颜面色诊
-- 望面诊病
-- 面部脏腑分区图谱
-- 面色与证候对照类图书
+- clinical facial photographs;
+- facial-region diagrams;
+- complexion comparison figures;
+- localized sign comparison figures.
 
-## 核心识别对象
+## Excluded images
 
-- 真人面部照片
-- 面部分区示意图
-- 面色对照图
-- 局部病征对照图
-
-## 不应混入
-
-- 脉波图
-- 舌象图
-- 纯目录图
-- 装饰插图
+- pulse-wave plots;
+- tongue images;
+- table-of-contents pages;
+- decorative illustrations.

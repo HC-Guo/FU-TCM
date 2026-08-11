@@ -57,7 +57,7 @@ Turn raw data into high-quality LLM training datasets.🔧
 [[🎬 Video Tutorials]](https://space.bilibili.com/3546929239689711?spm_id_from=333.337.0.0)
 [[📚 Written Tutorials]](https://wcny4qa9krto.feishu.cn/wiki/I9tbw2qnBi0lEakmmAGclTysnFd)
 
-[简体中文](./README-zh.md) | English
+English
 
 
 <!-- <img width="1568" height="688" alt="image" src="https://github.com/user-attachments/assets/6d8fd795-7f5b-4c45-b14d-5bbe6bf99766" /> -->

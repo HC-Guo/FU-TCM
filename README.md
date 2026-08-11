@@ -1,60 +1,62 @@
 <h1 align="center">FU-TCM</h1>
 
 <p align="center">
-  <strong>A Multimodal Large Language Model for Traditional Chinese Medicine</strong><br>
-  面向中医知识理解、多模态诊察与辨证推理的中医大模型
+  <strong>Advancing Large-Model Capabilities in Traditional Chinese Medicine through Diagnostic-Reasoning Training</strong>
 </p>
 
 <p align="center">
-  <img alt="Base model Qwen3.5-9B" src="https://img.shields.io/badge/Base-Qwen3.5--9B-6B5DD3">
-  <img alt="Text and vision" src="https://img.shields.io/badge/Modalities-Text%20%2B%20Vision-176B4D">
-  <img alt="Full SFT" src="https://img.shields.io/badge/Training-Full%20SFT-3776AB">
-  <img alt="GRPO" src="https://img.shields.io/badge/Alignment-GRPO-B56A2D">
+  <img alt="Model family: 9B and 27B" src="https://img.shields.io/badge/Models-9B%20%7C%2027B-6B5DD3">
+  <img alt="Modalities: text and vision" src="https://img.shields.io/badge/Modalities-Text%20%2B%20Vision-176B4D">
+  <img alt="Training: full-parameter SFT" src="https://img.shields.io/badge/Training-Full--parameter%20SFT-3776AB">
+  <img alt="Alignment: BGPO" src="https://img.shields.io/badge/Alignment-BGPO-B56A2D">
 </p>
 
 <p align="center">
-  <a href="index.html">项目主页</a> ·
-  <a href="docs/model_overview.md">模型说明</a> ·
-  <a href="docs/training_overview.md">训练方法</a> ·
-  <a href="docs/sft_grpo_evaluation.html">评测</a>
+  <a href="index.html">Project page</a> ·
+  <a href="docs/model_overview.md">Model overview</a> ·
+  <a href="docs/training_overview.md">Training</a> ·
+  <a href="docs/sft_grpo_evaluation.html">Evaluation</a>
 </p>
 
 ## Overview
 
-FU-TCM 是面向传统中医药知识与临床辨证任务训练的多模态大语言模型。当前训练版本以 **Qwen3.5-9B** 为基座，通过中医领域全参数监督微调和 GRPO 推理对齐，使模型能够结合古籍与教材知识、舌诊和面诊等图像信息，以及临床四诊证据完成中医问答与结构化辨证推理。
+FU-TCM is a multimodal large-language-model family for Traditional Chinese Medicine (TCM). It is designed to connect evidence from the four examinations to explicit intermediate *bianzheng* judgments and a final syndrome prediction. The model combines TCM knowledge, image-grounded understanding, and structured clinical-case reasoning.
 
-本仓库重点提供 FU-TCM 的模型训练、推理对齐、推理和评测代码。
+Training proceeds through full-parameter domain supervised fine-tuning, cold-start supervised fine-tuning on structured cases, and Bianzheng-Grounded Policy Optimization (BGPO). BGPO is a TCM-specific policy-optimization objective with verifiable rewards for response format, syndrome consistency, and fidelity to intermediate *bianzheng* fields.
 
-### Key features
+<p align="center">
+  <a href="assets/fu-tcm-framework-overview.png">
+    <img src="assets/fu-tcm-framework-overview.png" alt="FU-TCM framework, training stages, BGPO alignment, and benchmark evaluation" width="900">
+  </a>
+</p>
 
-- **中医知识理解**：覆盖古籍、方药、医理、教材知识与临床问答。
-- **多模态诊察理解**：处理文本与图像输入，重点支持舌诊、面诊、中药图像及医学图文问答。
-- **结构化辨证推理**：从望、闻、问、切信息出发，分析八纲、脏腑、气血津液与病因要素，并输出证型判断。
-- **领域推理对齐**：在全参数 SFT 后使用 GRPO，以格式、证型和辨证参数奖励约束模型输出。
-- **双推理后端评测**：提供 Transformers 与 vLLM 评测入口，并支持文本、视觉题目和医生盲测。
+<p align="center"><em>FU-TCM framework, training, and evaluation. This is the overview figure from the paper.</em></p>
 
-## Model at a glance
+## Highlights
 
-| Item | FU-TCM configuration |
-| --- | --- |
-| Base model | Qwen3.5-9B |
-| Modalities | Text and image |
-| Supervised training | Full-parameter SFT, bf16, DeepSpeed ZeRO-3 |
-| Context length | 4,096 tokens in the current SFT configuration |
-| Reasoning alignment | verl GRPO |
-| Reward design | 20% format, 40% syndrome, 40% structured differentiation |
-| Evaluation | Transformers, vLLM, text/vision benchmarks, doctor blind review |
+- **Two model scales:** FU-TCM-9B and FU-TCM-27B.
+- **Multimodal TCM capability:** text and image understanding across classical texts, textbooks, diagnostic images, and clinical cases.
+- **Inspectable syndrome differentiation:** a structured path from four-examination evidence through 30 intermediate *bianzheng* fields to the final syndrome.
+- **Three-stage training:** domain SFT, cold-start SFT, and BGPO reasoning alignment.
+- **Verifiable rewards:** format compliance, syndrome consistency, and intermediate-field fidelity.
+- **Six-benchmark evaluation:** case-based *bianzheng*, TCM text knowledge, examination questions, and visual understanding.
+
+## Results at a glance
+
+FU-TCM-27B achieved the highest six-benchmark macro-average accuracy of **80.41%** and ranked first on **five of six** benchmarks. Across eight models, strict intermediate-parameter accuracy correlated with final syndrome-choice accuracy (Pearson **r = 0.81**). These results support explicit *bianzheng* supervision as a route toward more accurate and auditable TCM reasoning.
+
+The current evidence is based on retrospective benchmarks and does not establish clinical benefit or autonomous diagnostic safety. FU-TCM is intended for research and practitioner-reviewed decision support.
 
 ## Model capabilities
 
 ```mermaid
 flowchart LR
-    K["TCM knowledge<br/>classics · formulas · theory"] --> M["FU-TCM<br/>Qwen3.5-9B"]
+    K["TCM knowledge<br/>classics · textbooks · materia medica"] --> M["FU-TCM<br/>9B · 27B"]
     V["Visual evidence<br/>tongue · face · herbs"] --> M
     C["Clinical evidence<br/>four examinations · cases"] --> M
     M --> Q["TCM knowledge QA"]
     M --> U["Multimodal understanding"]
-    M --> R["Structured syndrome differentiation"]
+    M --> R["Structured bianzheng reasoning"]
 
     classDef input fill:#f7f2e8,stroke:#b88a44,color:#3f3424;
     classDef model fill:#176b4d,stroke:#0e4934,color:#ffffff;
@@ -66,14 +68,13 @@ flowchart LR
 
 ## Training
 
-FU-TCM uses a two-stage domain alignment recipe:
+1. **Domain SFT** adapts the base vision-language models to TCM text and visual question answering.
+2. **Cold-start SFT** teaches the required structured case-reasoning format.
+3. **BGPO** reinforces format validity, syndrome consistency, and fidelity across intermediate diagnostic fields.
 
-1. **Multimodal full-parameter SFT** adapts Qwen3.5-9B to TCM knowledge, visual question answering, clinical cases, and structured reasoning instructions.
-2. **GRPO reasoning alignment** rewards valid reasoning structure, syndrome agreement, and quantitative consistency across eight-principle, organ, qi-blood-fluid, and pathogenic-factor judgments.
+The repository currently provides the executable Qwen3.5-9B training path with LLaMA-Factory, DeepSpeed ZeRO-3, bf16, and verl-based policy optimization.
 
-The current SFT configuration uses LLaMA-Factory, DeepSpeed ZeRO-3, bf16 training, gradient checkpointing, and a cosine learning-rate schedule. GRPO training is implemented with verl and a project-specific reward function.
-
-### Start model training
+### Start supervised fine-tuning
 
 ```bash
 git clone https://github.com/HC-Guo/FU-TCM.git
@@ -84,9 +85,14 @@ conda activate qwen35_ft
 bash llamafactory_qwen35/scripts/train_full_ds3.sh
 ```
 
-If Conda is unavailable, the setup script creates `.venv_qwen35_ft`; activate that environment before starting training.
+If Conda is unavailable, the setup script creates `.venv_qwen35_ft`; activate that environment before training.
 
-The main SFT configuration is [`qwen35_9b_full_sft_ds3.yaml`](sft_grpo_training_evaluation/llamafactory_qwen35/qwen35_9b_full_sft_ds3.yaml). GRPO launch examples are provided in [`run_tcm_grpo_smoke.sh`](sft_grpo_training_evaluation/run_tcm_grpo_smoke.sh) and [`run_tcm_grpo_smoke_hf.sh`](sft_grpo_training_evaluation/run_tcm_grpo_smoke_hf.sh).
+### Run the BGPO/GRPO smoke test
+
+```bash
+cd sft_grpo_training_evaluation
+bash run_tcm_grpo_smoke.sh
+```
 
 ## Evaluation
 
@@ -100,24 +106,24 @@ TCM_MODEL_PATH=/path/to/FU-TCM python eval_qwen35.py
 TCM_MODEL_PATH=/path/to/FU-TCM python eval_qwen35_vllm.py
 ```
 
-The evaluation code reports overall, dataset-level, and category-level accuracy. The benchmark utilities can also produce blinded question sets and answer sheets for clinician review.
+The evaluation utilities report overall, dataset-level, and category-level accuracy. They can also generate blinded question sets and answer sheets for clinician review.
 
-## Model code
+## Core implementation
 
 | Component | Path |
 | --- | --- |
-| Full SFT configuration | [`sft_grpo_training_evaluation/llamafactory_qwen35/`](sft_grpo_training_evaluation/llamafactory_qwen35/) |
-| GRPO reward | [`sft_grpo_training_evaluation/reward_functions.py`](sft_grpo_training_evaluation/reward_functions.py) |
-| GRPO data interface | [`sft_grpo_training_evaluation/convert_bianzheng_to_verl_grpo.py`](sft_grpo_training_evaluation/convert_bianzheng_to_verl_grpo.py) |
+| Full-parameter SFT | [`sft_grpo_training_evaluation/llamafactory_qwen35/`](sft_grpo_training_evaluation/llamafactory_qwen35/) |
+| BGPO reward implementation | [`sft_grpo_training_evaluation/reward_functions.py`](sft_grpo_training_evaluation/reward_functions.py) |
+| Policy-optimization data interface | [`sft_grpo_training_evaluation/convert_bianzheng_to_verl_grpo.py`](sft_grpo_training_evaluation/convert_bianzheng_to_verl_grpo.py) |
 | Transformers evaluation | [`sft_grpo_training_evaluation/eval_qwen35.py`](sft_grpo_training_evaluation/eval_qwen35.py) |
 | vLLM evaluation | [`sft_grpo_training_evaluation/eval_qwen35_vllm.py`](sft_grpo_training_evaluation/eval_qwen35_vllm.py) |
-| Doctor blind evaluation | [`sft_grpo_training_evaluation/benchmark_tools/`](sft_grpo_training_evaluation/benchmark_tools/) |
+| Clinician-blinded evaluation | [`sft_grpo_training_evaluation/benchmark_tools/`](sft_grpo_training_evaluation/benchmark_tools/) |
 
 ## Documentation
 
 | Guide | Contents |
 | --- | --- |
-| [Model overview](docs/model_overview.md) | Model positioning, capabilities, and reasoning design |
-| [Training overview](docs/training_overview.md) | Full SFT, GRPO, and evaluation stages |
+| [Model overview](docs/model_overview.md) | Model family, capabilities, and structured reasoning design |
+| [Training overview](docs/training_overview.md) | Domain SFT, cold-start SFT, BGPO, and evaluation |
 | [Training and evaluation reference](docs/sft_grpo_evaluation.html) | Main configuration and executable entry points |
-| [Security policy](SECURITY.md) | Credential and sensitive-data handling |
+| [Security policy](SECURITY.md) | Credentials, sensitive data, and responsible disclosure |

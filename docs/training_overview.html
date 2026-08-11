@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -18,20 +18,24 @@
 <body><main>
   <p><a href="model_overview.html">← Model overview</a></p>
   <h1>FU-TCM training</h1>
-  <p class="lead">训练分为领域监督微调、辨证推理对齐和模型评测三个阶段。</p>
+  <p class="lead">Training moves from domain adaptation to structured case reasoning and Bianzheng-Grounded Policy Optimization.</p>
 
   <div class="stages">
     <section class="stage">
       <div class="number">1</div>
-      <div><h2>Full-parameter SFT</h2><p>使用 Qwen3.5-9B、文本与图像指令样本、DeepSpeed ZeRO-3、bf16 和 4,096 token 上下文完成中医领域全参数微调。</p><p><code>llamafactory_qwen35/qwen35_9b_full_sft_ds3.yaml</code></p></div>
+      <div><h2>Full-parameter domain SFT</h2><p>Adapt the base vision-language models with TCM text and image question-answer data. The public 9B path uses DeepSpeed ZeRO-3, bf16, and a 4,096-token context.</p><p><code>llamafactory_qwen35/qwen35_9b_full_sft_ds3.yaml</code></p></div>
     </section>
     <section class="stage">
       <div class="number">2</div>
-      <div><h2>GRPO reasoning alignment</h2><p>通过格式、证型和辨证参数奖励，使模型学习四诊到八纲、脏腑、气血津液、病因和证型的结构化推理。</p><p><code>reward_functions.py::compute_score</code></p></div>
+      <div><h2>Cold-start SFT</h2><p>Teach the required structured case format and the path from four-examination evidence through intermediate <em>bianzheng</em> judgments to the final syndrome.</p></div>
     </section>
     <section class="stage">
       <div class="number">3</div>
-      <div><h2>Evaluation</h2><p>使用 Transformers 或 vLLM 运行文本和视觉评测，并按数据集与类别统计准确率。医生盲测工具用于独立人工评价。</p><p><code>eval_qwen35.py</code> · <code>eval_qwen35_vllm.py</code></p></div>
+      <div><h2>BGPO reasoning alignment</h2><p>Apply verifiable rewards for format validity, syndrome consistency, and fidelity across 30 intermediate diagnostic fields.</p><p><code>reward_functions.py::compute_score</code></p></div>
+    </section>
+    <section class="stage">
+      <div class="number">4</div>
+      <div><h2>Evaluation</h2><p>Run text and vision benchmarks with Transformers or vLLM and generate blinded materials for clinician review.</p><p><code>eval_qwen35.py</code> · <code>eval_qwen35_vllm.py</code></p></div>
     </section>
   </div>
 

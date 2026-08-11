@@ -41,6 +41,7 @@
 *.jpg
 *.jpeg
 *.png
+!/assets/fu-tcm-framework-overview.png
 *.webp
 
 # Model, experiment, and evaluation artifacts

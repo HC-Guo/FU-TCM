@@ -1,50 +1,35 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>名老中医辨证推理数据流程</title>
+  <title>Senior TCM Practitioner Case Reasoning · FU-TCM</title>
   <style>
-    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f7f8fa; color: #202124; }
-    main { max-width: 960px; margin: 0 auto; padding: 32px 20px 48px; }
-    h1 { margin: 0 0 10px; font-size: 30px; }
-    h2 { margin-top: 28px; font-size: 20px; }
-    p, li { line-height: 1.7; }
-    code { background: #eef0f3; padding: 2px 5px; border-radius: 4px; }
-    pre { background: #1f2933; color: #f5f7fa; padding: 14px; overflow: auto; border-radius: 6px; }
-    table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #dde1e6; }
-    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #edf0f2; vertical-align: top; }
-    th { background: #eef3f8; }
+    body{margin:0;font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f7f8fa;color:#202124}main{max-width:960px;margin:auto;padding:32px 20px 48px}a{color:#176b4d}h1{margin:0 0 10px;font-size:30px}h2{margin-top:28px;font-size:20px}code{padding:2px 5px;border-radius:4px;background:#eef0f3}pre{padding:14px;overflow:auto;border-radius:6px;background:#1f2933;color:#f5f7fa}table{width:100%;border-collapse:collapse;border:1px solid #dde1e6;background:#fff}th,td{padding:10px 12px;border-bottom:1px solid #edf0f2;text-align:left;vertical-align:top}th{background:#eef3f8}
   </style>
 </head>
-<body>
-<main>
-  <h1>名老中医辨证推理数据流程</h1>
-  <p>从原始名老中医 CSV 数据提取病案，调用模型生成结构化辨证数据，再复核四诊与辨证参数，最后准备为训练数据。</p>
-
-  <h2>流程</h2>
+<body><main>
+  <p><a href="../../index.html">← FU-TCM</a></p>
+  <h1>Senior TCM practitioner case reasoning</h1>
+  <p>Extract local case records, convert them to structured <em>bianzheng</em> examples, review four-examination evidence and intermediate fields, and prepare local training inputs.</p>
+  <h2>Execution order</h2>
   <pre><code>python scripts/extract/extract_minglaoyishi.py
 python scripts/convert/convert_minimax.py
 python scripts/verify/verify_mlzy.py
+python scripts/prepare/split_dataset.py
 python scripts/prepare/prepare_data.py</code></pre>
-
-  <h2>环境变量</h2>
-  <pre><code>export OPENAI_API_KEY="你的API_KEY"
-export OPENAI_BASE_URL="https://api.minimax.chat/v1"
-export OPENAI_MODEL="MiniMax-M2.7"</code></pre>
-
-  <h2>核心文件</h2>
-  <table>
-    <thead><tr><th>路径</th><th>说明</th></tr></thead>
-    <tbody>
-      <tr><td><code>名老中医/</code></td><td>原始 CSV/XLSX 数据</td></tr>
-      <tr><td><code>scripts/extract/</code></td><td>CSV 提取脚本</td></tr>
-      <tr><td><code>scripts/convert/</code></td><td>MiniMax/OpenAI 兼容转换脚本</td></tr>
-      <tr><td><code>scripts/verify/</code></td><td>四诊补足与辨证参数复核</td></tr>
-      <tr><td><code>scripts/prepare/</code></td><td>训练数据准备</td></tr>
-      <tr><td><code>data/processed/</code></td><td>中间结果和 JSONL 结果</td></tr>
-    </tbody>
-  </table>
-</main>
-</body>
+  <h2>Environment variables</h2>
+  <pre><code>export OPENAI_API_KEY="&lt;your-api-key&gt;"
+export OPENAI_BASE_URL="&lt;openai-compatible-base-url&gt;"
+export OPENAI_MODEL="&lt;model-name&gt;"</code></pre>
+  <h2>Core paths</h2>
+  <table><thead><tr><th>Path</th><th>Role</th></tr></thead><tbody>
+    <tr><td><code>source_cases/</code></td><td>Local source cases; excluded from Git.</td></tr>
+    <tr><td><code>scripts/extract/</code></td><td>Source extraction.</td></tr>
+    <tr><td><code>scripts/convert/</code></td><td>Structured case conversion.</td></tr>
+    <tr><td><code>scripts/verify/</code></td><td>Evidence and field review.</td></tr>
+    <tr><td><code>scripts/prepare/</code></td><td>Local training-data preparation.</td></tr>
+    <tr><td><code>data/processed/</code></td><td>Local intermediate outputs; excluded from Git.</td></tr>
+  </tbody></table>
+</main></body>
 </html>

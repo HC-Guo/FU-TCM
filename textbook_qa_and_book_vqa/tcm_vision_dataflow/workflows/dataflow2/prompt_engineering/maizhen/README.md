@@ -1,24 +1,16 @@
-# 脉诊子工程
+# Pulse-Diagnosis Prompt Module
 
-这个子目录专门处理脉诊类图书，不与面诊混用。
+This module is dedicated to pulse-diagnosis books and must not be mixed with facial-inspection sources.
 
-## 适用书籍
+## Target images
 
-- 脉诊入门
-- 脉诊图解
-- 脉象波形图谱
-- 脉诊临床图谱
-- 脉诊参数分析类图书
+- pulse-wave plots;
+- pulse-form diagrams;
+- waveform parameter figures;
+- pulse-taking location or procedure diagrams.
 
-## 核心识别对象
+## Excluded images
 
-- 脉波图
-- 脉象示意图
-- 波形参数图
-- 诊脉部位或操作示意图
-
-## 不应混入
-
-- 真人面部图
-- 单纯章节插图
-- 没有脉象意义的装饰图
+- facial photographs;
+- generic chapter illustrations;
+- decorative images without diagnostic pulse content.
