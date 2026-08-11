@@ -120,8 +120,8 @@
   <header>
     <h1>verl Docker 训练 Qwen3.5 GRPO 环境与启动指南</h1>
     <p class="lead">
-      目标：把你本地已经微调好的 Qwen3.5 模型、<code>grpodata/verl</code> 数据、
-      <code>reward_functions.py</code> 和 <code>zhenghou_btree.json</code> 上传到服务器后，
+      目标：把你本地已经微调好的 Qwen3.5 模型、<code>verl_data</code> 数据、
+      <code>reward_functions.py</code> 以及可选的 <code>zhenghou_btree.json</code> 上传到服务器后，
       用 Docker 进入 <code>verl</code> 环境进行 GRPO 训练。
     </p>
     <p class="small">
@@ -133,9 +133,9 @@
     <h2>0. 关键结论</h2>
     <ul>
       <li>官方 Docker 镜像优先用 <code>verlai/verl:vllm011.latest</code>，因为我们要用 vLLM rollout。</li>
-      <li>你的本地 <code>grpodata/verl</code> 目前是 <code>.jsonl</code>，verl 训练前要转成 <code>.parquet</code>。</li>
+      <li>你的本地 <code>verl_data</code> 目前是 <code>.jsonl</code>，verl 训练前要转成 <code>.parquet</code>。</li>
       <li><code>reward_functions.py</code> 里已经有 <code>compute_score</code>，verl 参数写 <code>custom_reward_function.name=compute_score</code>。</li>
-      <li><code>reward_functions.py</code> 会读取同目录下的 <code>zhenghou_btree.json</code>，上传时必须一起传。</li>
+      <li><code>reward_functions.py</code> 可通过 <code>TCM_ZHENGHOU_BTREE</code> 读取证型树；缺失时退化为精确证型匹配。</li>
       <li>先跑 smoke 配置确认链路，再扩大 batch、response length、rollout_n 和 epoch。</li>
     </ul>
     <div class="note">
@@ -155,7 +155,7 @@
         <tr>
           <td><code>PROJECT_DIR</code></td>
           <td><code>/data/tcm_final</code></td>
-          <td>项目文件，至少包含 <code>grpodata/verl</code>、<code>reward_functions.py</code>、<code>zhenghou_btree.json</code></td>
+          <td>项目文件，至少包含 <code>verl_data</code> 与 <code>reward_functions.py</code>；证型树为可选本地配置</td>
         </tr>
         <tr>
           <td><code>MODEL_DIR</code></td>
@@ -179,10 +179,9 @@
   <section>
     <h2>2. 上传文件到服务器</h2>
     <p>在本地机器执行，按你的服务器地址替换 <code>USER@SERVER</code>。</p>
-    <pre><code class="language-bash"># 项目最小必需文件：保留 grpodata/verl 这一层目录
-rsync -av ./grpodata \
+    <pre><code class="language-bash"># 项目最小必需文件：数据保持在本地 verl_data
+rsync -av ./verl_data \
   ./reward_functions.py \
-  ./zhenghou_btree.json \
   USER@SERVER:/data/tcm_final/
 
 # 上传你已经 SFT/继续训练好的 Qwen3.5 模型目录
@@ -202,9 +201,8 @@ docker --version
 mkdir -p /data/tcm_final /data/models/qwen35_tcm_sft /data/outputs/tcm_grpo /data/verl_src
 
 test -f /data/tcm_final/reward_functions.py
-test -f /data/tcm_final/zhenghou_btree.json
-test -f /data/tcm_final/grpodata/verl/bianzheng_grpo_train.jsonl
-test -f /data/tcm_final/grpodata/verl/bianzheng_grpo_test.jsonl
+test -f /data/tcm_final/verl_data/bianzheng_grpo_train.jsonl
+test -f /data/tcm_final/verl_data/bianzheng_grpo_test.jsonl
 test -f /data/models/qwen35_tcm_sft/config.json</code></pre>
     <div class="note">
       如果你选择把 jsonl 直接放到 <code>/data/tcm_final/verl</code>，后面的 <code>DATA_JSONL_DIR</code>
@@ -283,9 +281,8 @@ PY</code></pre>
     <p>你的数据字段已经符合 verl 常见格式：<code>data_source</code>、<code>prompt</code>、<code>ability</code>、<code>reward_model</code>、<code>extra_info</code>。</p>
     <pre><code class="language-bash">cd /workspace
 
-# 如果你的服务器上是 /data/tcm_final/grpodata/verl，则这里保持默认。
-# 如果你按第 3 步示例把文件直接放在 /data/tcm_final/verl，则改成 /workspace/tcm/verl。
-export DATA_JSONL_DIR=/workspace/tcm/grpodata/verl
+    # 默认使用项目本地的 verl_data。
+    export DATA_JSONL_DIR=/workspace/tcm/verl_data
 export DATA_PARQUET_DIR=/workspace/tcm/verl_data
 
 python - <<'PY'
@@ -294,7 +291,7 @@ import os
 from pathlib import Path
 import pandas as pd
 
-src = Path(os.environ.get("DATA_JSONL_DIR", "/workspace/tcm/grpodata/verl"))
+src = Path(os.environ.get("DATA_JSONL_DIR", "/workspace/tcm/verl_data"))
 out = Path(os.environ.get("DATA_PARQUET_DIR", "/workspace/tcm/verl_data"))
 out.mkdir(parents=True, exist_ok=True)
 
@@ -494,8 +491,8 @@ python -m verl.trainer.main_ppo \
   <section>
     <h2>10. 常见报错</h2>
     <h3>找不到 <code>zhenghou_btree.json</code></h3>
-    <p><code>reward_functions.py</code> 用 <code>os.path.dirname(__file__)</code> 读取同目录文件，所以必须保证容器内：</p>
-    <pre><code class="language-bash">ls /workspace/tcm/reward_functions.py /workspace/tcm/zhenghou_btree.json</code></pre>
+    <p>该文件只影响证型层级相似度；没有文件时仍可做精确匹配。若需要层级奖励，请设置：</p>
+    <pre><code class="language-bash">export TCM_ZHENGHOU_BTREE=/workspace/private/zhenghou_btree.json</code></pre>
 
     <h3>找不到 parquet</h3>
     <p>重新确认转换输出：</p>

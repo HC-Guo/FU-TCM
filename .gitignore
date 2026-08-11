@@ -1,39 +1,103 @@
-# Local/system artifacts
+# Operating-system and Python artifacts
 .DS_Store
-__pycache__/
+**/__pycache__/
 *.py[cod]
-.venv/
-local_artifacts/
-eval_output/
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.cache/
+**/cache/
+**/.venv/
+**/venv/
 
-# Large local archives; keep the files on disk, but use Git LFS or release assets if you need to share them.
-archives/*.zip
+# Credentials and local configuration
+**/.env
+**/.env.*
+!**/.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+**/credentials*.json
+**/service-account*.json
+**/service_account*.json
 
-# Excluded distillation files kept out of GitHub upload
+# Generated datasets and binary source material
+*.jsonl
+*.parquet
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.doc
+*.docx
+*.pdf
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.wav
+*.mp3
+*.jpg
+*.jpeg
+*.png
+*.webp
+
+# Model, experiment, and evaluation artifacts
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.onnx
+**/checkpoints/
+**/models/
+**/saves/
+**/logs/
+**/wandb/
+**/eval_output/
+**/local_artifacts/
+
+# Classical-text QA local inputs and outputs
+/classical_text_qa/source_texts/
+/classical_text_qa/中医古籍分类/
+/classical_text_qa/qa_output*/
+/classical_text_qa/sft_data/
+/classical_text_qa/removed_qa_v1.json
+
+# Textbook QA and VQA local inputs and outputs
+/textbook_qa_and_book_vqa/sft_data/
+/textbook_qa_and_book_vqa/sft_image_data/
+/textbook_qa_and_book_vqa/source_books/
+/textbook_qa_and_book_vqa/tcm_vision_dataflow/archives/
+/textbook_qa_and_book_vqa/tcm_vision_dataflow/data/
+/textbook_qa_and_book_vqa/tcm_vision_dataflow/results/
+/textbook_qa_and_book_vqa/tcm_vision_dataflow/source_books/
+/textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/dataflow/example/
+/textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/test/
+/textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow2/scripts/qa/output/
+**/*_workdir/
+
+# Clinical-reasoning local inputs and outputs
+/clinical_case_reasoning/meta_reasoning/data/
+/clinical_case_reasoning/mlzy_reasoning/data/
+/clinical_case_reasoning/mlzy_reasoning/data_parquet/
+/clinical_case_reasoning/mlzy_reasoning/source_cases/
+/clinical_case_reasoning/mlzy_reasoning/名老中医/
+/clinical_case_reasoning/mlzy_reasoning/prompt_example.json
+
+# SFT, GRPO, and benchmark local inputs and outputs
+/sft_grpo_training_evaluation/benchmark/
+/sft_grpo_training_evaluation/grpodata/
+/sft_grpo_training_evaluation/sft_data/
+/sft_grpo_training_evaluation/sft_image_data/
+/sft_grpo_training_evaluation/sft_merged/
+/sft_grpo_training_evaluation/verl_data/
+/sft_grpo_training_evaluation/verl/
+/sft_grpo_training_evaluation/.venv_qwen35_ft/
+/sft_grpo_training_evaluation/llamafactory_qwen35/LLaMA-Factory/
+/sft_grpo_training_evaluation/llamafactory_qwen35/data/tcm_sft_mm.json
+
+# Historical output names that must remain local
 **/ladder_distill.json
 **/exam_distill.json
 **/shizhen_distill.json
-
-# Fu-TCM datasets are local-only. Keep source material, generated samples,
-# training splits, evaluation sets, and intermediate artifacts out of Git.
-/01_classical_text_qa/qa_output*/
-/01_classical_text_qa/sft_data/
-
-/02_textbook_qa_and_book_vqa/sft_data/
-/02_textbook_qa_and_book_vqa/sft_image_data/
-/02_textbook_qa_and_book_vqa/tcm_vision_dataflow/archives/
-/02_textbook_qa_and_book_vqa/tcm_vision_dataflow/data/
-/02_textbook_qa_and_book_vqa/tcm_vision_dataflow/results/
-/02_textbook_qa_and_book_vqa/tcm_vision_dataflow/source_books/
-**/*_workdir/
-
-/03_clinical_case_reasoning/meta_reasoning/data/
-/03_clinical_case_reasoning/mlzy_reasoning/data/
-/03_clinical_case_reasoning/mlzy_reasoning/source_cases/
-
-/04_sft_grpo_training_evaluation/benchmark/
-/04_sft_grpo_training_evaluation/grpodata/
-/04_sft_grpo_training_evaluation/sft_data/
-/04_sft_grpo_training_evaluation/sft_image_data/
-/04_sft_grpo_training_evaluation/sft_merged/
-/04_sft_grpo_training_evaluation/verl_data/

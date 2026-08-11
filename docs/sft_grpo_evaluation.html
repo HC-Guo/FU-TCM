@@ -1,0 +1,11 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SFT, GRPO and Evaluation · FU-TCM</title><style>body{margin:0;background:#f5f8f6;color:#18201d;font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:900px;margin:auto;padding:44px 20px 64px}a{color:#176b4d}h1{font-size:2.4rem;letter-spacing:-.04em}.notice{padding:16px 18px;border:1px solid #9bc7b2;border-radius:12px;background:#eef7f2}table{width:100%;border-collapse:collapse;background:#fff}th,td{padding:11px 13px;border:1px solid #d8e4de;text-align:left}code{overflow-wrap:anywhere}</style></head><body><main>
+<p><a href="workflow_overview.html">← Workflow overview</a></p><h1>SFT, GRPO &amp; Evaluation</h1>
+<p>该模块保留 SFT/GRPO 数据准备、LLaMA-Factory 配置、奖励函数、评测脚本和 benchmark 构建工具。</p><p class="notice"><code>sft_data/</code>、<code>sft_image_data/</code>、<code>sft_merged/</code>、<code>grpodata/</code>、<code>verl_data/</code> 与 <code>benchmark/</code> 均为本地目录，当前分支不包含其中的数据。</p>
+<h2>Versioned entry points</h2><table><thead><tr><th>Path</th><th>Role</th></tr></thead><tbody>
+<tr><td><a href="../sft_grpo_training_evaluation/llamafactory_qwen35/qwen35_9b_full_sft_ds3.yaml"><code>llamafactory_qwen35/</code></a></td><td>SFT 训练配置。</td></tr>
+<tr><td><a href="../sft_grpo_training_evaluation/convert_bianzheng_to_verl_grpo.py"><code>convert_bianzheng_to_verl_grpo.py</code></a></td><td>verl GRPO 数据转换。</td></tr>
+<tr><td><a href="../sft_grpo_training_evaluation/reward_functions.py"><code>reward_functions.py</code></a></td><td>GRPO 奖励函数。</td></tr>
+<tr><td><a href="../sft_grpo_training_evaluation/eval_qwen35.py"><code>eval_qwen35.py</code></a></td><td>Transformers 评测。</td></tr>
+<tr><td><a href="../sft_grpo_training_evaluation/eval_qwen35_vllm.py"><code>eval_qwen35_vllm.py</code></a></td><td>vLLM 评测。</td></tr>
+<tr><td><a href="../sft_grpo_training_evaluation/benchmark_tools/generate_answer_key_html.mjs"><code>benchmark_tools/</code></a></td><td>评测样本与盲测材料生成脚本。</td></tr>
+</tbody></table></main></body></html>
