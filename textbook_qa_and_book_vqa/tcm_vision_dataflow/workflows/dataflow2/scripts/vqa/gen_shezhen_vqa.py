@@ -186,7 +186,7 @@ class ShezhenVQAPipeline(PipelineABC):
         if ChapterBasedGenerator is None or ZhaoLiMingOutputParser is None:
             raise RuntimeError(
                 "该旧版入口缺少 chapter_based_generator.py 或 "
-                "zhaoliming_output_parser.py；请参见 docs/repository_inventory.html。"
+                "zhaoliming_output_parser.py；请安装对应模块后再运行。"
             )
         self.book_name = book_name
         self.skip_llm_if_cached = skip_llm_if_cached

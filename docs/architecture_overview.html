@@ -8,17 +8,17 @@
 <body><main>
   <p><a href="../index.html">← FU-TCM index</a></p>
   <h1>Architecture overview</h1>
-  <p class="notice"><strong>Code-only branch.</strong> 训练数据、原始材料、生成结果和评测样本不进入版本控制；<a href="../.gitignore">.gitignore</a> 是本地数据路径的权威清单。</p>
+  <p class="notice">FU-TCM 以四个模块连接领域材料处理、结构化推理、模型训练与评测。</p>
   <div class="flow">
-    <div class="layer"><strong>Local source data · ignored</strong><code>classical texts · textbooks · illustrated books · clinical cases</code></div>
+    <div class="layer"><strong>TCM source materials</strong><code>classical texts · textbooks · illustrated books · clinical cases</code></div>
     <div class="arrow">↓</div>
-    <div class="layer"><strong>Versioned processing code</strong><code>classical_text_qa · textbook_qa_and_book_vqa · clinical_case_reasoning</code></div>
+    <div class="layer"><strong>Processing workflows</strong><code>classical_text_qa · textbook_qa_and_book_vqa · clinical_case_reasoning</code></div>
     <div class="arrow">↓</div>
-    <div class="layer"><strong>Local model-ready data · ignored</strong><code>text and multimodal SFT · structured reasoning · GRPO · benchmarks</code></div>
+    <div class="layer"><strong>Model-ready datasets</strong><code>text and multimodal SFT · structured reasoning · GRPO · benchmarks</code></div>
     <div class="arrow">↓</div>
-    <div class="layer"><strong>Versioned training and evaluation code</strong><code>sft_grpo_training_evaluation</code></div>
+    <div class="layer"><strong>Training and evaluation workflows</strong><code>sft_grpo_training_evaluation</code></div>
   </div>
-  <h2>Repository rules</h2>
-  <ol><li>All tracked paths use English names.</li><li>Scripts, prompts, and model configuration are versioned.</li><li>Source data, outputs, images, archives, splits, and benchmarks remain local.</li><li>Credentials are passed through environment variables.</li></ol>
+  <h2>Design principles</h2>
+  <ol><li>Each workflow can be installed and run independently.</li><li>Text, multimodal, and reasoning pipelines share clear intermediate formats.</li><li>Training and evaluation configuration remains reproducible across environments.</li><li>Service credentials are passed through environment variables.</li></ol>
   <p>Continue to the <a href="workflow_overview.html">workflow overview</a>.</p>
 </main></body></html>

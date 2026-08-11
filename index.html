@@ -116,26 +116,21 @@
       <p class="lead">面向中医古籍、教材图文、临床病例推理与模型训练的开放代码工作流。</p>
       <div class="badges" aria-label="Repository status">
         <span class="badge">Python 3.11+</span>
-        <span class="badge">Code-only</span>
-        <span class="badge">English paths</span>
-        <span class="badge">Automated hygiene</span>
+        <span class="badge">TCM NLP</span>
+        <span class="badge">Multimodal VQA</span>
+        <span class="badge">SFT &amp; GRPO</span>
       </div>
       <div class="actions">
         <a class="button primary" href="README.md">Quick start</a>
-        <a class="button secondary" href="docs/repository_inventory.html">Repository inventory</a>
+        <a class="button secondary" href="docs/architecture_overview.html">Architecture</a>
       </div>
     </section>
   </header>
 
   <main class="shell">
-    <section class="notice" aria-label="Data policy">
-      <div class="notice-icon">🔒</div>
-      <div><strong>代码与数据分离。</strong> 训练/测试数据、原始书籍、病例、图像、模型权重和生成结果保持本地，不进入 Git。权威目录规则见 <a href=".gitignore"><code>.gitignore</code></a>。</div>
-    </section>
-
     <section id="modules">
       <h2>Workflow modules</h2>
-      <p class="section-intro">四个模块覆盖数据生成、结构化推理、训练准备和评测，目录名称均使用无编号的英文路径。</p>
+      <p class="section-intro">四个模块覆盖数据生成、结构化推理、训练准备和模型评测。</p>
       <div class="grid">
         <a class="card" href="docs/classical_text_qa.html"><span class="card-kicker">Text pipeline</span><strong>Classical Text QA</strong><span>古籍 QA 生成、清洗与 SFT 格式转换。</span><span class="card-arrow">→</span></a>
         <a class="card" href="docs/textbook_qa_and_book_vqa.html"><span class="card-kicker">Multimodal pipeline</span><strong>Textbook QA &amp; Book VQA</strong><span>教材文本 QA、图文书籍 VQA 与定制 DataFlow 工作流。</span><span class="card-arrow">→</span></a>
@@ -146,9 +141,9 @@
 
     <section id="workflow">
       <h2>From source to evaluation</h2>
-      <p class="section-intro">版本化代码连接各阶段，本地数据只在运行环境中流动。</p>
+      <p class="section-intro">FU-TCM 将领域材料转换为可用于训练与评测的结构化数据。</p>
       <div class="flow" aria-label="FU-TCM workflow">
-        <div class="flow-step">Local sources</div><div class="flow-arrow">→</div>
+        <div class="flow-step">TCM sources</div><div class="flow-arrow">→</div>
         <div class="flow-step">QA / VQA / Reasoning</div><div class="flow-arrow">→</div>
         <div class="flow-step">SFT / GRPO</div><div class="flow-arrow">→</div>
         <div class="flow-step">Evaluation</div>
@@ -157,21 +152,20 @@
 
     <section id="documentation">
       <h2>Documentation</h2>
-      <p class="section-intro">从总览进入模块说明；从清单确认已上传、已删除和仍缺失的内容。</p>
+      <p class="section-intro">了解项目架构、执行入口、模块职责和安全配置。</p>
       <table>
         <thead><tr><th>Guide</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td><a href="docs/repository_inventory.html">Repository inventory</a></td><td>当前上传内容、已删除数据与确认遗漏文件。</td></tr>
-          <tr><td><a href="docs/architecture_overview.html">Architecture overview</a></td><td>版本化代码与本地研究数据的分层关系。</td></tr>
-          <tr><td><a href="docs/workflow_overview.html">Workflow overview</a></td><td>模块入口、阶段输入输出和本地目录。</td></tr>
+          <tr><td><a href="docs/architecture_overview.html">Architecture overview</a></td><td>四个模块之间的组件关系与数据流。</td></tr>
+          <tr><td><a href="docs/workflow_overview.html">Workflow overview</a></td><td>模块入口、处理阶段和输入输出。</td></tr>
           <tr><td><a href="SECURITY.md">Security policy</a></td><td>API 密钥、私有数据和安全报告规则。</td></tr>
         </tbody>
       </table>
     </section>
 
     <footer>
-      <span>FU-TCM · Code-only research workflows</span>
-      <span>Repository paths are English; documentation is bilingual.</span>
+      <span>FU-TCM · Open research workflows for TCM AI</span>
+      <span>Documentation in English and Chinese.</span>
     </footer>
   </main>
 </body>

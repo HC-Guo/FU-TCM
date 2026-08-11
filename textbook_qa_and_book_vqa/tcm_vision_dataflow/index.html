@@ -21,19 +21,18 @@
 <main>
   <h1>中医视觉/图文 DataFlow 数据处理流程</h1>
   <p>本目录保留舌诊、望诊、面诊、脉诊、中药草图和医学书籍 QA 的 DataFlow 脚本、提示词与框架源码。</p>
-  <p style="background:#eef7f2;border:1px solid #9bc7b2;padding:12px 14px;border-radius:6px"><strong>代码仓库：</strong>原始书籍、图像、QA/VQA 数据、压缩包和生成结果均为本地内容，不在当前分支中。</p>
 
   <h2>结构</h2>
   <table>
     <thead><tr><th>路径</th><th>说明</th></tr></thead>
     <tbody>
-      <tr><td><code>source_books/</code></td><td>本地原始 PDF、EPUB 书籍（忽略）</td></tr>
-      <tr><td><code>archives/</code></td><td>本地原始压缩包（忽略）</td></tr>
-      <tr><td><code>data/</code></td><td>本地 QA/VQA 中间数据（忽略）</td></tr>
-      <tr><td><code>results/</code></td><td>本地生成结果（忽略）</td></tr>
+      <tr><td><code>source_books/</code></td><td>PDF、EPUB 等输入材料</td></tr>
+      <tr><td><code>archives/</code></td><td>输入材料归档</td></tr>
+      <tr><td><code>data/</code></td><td>QA/VQA 中间数据</td></tr>
+      <tr><td><code>results/</code></td><td>工作流生成结果</td></tr>
       <tr><td><code>workflows/dataflow2/</code></td><td>Dataflow 2 的 prompt、脚本和框架</td></tr>
-      <tr><td><code>workflows/dataflow_runtime/</code></td><td>项目定制的 DataFlow 1.0.10 代码（不含 example/test）</td></tr>
-      <tr><td><code>requirements.txt</code></td><td>本地 DataFlow runtime 与通用 Python 依赖</td></tr>
+      <tr><td><code>workflows/dataflow_runtime/</code></td><td>项目定制的 DataFlow 1.0.10 runtime</td></tr>
+      <tr><td><code>requirements.txt</code></td><td>DataFlow runtime 与通用 Python 依赖</td></tr>
     </tbody>
   </table>
 
