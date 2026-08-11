@@ -17,11 +17,14 @@ Open `index.html` for the browsable project overview. The current upload invento
 
 ## Install code dependencies
 
-Install only the module you intend to run. DataFlow is a pinned external dependency; its duplicated source and upstream example/test data are not vendored here.
+Install only the module you intend to run. The project-specific DataFlow 1.0.10 runtime is retained locally; only its obsolete 1.0.9 snapshot and upstream example/test files are removed.
 
 ```bash
 pip install -r 01_classical_text_qa/requirements.txt
-pip install -r 02_textbook_qa_and_book_vqa/tcm_vision_dataflow/requirements.txt
+(
+  cd 02_textbook_qa_and_book_vqa/tcm_vision_dataflow
+  pip install -r requirements.txt
+)
 pip install -r 03_clinical_case_reasoning/mlzy_reasoning/requirements.txt
 pip install -r 04_sft_grpo_training_evaluation/requirements.txt
 ```
@@ -42,6 +45,7 @@ The scripts recreate their output directories as needed. Place private source da
 03_clinical_case_reasoning/{meta_reasoning,mlzy_reasoning}/data/
 03_clinical_case_reasoning/mlzy_reasoning/source_cases/
 03_clinical_case_reasoning/mlzy_reasoning/prompt_example.json
+03_clinical_case_reasoning/mlzy_reasoning/data_parquet/
 
 04_sft_grpo_training_evaluation/{sft_data,sft_image_data,sft_merged,grpodata,verl_data,benchmark}/
 ```
@@ -79,6 +83,15 @@ python 03_clinical_case_reasoning/mlzy_reasoning/scripts/prepare/prepare_data.py
 # GRPO data conversion (requires local input data)
 cd 04_sft_grpo_training_evaluation
 python convert_bianzheng_to_verl_grpo.py
+```
+
+To feed the verified MLZY split directly into the GRPO converter, run from `04_sft_grpo_training_evaluation/`:
+
+```bash
+python convert_bianzheng_to_verl_grpo.py \
+  --train ../03_clinical_case_reasoning/mlzy_reasoning/data/processed/bianzheng_mlzy_train.jsonl \
+  --test ../03_clinical_case_reasoning/mlzy_reasoning/data/processed/bianzheng_mlzy_test.jsonl \
+  --output-dir verl_data
 ```
 
 ## Repository check

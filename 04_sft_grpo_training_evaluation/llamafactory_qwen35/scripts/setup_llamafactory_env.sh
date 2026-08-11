@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+CONFIG_DIR=$(cd "${SCRIPT_DIR}/.." && pwd)
+MODULE_DIR=$(cd "${CONFIG_DIR}/.." && pwd)
+
 # Create a clean LLaMA-Factory environment for Qwen3.5 multimodal full SFT.
 # Run from TCM_final on the server:
 #   bash llamafactory_qwen35/scripts/setup_llamafactory_env.sh
@@ -11,7 +15,7 @@ set -euo pipefail
 ENV_NAME="${ENV_NAME:-qwen35_ft}"
 PYTHON_VERSION="${PYTHON_VERSION:-3.11}"
 TORCH_CUDA="${TORCH_CUDA:-cu121}"
-LLAMA_FACTORY_DIR="${LLAMA_FACTORY_DIR:-LLaMA-Factory}"
+LLAMA_FACTORY_DIR="${LLAMA_FACTORY_DIR:-${CONFIG_DIR}/LLaMA-Factory}"
 
 if command -v conda >/dev/null 2>&1; then
   source "$(conda info --base)/etc/profile.d/conda.sh"
@@ -20,7 +24,7 @@ if command -v conda >/dev/null 2>&1; then
   fi
   conda activate "${ENV_NAME}"
 else
-  VENV_DIR="${VENV_DIR:-.venv_qwen35_ft}"
+  VENV_DIR="${VENV_DIR:-${MODULE_DIR}/.venv_qwen35_ft}"
   "${PYTHON_BIN:-python3}" -m venv "${VENV_DIR}"
   source "${VENV_DIR}/bin/activate"
 fi

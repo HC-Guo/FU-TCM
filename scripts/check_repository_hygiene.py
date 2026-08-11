@@ -28,6 +28,21 @@ FORBIDDEN_PREFIXES = (
 ALLOWED_BINARY_PREFIXES = (
     "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/static/logo/",
 )
+REQUIRED_PIPELINE_FILES = (
+    "01_classical_text_qa/scripts/process/convert_to_sft_format.py",
+    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/pyproject.toml",
+    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/dataflow/serving/api_llm_serving_request.py",
+    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/dataflow/operators/pdf2vqa/generate/llm_output_parser.py",
+    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/dataflow/statics/pipelines/api_pipelines/pdf_vqa_extract_pipeline_part1.py",
+    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow2/scripts/vqa/gen_shezhen_vqa_final.py",
+    "03_clinical_case_reasoning/mlzy_reasoning/scripts/prepare/split_dataset.py",
+    "03_clinical_case_reasoning/mlzy_reasoning/scripts/prepare/prepare_data.py",
+    "04_sft_grpo_training_evaluation/convert_bianzheng_to_verl_grpo.py",
+    "04_sft_grpo_training_evaluation/reward_functions.py",
+    "04_sft_grpo_training_evaluation/run_tcm_grpo_smoke.sh",
+    "04_sft_grpo_training_evaluation/run_tcm_grpo_smoke_hf.sh",
+    "04_sft_grpo_training_evaluation/verl_py_shims/sitecustomize.py",
+)
 SECRET_PATTERNS = {
     "OpenAI-style token": re.compile(r"\bsk-[A-Za-z0-9_-]{20,}\b"),
     "GitHub token": re.compile(r"\bgh[pousr]_[A-Za-z0-9]{20,}\b"),
@@ -56,6 +71,13 @@ def tracked_files() -> list[Path]:
     return [ROOT / name for name in output.rstrip("\0").split("\0") if name]
 
 
+def indexed_relatives() -> set[str]:
+    output = subprocess.check_output(
+        ["git", "ls-files", "-z", "--cached"], cwd=ROOT
+    ).decode("utf-8")
+    return {name for name in output.rstrip("\0").split("\0") if name}
+
+
 def read_text(path: Path) -> str | None:
     try:
         if path.stat().st_size > 2_000_000:
@@ -68,6 +90,11 @@ def read_text(path: Path) -> str | None:
 def main() -> int:
     errors: list[str] = []
     files = tracked_files()
+    tracked_relatives = indexed_relatives()
+
+    for required in REQUIRED_PIPELINE_FILES:
+        if required not in tracked_relatives:
+            errors.append(f"required pipeline file is not tracked: {required}")
 
     for path in files:
         relative = path.relative_to(ROOT).as_posix()

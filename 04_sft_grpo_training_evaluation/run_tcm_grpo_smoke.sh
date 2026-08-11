@@ -6,33 +6,39 @@ set -xeuo pipefail
 
 ########################### paths ###########################
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-PREFERRED_VERL_DIR="${PREFERRED_VERL_DIR:-/cpfs01/projects-HDD/cfff-afe2df89e32e_HDD/ghc_45160/slr/verl}"
-
-if [ -n "${ROOT_DIR:-}" ]; then
-    ROOT_DIR=$(cd "${ROOT_DIR}" && pwd)
-elif [ -d "${SCRIPT_DIR}/verl_data" ]; then
-    ROOT_DIR="${SCRIPT_DIR}"
-else
-    ROOT_DIR=$(cd "${SCRIPT_DIR}/.." && pwd)
+ROOT_DIR="${ROOT_DIR:-${SCRIPT_DIR}}"
+if [ ! -d "${ROOT_DIR}" ]; then
+    echo "Missing project root: ${ROOT_DIR}. Set ROOT_DIR to 04_sft_grpo_training_evaluation." >&2
+    exit 1
 fi
+ROOT_DIR=$(cd "${ROOT_DIR}" && pwd)
 
 if [ -n "${VERL_DIR:-}" ]; then
-    VERL_DIR=$(cd "${VERL_DIR}" && pwd)
-elif [ -f "${PREFERRED_VERL_DIR}/verl/trainer/main_ppo.py" ]; then
-    VERL_DIR="${PREFERRED_VERL_DIR}"
+    VERL_DIR="${VERL_DIR}"
 elif [ -d "${ROOT_DIR}/verl" ]; then
     VERL_DIR="${ROOT_DIR}/verl"
+elif [ -n "${PREFERRED_VERL_DIR:-}" ] && [ -f "${PREFERRED_VERL_DIR}/verl/trainer/main_ppo.py" ]; then
+    VERL_DIR=$(cd "${PREFERRED_VERL_DIR}" && pwd)
 else
-    VERL_DIR="${SCRIPT_DIR}"
+    VERL_DIR="${ROOT_DIR}/verl"
 fi
 
+if [ ! -d "${VERL_DIR}" ]; then
+    echo "Missing verl checkout: ${VERL_DIR}. Set VERL_DIR or clone verl there." >&2
+    exit 1
+fi
+VERL_DIR=$(cd "${VERL_DIR}" && pwd)
 cd "${VERL_DIR}"
-mkdir -p logs
+LOG_DIR="${LOG_DIR:-${ROOT_DIR}/logs}"
+mkdir -p "${LOG_DIR}"
 
 ########################### environment ###########################
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0,1,2,3,4,5}"
-export CUDA_HOME="${CUDA_HOME:-/cpfs01/projects-HDD/cfff-afe2df89e32e_HDD/ghc_45160/cuda-12.8}"
-if [ -d "${CUDA_HOME}" ]; then
+if [ -z "${CUDA_HOME:-}" ] && command -v nvcc >/dev/null 2>&1; then
+    CUDA_HOME=$(cd "$(dirname "$(command -v nvcc)")/.." && pwd)
+fi
+export CUDA_HOME="${CUDA_HOME:-}"
+if [ -n "${CUDA_HOME}" ] && [ -d "${CUDA_HOME}" ]; then
     export PATH="${CUDA_HOME}/bin:${PATH}"
     CUDA_LIB_PATH="${CUDA_HOME}/lib64"
     if [ -d "${CUDA_HOME}/compat" ]; then
@@ -40,14 +46,15 @@ if [ -d "${CUDA_HOME}" ]; then
     fi
     export LD_LIBRARY_PATH="${CUDA_LIB_PATH}${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 else
-    echo "WARNING: CUDA_HOME does not exist: ${CUDA_HOME}" >&2
+    echo "WARNING: CUDA_HOME is unset or invalid; set it explicitly if CUDA libraries are not discoverable." >&2
 fi
 export HYDRA_FULL_ERROR=1
 export TOKENIZERS_PARALLELISM=false
 export WANDB_PROJECT="${WANDB_PROJECT:-tcm-grpo}"
 export WANDB_MODE="${WANDB_MODE:-online}"
-if [ -d "${ROOT_DIR}/verl_py_shims" ]; then
-    export PYTHONPATH="${ROOT_DIR}/verl_py_shims${PYTHONPATH:+:${PYTHONPATH}}"
+SHIM_DIR="${SCRIPT_DIR}/verl_py_shims"
+if [ -d "${SHIM_DIR}" ]; then
+    export PYTHONPATH="${SHIM_DIR}${PYTHONPATH:+:${PYTHONPATH}}"
 fi
 
 ########################### user-adjustable ###########################
@@ -138,90 +145,8 @@ except Exception as exc:
 import transformers
 print("transformers:", transformers.__version__)
 print("has AutoModelForVision2Seq:", hasattr(transformers, "AutoModelForVision2Seq"))
-PY
-
-"${PYTHON_BIN}" - <<'PY'
-from pathlib import Path
-import site
-import textwrap
-
-module_code = textwrap.dedent(
-    """
-    try:
-        import transformers
-    except Exception:
-        transformers = None
-
-    if transformers is not None:
-        if not hasattr(transformers, "AutoModelForVision2Seq") and hasattr(transformers, "AutoModelForImageTextToText"):
-            transformers.AutoModelForVision2Seq = transformers.AutoModelForImageTextToText
-    """
-).lstrip()
-
-site_dirs = [Path(p) for p in site.getsitepackages()]
-site_dirs.extend(Path(p) for p in site.getusersitepackages().split(":") if p)
-
-for site_dir in site_dirs:
-    if site_dir.exists() and site_dir.is_dir():
-        module_path = site_dir / "tcm_transformers_compat.py"
-        pth_path = site_dir / "tcm_transformers_compat.pth"
-        try:
-            module_path.write_text(module_code, encoding="utf-8")
-            pth_path.write_text("import tcm_transformers_compat\n", encoding="utf-8")
-        except OSError as exc:
-            print("skip unwritable site-packages:", site_dir, repr(exc))
-            continue
-        else:
-            print("installed transformers compat shim:", module_path)
-            break
-else:
-    raise RuntimeError(f"No writable site-packages found from: {site_dirs}")
-PY
-
-"${PYTHON_BIN}" - <<'PY'
-from pathlib import Path
-
-import transformers
-
-init_path = Path(transformers.__file__)
-marker = "# TCM compatibility alias for verl AutoModelForVision2Seq"
-patch = """
-
-{marker}
-try:
-    AutoModelForVision2Seq
-except NameError:
-    try:
-        AutoModelForVision2Seq = AutoModelForImageTextToText
-    except NameError:
-        try:
-            from transformers.models.auto.modeling_auto import AutoModelForImageTextToText as AutoModelForVision2Seq
-        except Exception:
-            pass
-""".format(marker=marker)
-
-text = init_path.read_text(encoding="utf-8")
-if marker not in text:
-    init_path.write_text(text.rstrip() + patch + "\n", encoding="utf-8")
-    print("patched transformers __init__:", init_path)
-else:
-    print("transformers __init__ already patched:", init_path)
-
-import transformers as _check
-print("post-patch has AutoModelForVision2Seq:", hasattr(_check, "AutoModelForVision2Seq"))
-PY
-
-"${PYTHON_BIN}" - <<PY
-from pathlib import Path
-
-model_py = Path("${VERL_DIR}") / "verl" / "utils" / "model.py"
-text = model_py.read_text(encoding="utf-8")
-if "AutoModelForVision2Seq" in text:
-    patched = text.replace("AutoModelForVision2Seq", "AutoModelForImageTextToText")
-    model_py.write_text(patched, encoding="utf-8")
-    print("patched verl transformers import:", model_py)
-else:
-    print("verl transformers import already compatible:", model_py)
+if not hasattr(transformers, "AutoModelForVision2Seq"):
+    raise RuntimeError("Transformers compatibility shim was not loaded; check PYTHONPATH and verl_py_shims/sitecustomize.py")
 PY
 
 # Keep smoke short without relying on trainer.total_training_steps support.
@@ -340,4 +265,4 @@ TRAINER=(
     "${ROLLOUT[@]}" \
     "${RAY_ENV[@]}" \
     "${TRAINER[@]}" \
-    "$@" 2>&1 | tee logs/tcm-qwen3_5-9b-smoke-${start_time}.log
+    "$@" 2>&1 | tee "${LOG_DIR}/tcm-qwen3_5-9b-smoke-${start_time}.log"

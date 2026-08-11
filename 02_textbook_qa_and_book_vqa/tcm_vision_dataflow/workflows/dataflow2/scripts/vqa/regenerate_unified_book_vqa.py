@@ -39,18 +39,27 @@ VALID_QA_TYPES = {
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from dataflow.serving import APILLMServing_request  # noqa: E402
+PROMPT_HELPER_IMPORT_ERROR: ModuleNotFoundError | None = None
+try:
+    from maizhen_vqa_workdir.prompt_engineering.debug_render_mianzhen_prompts import (  # noqa: E402
+        BOOK_PROFILES_PATH,
+        BOOK_RULES_PATH,
+        SYSTEM_PROMPT_PATH,
+        USER_TEMPLATE_PATH,
+        build_prompt,
+        load_json,
+        load_text,
+        read_jsonl,
+    )
+except ModuleNotFoundError as exc:
+    PROMPT_HELPER_IMPORT_ERROR = exc
 
-from maizhen_vqa_workdir.prompt_engineering.debug_render_mianzhen_prompts import (  # noqa: E402
-    BOOK_PROFILES_PATH,
-    BOOK_RULES_PATH,
-    SYSTEM_PROMPT_PATH,
-    USER_TEMPLATE_PATH,
-    build_prompt,
-    load_json,
-    load_text,
-    read_jsonl,
-)
+    def read_jsonl(path: Path) -> list[dict]:
+        return [
+            json.loads(line)
+            for line in path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
 
 
 SCHEMA_PATH = PROMPT_ROOT / "configs" / "vqa_output_schema.json"
@@ -281,6 +290,24 @@ def main() -> None:
         print(f"[输出] {(book_dir / 'vqa_dataset.jsonl')}")
         return
 
+    if PROMPT_HELPER_IMPORT_ERROR is not None:
+        raise FileNotFoundError(
+            "缺少 maizhen_vqa_workdir/prompt_engineering/debug_render_mianzhen_prompts.py "
+            "及其提示词配置；--dry-run 可用于检查输入，但正式生成需要先补齐这些文件。"
+        ) from PROMPT_HELPER_IMPORT_ERROR
+
+    required_prompt_assets = [
+        SCHEMA_PATH,
+        BOOK_PROFILES_PATH,
+        BOOK_RULES_PATH,
+        SYSTEM_PROMPT_PATH,
+        USER_TEMPLATE_PATH,
+    ]
+    missing_prompt_assets = [path for path in required_prompt_assets if not path.is_file()]
+    if missing_prompt_assets:
+        missing_text = "\n".join(f"- {path}" for path in missing_prompt_assets)
+        raise FileNotFoundError(f"缺少提示词配置文件：\n{missing_text}")
+
     system_prompt = load_text(SYSTEM_PROMPT_PATH)
     user_template = load_text(USER_TEMPLATE_PATH)
     schema = load_json(SCHEMA_PATH)
@@ -312,6 +339,8 @@ def main() -> None:
     if not api_key:
         raise ValueError("请先设置 DF_API_KEY 或 MINIMAX_API_KEY")
     os.environ.setdefault("DF_API_KEY", api_key)
+
+    from dataflow.serving import APILLMServing_request
 
     llm = APILLMServing_request(
         api_url=os.getenv("MINIMAX_API_URL", "https://api.minimax.chat/v1/chat/completions"),
