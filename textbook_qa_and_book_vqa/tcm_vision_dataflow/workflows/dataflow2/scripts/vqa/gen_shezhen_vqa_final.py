@@ -259,7 +259,7 @@ def _emit_quality_ready_file(
     if process_one_file is None:
         raise RuntimeError(
             "--quality-gate 需要可选脚本 stratify_filter_vqa.py；"
-            "请按 docs/repository_inventory.html 中的路径补充后再启用。"
+            "请将该模块放到 Python 导入路径后再启用。"
         )
     summary = process_one_file(
         input_path=input_path,

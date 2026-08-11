@@ -1,8 +1,7 @@
 # Security and data-handling policy
 
-This is a public, code-only repository. Do not commit credentials, private
-clinical records, source books, generated QA/VQA records, train/test splits,
-model checkpoints, or evaluation samples.
+FU-TCM accepts security reports for accidental credential or sensitive-data
+exposure, unsafe dependency use, and vulnerabilities in its workflow code.
 
 ## Credentials
 

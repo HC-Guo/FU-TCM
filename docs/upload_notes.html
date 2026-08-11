@@ -1,9 +1,0 @@
-<!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Repository Data Policy · FU-TCM</title><style>body{margin:0;background:#f5f8f6;color:#18201d;font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:860px;margin:auto;padding:44px 20px 64px}a{color:#176b4d}h1{font-size:2.4rem;letter-spacing:-.04em}.notice{padding:18px 20px;border:1px solid #9bc7b2;border-radius:12px;background:#eef7f2}pre{padding:18px;overflow:auto;border-radius:10px;background:#17211d;color:#e8f3ed}</style></head><body><main>
-<p><a href="../index.html">← FU-TCM index</a></p><h1>Repository data policy</h1>
-<p class="notice">FU-TCM 的当前分支仅提交代码、提示词、配置和说明文档。原始材料、生成数据、训练/测试集、图像、压缩包和 benchmark 样本保持在本地。</p>
-<h2>Before committing</h2><pre><code>git status --short
-git ls-files | LC_ALL=C grep '[^ -~]'
-git check-ignore -v &lt;local-data-path&gt;</code></pre>
-<p>第二条命令应无输出；第三条命令应显示对应的 <code>.gitignore</code> 规则。若确实需要发布数据，请使用单独的数据仓库或受控存储，并先完成授权、隐私和许可检查。</p>
-</main></body></html>

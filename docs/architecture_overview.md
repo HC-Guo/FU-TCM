@@ -1,35 +1,35 @@
 # FU-TCM architecture overview
 
-FU-TCM separates versioned workflow code from local-only research data.
+FU-TCM connects domain-source processing, structured reasoning, model training, and evaluation through four modular workflows.
 
 ```text
-Local source data (ignored)
+TCM source materials
   ├─ classical texts and generated QA checkpoints
   ├─ textbooks, illustrated books, and extracted images
   └─ clinical cases
                  │
                  ▼
-Versioned processing code
+Processing workflows
   ├─ classical_text_qa
   ├─ textbook_qa_and_book_vqa
   └─ clinical_case_reasoning
                  │
                  ▼
-Local model-ready data (ignored)
+Model-ready datasets
   ├─ text and multimodal SFT datasets
   ├─ structured reasoning and GRPO datasets
   └─ evaluation samples and generated reports
                  │
                  ▼
-Versioned training and evaluation code
+Training and evaluation workflows
   └─ sft_grpo_training_evaluation
 ```
 
-## Design rules
+## Design principles
 
-1. Repository paths use English names.
-2. Data-producing scripts and model configuration are versioned.
-3. Source data, generated records, images, archives, train/test splits, and benchmarks stay in ignored local directories.
-4. Secrets are supplied through environment variables and never committed.
+1. Each workflow can be installed and run independently.
+2. Text, multimodal, and reasoning pipelines share clear intermediate formats.
+3. Training and evaluation configuration remains reproducible across environments.
+4. Service credentials are supplied through environment variables.
 
-See `workflow_overview.md` for executable entry points and `.gitignore` for the authoritative list of local-only paths.
+See `workflow_overview.md` for executable entry points and expected inputs and outputs.

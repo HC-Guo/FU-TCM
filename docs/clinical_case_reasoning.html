@@ -1,7 +1,7 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clinical Case Reasoning · FU-TCM</title><style>body{margin:0;background:#f5f8f6;color:#18201d;font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:900px;margin:auto;padding:44px 20px 64px}a{color:#176b4d}h1{font-size:2.4rem;letter-spacing:-.04em}.notice{padding:16px 18px;border:1px solid #9bc7b2;border-radius:12px;background:#eef7f2}table{width:100%;border-collapse:collapse;background:#fff}th,td{padding:11px 13px;border:1px solid #d8e4de;text-align:left}code{overflow-wrap:anywhere}</style></head><body><main>
 <p><a href="workflow_overview.html">← Workflow overview</a></p><h1>Clinical Case Reasoning</h1>
-<p>该模块处理两类病例来源，执行抽取、结构化辨证推理转换、四诊复核与训练准备。</p><p class="notice">病例原文、处理结果和 train/test 数据均保存在各子项目的本地 <code>data/</code> 目录中，不进入 Git。</p>
-<h2>Versioned entry points</h2><table><thead><tr><th>Path</th><th>Role</th></tr></thead><tbody>
+<p>该模块处理两类病例来源，执行抽取、结构化辨证推理转换、四诊复核与训练准备。</p>
+<h2>Main entry points</h2><table><thead><tr><th>Path</th><th>Role</th></tr></thead><tbody>
 <tr><td><a href="../clinical_case_reasoning/mlzy_reasoning/scripts/extract/extract_minglaoyishi.py"><code>mlzy_reasoning/scripts/extract/</code></a></td><td>病例抽取。</td></tr>
 <tr><td><a href="../clinical_case_reasoning/mlzy_reasoning/scripts/convert/convert_minimax.py"><code>mlzy_reasoning/scripts/convert/</code></a></td><td>病例扩写与结构化转换。</td></tr>
 <tr><td><a href="../clinical_case_reasoning/mlzy_reasoning/scripts/verify/verify_mlzy.py"><code>mlzy_reasoning/scripts/verify/</code></a></td><td>质量复核。</td></tr>

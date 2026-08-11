@@ -7,7 +7,7 @@
 ```text
 source_cases/                      原始名老中医数据目录（本地）
 configs/mapping_table.json         辨证映射规则
-prompt_example.json                可选 few-shot 病案（本地，不上传）
+prompt_example.json                可选 few-shot 病案
 scripts/extract/                   从 CSV 提取 raw_data
 scripts/convert/                   调用模型转换结构化辨证数据
 scripts/verify/                    四诊补足与辨证参数复核
