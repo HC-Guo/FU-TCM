@@ -1,11 +1,33 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SFT, GRPO and Evaluation · FU-TCM</title><style>body{margin:0;background:#f5f8f6;color:#18201d;font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:900px;margin:auto;padding:44px 20px 64px}a{color:#176b4d}h1{font-size:2.4rem;letter-spacing:-.04em}.notice{padding:16px 18px;border:1px solid #9bc7b2;border-radius:12px;background:#eef7f2}table{width:100%;border-collapse:collapse;background:#fff}th,td{padding:11px 13px;border:1px solid #d8e4de;text-align:left}code{overflow-wrap:anywhere}</style></head><body><main>
-<p><a href="workflow_overview.html">← Workflow overview</a></p><h1>SFT, GRPO &amp; Evaluation</h1>
-<p>该模块提供 SFT/GRPO 数据准备、LLaMA-Factory 配置、奖励函数、评测脚本和 benchmark 构建工具。</p>
-<h2>Main entry points</h2><table><thead><tr><th>Path</th><th>Role</th></tr></thead><tbody>
-<tr><td><a href="../sft_grpo_training_evaluation/llamafactory_qwen35/qwen35_9b_full_sft_ds3.yaml"><code>llamafactory_qwen35/</code></a></td><td>SFT 训练配置。</td></tr>
-<tr><td><a href="../sft_grpo_training_evaluation/convert_bianzheng_to_verl_grpo.py"><code>convert_bianzheng_to_verl_grpo.py</code></a></td><td>verl GRPO 数据转换。</td></tr>
-<tr><td><a href="../sft_grpo_training_evaluation/reward_functions.py"><code>reward_functions.py</code></a></td><td>GRPO 奖励函数。</td></tr>
-<tr><td><a href="../sft_grpo_training_evaluation/eval_qwen35.py"><code>eval_qwen35.py</code></a></td><td>Transformers 评测。</td></tr>
-<tr><td><a href="../sft_grpo_training_evaluation/eval_qwen35_vllm.py"><code>eval_qwen35_vllm.py</code></a></td><td>vLLM 评测。</td></tr>
-<tr><td><a href="../sft_grpo_training_evaluation/benchmark_tools/generate_answer_key_html.mjs"><code>benchmark_tools/</code></a></td><td>评测样本与盲测材料生成脚本。</td></tr>
-</tbody></table></main></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FU-TCM Training and Evaluation</title>
+  <style>
+    body{margin:0;background:#f5f8f6;color:#18201d;font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    main{max-width:940px;margin:auto;padding:44px 20px 64px}a{color:#176b4d}
+    h1{font-size:2.5rem;letter-spacing:-.04em}.lead{color:#53615b;font-size:1.08rem}
+    table{width:100%;border-collapse:collapse;background:#fff}th,td{padding:12px 14px;border:1px solid #d8e4de;text-align:left;vertical-align:top}
+    th{background:#edf4f0;color:#0e4934}code{overflow-wrap:anywhere}
+  </style>
+</head>
+<body><main>
+  <p><a href="training_overview.html">← Training overview</a></p>
+  <h1>FU-TCM training and evaluation</h1>
+  <p class="lead">该部分集中提供 FU-TCM 的全参数 SFT、GRPO 推理对齐、模型推理和中医专项评测代码。</p>
+
+  <h2>Main entry points</h2>
+  <table>
+    <thead><tr><th>Path</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td><a href="../sft_grpo_training_evaluation/llamafactory_qwen35/qwen35_9b_full_sft_ds3.yaml"><code>qwen35_9b_full_sft_ds3.yaml</code></a></td><td>Qwen3.5-9B 全参数中医多模态 SFT 配置。</td></tr>
+      <tr><td><a href="../sft_grpo_training_evaluation/reward_functions.py"><code>reward_functions.py</code></a></td><td>面向格式、证型与辨证参数的 GRPO 奖励函数。</td></tr>
+      <tr><td><a href="../sft_grpo_training_evaluation/run_tcm_grpo_smoke.sh"><code>run_tcm_grpo_smoke.sh</code></a></td><td>verl GRPO 启动与最小验证入口。</td></tr>
+      <tr><td><a href="../sft_grpo_training_evaluation/eval_qwen35.py"><code>eval_qwen35.py</code></a></td><td>Transformers 模型推理与评测。</td></tr>
+      <tr><td><a href="../sft_grpo_training_evaluation/eval_qwen35_vllm.py"><code>eval_qwen35_vllm.py</code></a></td><td>vLLM 模型推理与评测。</td></tr>
+      <tr><td><a href="../sft_grpo_training_evaluation/benchmark_tools/generate_doctor_blind.mjs"><code>benchmark_tools/</code></a></td><td>中医模型医生盲测题本与答案材料。</td></tr>
+    </tbody>
+  </table>
+</main></body>
+</html>

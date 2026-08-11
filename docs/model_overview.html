@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FU-TCM Model Overview</title>
+  <style>
+    body{margin:0;background:#f5f8f6;color:#18201d;font:16px/1.72 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    main{max-width:940px;margin:auto;padding:44px 20px 64px}
+    a{color:#176b4d}h1{font-size:2.6rem;letter-spacing:-.045em}h2{margin-top:38px}
+    .lead{font-size:1.12rem;color:#53615b}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .card{padding:20px;border:1px solid #d8e4de;border-radius:14px;background:#fff}
+    .card h3{margin:0 0 8px;color:#176b4d}.card p{margin:0;color:#53615b}
+    table{width:100%;border-spacing:0;border:1px solid #d8e4de;border-radius:14px;overflow:hidden;background:#fff}
+    th,td{padding:12px 14px;border-bottom:1px solid #d8e4de;text-align:left}th{background:#edf4f0;color:#0e4934}tr:last-child td{border:0}
+    .reward{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.metric{padding:18px;border-radius:14px;text-align:center;background:#e8f3ed}
+    .metric strong{display:block;color:#176b4d;font-size:1.7rem}
+    @media(max-width:720px){.grid,.reward{grid-template-columns:1fr}}
+  </style>
+</head>
+<body><main>
+  <p><a href="../index.html">← FU-TCM</a></p>
+  <h1>FU-TCM model overview</h1>
+  <p class="lead">FU-TCM 是面向中医知识理解、多模态诊察、临床推理与结构化辨证训练的多模态大语言模型。</p>
+
+  <h2>Model configuration</h2>
+  <table>
+    <tbody>
+      <tr><th>Base model</th><td>Qwen3.5-9B</td></tr>
+      <tr><th>Modalities</th><td>Text and image</td></tr>
+      <tr><th>Supervised alignment</th><td>Full-parameter SFT</td></tr>
+      <tr><th>Reasoning alignment</th><td>verl GRPO</td></tr>
+      <tr><th>SFT context length</th><td>4,096 tokens</td></tr>
+      <tr><th>Training stack</th><td>bf16 · DeepSpeed ZeRO-3 · LLaMA-Factory</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Core capabilities</h2>
+  <div class="grid">
+    <section class="card"><h3>中医知识理解</h3><p>理解古籍、方药、医理、教材与临床知识，完成有依据的中医问答。</p></section>
+    <section class="card"><h3>多模态诊察理解</h3><p>处理舌诊、面诊、中药图像与医学图文信息。</p></section>
+    <section class="card"><h3>结构化辨证推理</h3><p>分析四诊、八纲、脏腑、气血津液和病因要素。</p></section>
+    <section class="card"><h3>证型判断</h3><p>根据临床证据组织辨证过程，并输出明确证型。</p></section>
+  </div>
+
+  <h2>GRPO alignment objective</h2>
+  <div class="reward">
+    <div class="metric"><strong>20%</strong>格式与推理结构</div>
+    <div class="metric"><strong>40%</strong>证型一致性</div>
+    <div class="metric"><strong>40%</strong>辨证参数一致性</div>
+  </div>
+  <p>奖励函数同时约束推理结构和最终证型，而不只评价回答是否流畅。</p>
+
+  <p>Continue to the <a href="training_overview.html">training overview</a>.</p>
+</main></body>
+</html>
