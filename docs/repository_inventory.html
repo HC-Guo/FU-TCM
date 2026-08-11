@@ -19,14 +19,14 @@
 </head>
 <body><main>
   <h1>FU-TCM GitHub 内容与缺失文件清单</h1>
-  <p class="summary"><strong>结论：</strong>当前整理分支已转为代码、配置与文档仓库；训练集、测试集、病例示例、书籍、图片、模型和生成结果不再跟踪。主链路代码已归类，但仍有 4 组原始辅助文件未上传，因此不能把所有旧入口标记为“完整可运行”。</p>
+  <p class="summary"><strong>结论：</strong>当前整理分支保留代码、配置、文档以及项目定制的 DataFlow 1.0.10 runtime；训练集、测试集、病例示例、书籍、医学图像、模型和生成结果不再跟踪。主链路代码已归类，但仍有 4 组原始辅助文件未上传，因此不能把所有旧入口标记为“完整可运行”。</p>
 
   <h2>已保留并整理的内容</h2>
   <table>
     <thead><tr><th>模块</th><th>保留内容</th><th>状态</th></tr></thead>
     <tbody>
       <tr><td><code>01_classical_text_qa</code></td><td>7 个古籍 QA 生成器、清洗和 SFT 转换脚本、依赖文件</td><td class="ok">主路径已统一为 <code>source_texts → qa_output → sft_data</code></td></tr>
-      <tr><td><code>02_textbook_qa_and_book_vqa</code></td><td>教材 QA、舌诊/望诊/脉诊/中药 VQA 脚本、分块器和提示词</td><td class="ok">DataFlow 改为 <code>open-dataflow==1.0.10</code> 外部依赖</td></tr>
+      <tr><td><code>02_textbook_qa_and_book_vqa</code></td><td>教材 QA、舌诊/望诊/脉诊/中药 VQA 脚本、分块器、提示词和定制 DataFlow runtime</td><td class="ok">保留本地 DataFlow 1.0.10 代码；移除其 <code>example/</code> 和 <code>test/</code></td></tr>
       <tr><td><code>03_clinical_case_reasoning</code></td><td>抽取、转换、复核、确定性 train/test 切分和 verl parquet 准备脚本</td><td class="ok">few-shot 病案示例改为本地可选文件</td></tr>
       <tr><td><code>04_sft_grpo_training_evaluation</code></td><td>GRPO 转换、奖励函数、SFT 配置、训练与评测入口</td><td class="ok">转换输出与训练入口统一为 <code>verl_data</code></td></tr>
       <tr><td>仓库治理</td><td><code>SECURITY.md</code>、强化后的 <code>.gitignore</code>、仓库卫生检查和 GitHub Actions</td><td class="ok">阻止数据、密钥、Windows 绝对路径和非英文路径再次进入 Git</td></tr>
@@ -35,7 +35,8 @@
 
   <h2>本次从 Git 跟踪中删除</h2>
   <ul>
-    <li>两份重复的 DataFlow 第三方源码树，共 986 个文件；其中包含上游示例、测试数据、PDF、图片、音频和 JSONL。</li>
+    <li><code>workflows/dataflow2/framework/DataFlow-main/</code>：重复的 Open-DataFlow 1.0.9 完整快照，共 485 个文件。</li>
+    <li><code>workflows/dataflow_runtime/dataflow/example/</code> 的 54 个上游/项目示例文件，以及 <code>workflows/dataflow_runtime/test/</code> 的 34 个上游测试文件；runtime 代码本身已恢复。</li>
     <li><code>03_clinical_case_reasoning/mlzy_reasoning/prompt_example.json</code>：包含真实风格的病案 few-shot 示例，现改为本地可选输入。</li>
     <li>后续产生的 JSONL、parquet、CSV、书籍、图片、模型、日志、benchmark 和 train/test 目录均由 <code>.gitignore</code> 排除。</li>
   </ul>

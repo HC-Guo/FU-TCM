@@ -21,8 +21,12 @@ FORBIDDEN_PATH_PARTS = {
     "source_cases", "sft_data", "sft_image_data", "sft_merged", "verl_data",
 }
 FORBIDDEN_PREFIXES = (
-    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/",
     "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow2/framework/DataFlow-main/",
+    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/dataflow/example/",
+    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/test/",
+)
+ALLOWED_BINARY_PREFIXES = (
+    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/static/logo/",
 )
 SECRET_PATTERNS = {
     "OpenAI-style token": re.compile(r"\bsk-[A-Za-z0-9_-]{20,}\b"),
@@ -33,7 +37,9 @@ SECRET_PATTERNS = {
     "Slack token": re.compile(r"\bxox[baprs]-[A-Za-z0-9-]{10,}\b"),
     "private key": re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
 }
-WINDOWS_ABSOLUTE_PATH = re.compile(r"[A-Za-z]:\\")
+WINDOWS_ABSOLUTE_PATH = re.compile(
+    r"\b[A-Za-z]:\\(?:[^\\\r\n\"']+\\)+[^\\\r\n\"']*"
+)
 KEY_DERIVATION_LOG = re.compile(
     r"\b(?:key_prefix|key_suffix)\s*=|"
     r"\b(?:api_key|access_token|secret_key)\s*\[\s*:\s*\d+|"
@@ -67,12 +73,15 @@ def main() -> int:
         relative = path.relative_to(ROOT).as_posix()
         if any(ord(char) > 127 for char in relative):
             errors.append(f"non-English tracked path: {relative}")
-        if path.suffix.lower() in DATA_EXTENSIONS:
+        if (
+            path.suffix.lower() in DATA_EXTENSIONS
+            and not relative.startswith(ALLOWED_BINARY_PREFIXES)
+        ):
             errors.append(f"tracked dataset/binary source file: {relative}")
         if any(part in FORBIDDEN_PATH_PARTS for part in path.relative_to(ROOT).parts):
             errors.append(f"tracked local-data directory: {relative}")
         if relative.startswith(FORBIDDEN_PREFIXES):
-            errors.append(f"vendored DataFlow tree must stay removed: {relative}")
+            errors.append(f"excluded DataFlow snapshot/example/test file: {relative}")
         if path.name == "prompt_example.json":
             errors.append(f"tracked clinical example data: {relative}")
         if path.name == ".env" or (path.name.startswith(".env.") and path.name != ".env.example"):
@@ -81,10 +90,13 @@ def main() -> int:
         text = read_text(path)
         if text is None:
             continue
+        if text.startswith("version https://git-lfs.github.com/spec/v1"):
+            errors.append(f"unresolved Git LFS pointer: {relative}")
         for label, pattern in SECRET_PATTERNS.items():
             if pattern.search(text):
                 errors.append(f"{label} candidate: {relative}")
-        if path.suffix == ".py":
+        is_unrendered_template = "{{" in relative or "{%" in relative
+        if path.suffix == ".py" and not is_unrendered_template:
             try:
                 # Validate against the oldest Python version supported by CI even
                 # when this script is run from a newer local interpreter.

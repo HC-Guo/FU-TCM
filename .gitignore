@@ -72,6 +72,8 @@
 /02_textbook_qa_and_book_vqa/tcm_vision_dataflow/data/
 /02_textbook_qa_and_book_vqa/tcm_vision_dataflow/results/
 /02_textbook_qa_and_book_vqa/tcm_vision_dataflow/source_books/
+/02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/dataflow/example/
+/02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/test/
 /02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow2/scripts/qa/output/
 **/*_workdir/
 
