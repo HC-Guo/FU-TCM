@@ -1,38 +1,19 @@
-# 面诊及脉诊 VQA 提示词工程
+# TCM Visual-QA Prompt Engineering
 
-这个目录现在按任务拆分为独立子工程，避免面诊和脉诊共用一套规则导致抽取污染。
+This directory separates prompt design by visual task so that facial inspection, pulse diagnosis, tongue diagnosis, and mixed inspection materials do not share incompatible extraction rules.
 
-## 目录说明
+## Structure
 
-- `common_design_rules.md`: 通用设计原则与抽取约束
-- `mianzhen/`: 面诊子工程
-- `maizhen/`: 脉诊子工程
-- `wangzhen_mixed/`: 暂存综合望诊或暂未明确归类的书
+- `common_design_rules.md`: shared extraction and grounding constraints.
+- `mianzhen/`: facial-inspection prompts.
+- `maizhen/`: pulse-diagnosis prompts.
+- `shezhen/`: tongue-diagnosis prompts.
+- `wangzhen_mixed/`: mixed or not-yet-classified inspection sources.
 
-## 为什么拆分
+## Design goals
 
-- 面诊处理的是面部颜色、部位、形态、纹理、斑点、浮肿等征象
-- 脉诊处理的是脉波图、脉形、节律、参数、主波和潮波等结构化信号
-- 两类图片的筛选规则、提问方式、答案依据和后处理校验完全不同
-
-## 当前设计目标
-
-- 面向中医带图书籍，从图文混排内容中抽取高质量 VQA
-- 保证每个 QA 对应单张图片，避免跨图污染
-- 允许跨页关联图片与说明文字
-- 对信息不足样本输出空结果，而不是生成“无法回答”类脏数据
-- 输出结构尽量与现有 `gen_shezhen_vqa.py` 风格兼容
-
-## 建议接入方式
-
-1. 先按书籍类别路由到 `mianzhen` 或 `maizhen`
-2. 共用底层 XML 解析与缓存链路
-3. 仅在 prompt、图片筛选、后处理校验三层分开
-
-## 下一步
-
-下一步最合理的是直接落代码：
-
-1. 新建 `gen_maizhen_vqa.py`
-2. 新建 `gen_mianzhen_vqa.py`
-3. 把书单做显式分类映射
+- Produce one grounded QA record for one image.
+- Permit cross-page matching when an image and its explanation are separated.
+- Return an empty result when the source lacks enough evidence.
+- Keep output fields compatible with the existing VQA generators.
+- Route each source to task-specific prompts, image filters, and post-processing checks.

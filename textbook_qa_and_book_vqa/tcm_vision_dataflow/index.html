@@ -1,53 +1,34 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>中医视觉/图文 DataFlow 数据处理流程</title>
+  <title>TCM Textbook QA and Illustrated-Book VQA · FU-TCM</title>
   <style>
-    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f7f8fa; color: #202124; }
-    main { max-width: 1040px; margin: 0 auto; padding: 32px 20px 48px; }
-    h1 { margin: 0 0 10px; font-size: 30px; }
-    h2 { margin-top: 28px; font-size: 20px; }
-    p, li { line-height: 1.7; }
-    code { background: #eef0f3; padding: 2px 5px; border-radius: 4px; }
-    pre { background: #1f2933; color: #f5f7fa; padding: 14px; overflow: auto; border-radius: 6px; }
-    table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #dde1e6; }
-    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #edf0f2; vertical-align: top; }
-    th { background: #eef3f8; }
+    body{margin:0;font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f7f8fa;color:#202124}main{max-width:1040px;margin:auto;padding:32px 20px 48px}a{color:#176b4d}h1{margin:0 0 10px;font-size:30px}h2{margin-top:28px;font-size:20px}code{padding:2px 5px;border-radius:4px;background:#eef0f3}pre{padding:14px;overflow:auto;border-radius:6px;background:#1f2933;color:#f5f7fa}table{width:100%;border-collapse:collapse;border:1px solid #dde1e6;background:#fff}th,td{padding:10px 12px;border-bottom:1px solid #edf0f2;text-align:left;vertical-align:top}th{background:#eef3f8}
   </style>
 </head>
-<body>
-<main>
-  <h1>中医视觉/图文 DataFlow 数据处理流程</h1>
-  <p>本目录保留舌诊、望诊、面诊、脉诊、中药草图和医学书籍 QA 的 DataFlow 脚本、提示词与框架源码。</p>
-
-  <h2>结构</h2>
-  <table>
-    <thead><tr><th>路径</th><th>说明</th></tr></thead>
-    <tbody>
-      <tr><td><code>source_books/</code></td><td>PDF、EPUB 等输入材料</td></tr>
-      <tr><td><code>archives/</code></td><td>输入材料归档</td></tr>
-      <tr><td><code>data/</code></td><td>QA/VQA 中间数据</td></tr>
-      <tr><td><code>results/</code></td><td>工作流生成结果</td></tr>
-      <tr><td><code>workflows/dataflow2/</code></td><td>Dataflow 2 的 prompt、脚本和框架</td></tr>
-      <tr><td><code>workflows/dataflow_runtime/</code></td><td>项目定制的 DataFlow 1.0.10 runtime</td></tr>
-      <tr><td><code>requirements.txt</code></td><td>DataFlow runtime 与通用 Python 依赖</td></tr>
-    </tbody>
-  </table>
-
-  <h2>常用入口</h2>
+<body><main>
+  <p><a href="../../index.html">← FU-TCM</a></p>
+  <h1>TCM textbook QA and illustrated-book VQA</h1>
+  <p>This module contains preparation code and prompts for text QA and visual QA. The bundled DataFlow runtime is an implementation dependency, not the focus of FU-TCM.</p>
+  <h2>Structure</h2>
+  <table><thead><tr><th>Path</th><th>Role</th></tr></thead><tbody>
+    <tr><td><code>source_books/</code></td><td>Local PDF and EPUB inputs; excluded from Git.</td></tr>
+    <tr><td><code>data/</code></td><td>Local intermediate QA/VQA records; excluded from Git.</td></tr>
+    <tr><td><code>results/</code></td><td>Local generated outputs; excluded from Git.</td></tr>
+    <tr><td><code>workflows/dataflow2/</code></td><td>FU-TCM preparation scripts and prompts.</td></tr>
+    <tr><td><code>workflows/dataflow_runtime/</code></td><td>Project-specific DataFlow runtime.</td></tr>
+    <tr><td><code>requirements.txt</code></td><td>Python dependencies.</td></tr>
+  </tbody></table>
+  <h2>Main entry points</h2>
   <pre><code>workflows/dataflow2/scripts/vqa/
 workflows/dataflow2/scripts/qa/
 workflows/dataflow2/prompt_engineering/
-workflows/dataflow_runtime/
-data/shezhen_vqa/
-results/</code></pre>
-
-  <h2>环境变量</h2>
-  <pre><code>export DF_API_KEY="&lt;your_api_key&gt;"
-export MINIMAX_API_URL="https://api.minimax.chat/v1/chat/completions"
-export MINIMAX_MODEL="MiniMax-M1"</code></pre>
-</main>
-</body>
+workflows/dataflow_runtime/</code></pre>
+  <h2>Environment variables</h2>
+  <pre><code>export DF_API_KEY="&lt;your-api-key&gt;"
+export MINIMAX_API_URL="&lt;openai-compatible-chat-completions-url&gt;"
+export MINIMAX_MODEL="&lt;model-name&gt;"</code></pre>
+</main></body>
 </html>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -21,35 +21,35 @@
 <body><main>
   <p><a href="../index.html">← FU-TCM</a></p>
   <h1>FU-TCM model overview</h1>
-  <p class="lead">FU-TCM 是面向中医知识理解、多模态诊察、临床推理与结构化辨证训练的多模态大语言模型。</p>
+  <p class="lead">FU-TCM is a multimodal large-language-model family that makes the path from four-examination evidence through intermediate <em>bianzheng</em> judgments to the final syndrome explicit and reviewable.</p>
 
   <h2>Model configuration</h2>
   <table>
     <tbody>
-      <tr><th>Base model</th><td>Qwen3.5-9B</td></tr>
+      <tr><th>Model family</th><td>FU-TCM-9B and FU-TCM-27B</td></tr>
+      <tr><th>Base models</th><td>Qwen3.5-9B and Qwen3.6-27B</td></tr>
       <tr><th>Modalities</th><td>Text and image</td></tr>
       <tr><th>Supervised alignment</th><td>Full-parameter SFT</td></tr>
-      <tr><th>Reasoning alignment</th><td>verl GRPO</td></tr>
-      <tr><th>SFT context length</th><td>4,096 tokens</td></tr>
-      <tr><th>Training stack</th><td>bf16 · DeepSpeed ZeRO-3 · LLaMA-Factory</td></tr>
+      <tr><th>Reasoning alignment</th><td>Bianzheng-Grounded Policy Optimization</td></tr>
+      <tr><th>Public training path</th><td>Qwen3.5-9B · bf16 · DeepSpeed ZeRO-3 · LLaMA-Factory · verl</td></tr>
     </tbody>
   </table>
 
   <h2>Core capabilities</h2>
   <div class="grid">
-    <section class="card"><h3>中医知识理解</h3><p>理解古籍、方药、医理、教材与临床知识，完成有依据的中医问答。</p></section>
-    <section class="card"><h3>多模态诊察理解</h3><p>处理舌诊、面诊、中药图像与医学图文信息。</p></section>
-    <section class="card"><h3>结构化辨证推理</h3><p>分析四诊、八纲、脏腑、气血津液和病因要素。</p></section>
-    <section class="card"><h3>证型判断</h3><p>根据临床证据组织辨证过程，并输出明确证型。</p></section>
+    <section class="card"><h3>TCM knowledge</h3><p>Answers questions grounded in classical works, formulas, materia medica, theory, textbooks, and clinical knowledge.</p></section>
+    <section class="card"><h3>Multimodal understanding</h3><p>Connects textual context with tongue, face, herb, and other medical images.</p></section>
+    <section class="card"><h3>Structured reasoning</h3><p>Represents the four examinations, eight principles, organ systems, qi-blood-fluid states, and pathogenic factors.</p></section>
+    <section class="card"><h3>Inspectable outputs</h3><p>Exposes 30 intermediate fields linking clinical evidence to the final syndrome.</p></section>
   </div>
 
-  <h2>GRPO alignment objective</h2>
+  <h2>BGPO alignment objective</h2>
   <div class="reward">
-    <div class="metric"><strong>20%</strong>格式与推理结构</div>
-    <div class="metric"><strong>40%</strong>证型一致性</div>
-    <div class="metric"><strong>40%</strong>辨证参数一致性</div>
+    <div class="metric"><strong>Format</strong>Required response structure</div>
+    <div class="metric"><strong>Syndrome</strong>Prediction consistency</div>
+    <div class="metric"><strong>Fields</strong>Intermediate fidelity</div>
   </div>
-  <p>奖励函数同时约束推理结构和最终证型，而不只评价回答是否流畅。</p>
+  <p>These verifiable rewards evaluate both the diagnostic path and the final result rather than surface fluency alone.</p>
 
   <p>Continue to the <a href="training_overview.html">training overview</a>.</p>
 </main></body>

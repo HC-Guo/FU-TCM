@@ -1,18 +1,5 @@
-# 综合望诊待定区
+# Mixed Inspection Staging Area
 
-这个目录用于暂存“既不纯面诊，也不纯脉诊”的书。
+This directory contains prompt notes for sources that are neither purely facial-inspection nor purely pulse-diagnosis material.
 
-## 典型情况
-
-- 综合望诊教材
-- 同时包含面、舌、体态、色诊等内容的图书
-- 暂时无法自动判断主任务类型的书
-
-## 处理策略
-
-优先不要直接进入正式抽取。
-
-建议先做以下之一：
-
-1. 人工标注为 `面诊` 或 `脉诊`
-2. 后续单独设计 `望诊综合 prompt`
+Typical sources combine face, tongue, posture, complexion, or other inspection content. Do not route them directly into production extraction until they have been manually assigned to a specific task or a dedicated mixed-inspection prompt has been validated.

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -15,18 +15,18 @@
 <body><main>
   <p><a href="training_overview.html">← Training overview</a></p>
   <h1>FU-TCM training and evaluation</h1>
-  <p class="lead">该部分集中提供 FU-TCM 的全参数 SFT、GRPO 推理对齐、模型推理和中医专项评测代码。</p>
+  <p class="lead">This module contains the executable FU-TCM full-parameter SFT, BGPO/GRPO alignment, inference, and TCM-specific evaluation code.</p>
 
   <h2>Main entry points</h2>
   <table>
     <thead><tr><th>Path</th><th>Role</th></tr></thead>
     <tbody>
-      <tr><td><a href="../sft_grpo_training_evaluation/llamafactory_qwen35/qwen35_9b_full_sft_ds3.yaml"><code>qwen35_9b_full_sft_ds3.yaml</code></a></td><td>Qwen3.5-9B 全参数中医多模态 SFT 配置。</td></tr>
-      <tr><td><a href="../sft_grpo_training_evaluation/reward_functions.py"><code>reward_functions.py</code></a></td><td>面向格式、证型与辨证参数的 GRPO 奖励函数。</td></tr>
-      <tr><td><a href="../sft_grpo_training_evaluation/run_tcm_grpo_smoke.sh"><code>run_tcm_grpo_smoke.sh</code></a></td><td>verl GRPO 启动与最小验证入口。</td></tr>
-      <tr><td><a href="../sft_grpo_training_evaluation/eval_qwen35.py"><code>eval_qwen35.py</code></a></td><td>Transformers 模型推理与评测。</td></tr>
-      <tr><td><a href="../sft_grpo_training_evaluation/eval_qwen35_vllm.py"><code>eval_qwen35_vllm.py</code></a></td><td>vLLM 模型推理与评测。</td></tr>
-      <tr><td><a href="../sft_grpo_training_evaluation/benchmark_tools/generate_doctor_blind.mjs"><code>benchmark_tools/</code></a></td><td>中医模型医生盲测题本与答案材料。</td></tr>
+      <tr><td><a href="../sft_grpo_training_evaluation/llamafactory_qwen35/qwen35_9b_full_sft_ds3.yaml"><code>qwen35_9b_full_sft_ds3.yaml</code></a></td><td>Qwen3.5-9B full-parameter multimodal TCM SFT configuration.</td></tr>
+      <tr><td><a href="../sft_grpo_training_evaluation/reward_functions.py"><code>reward_functions.py</code></a></td><td>BGPO/GRPO rewards for format, syndrome consistency, and intermediate diagnostic fields.</td></tr>
+      <tr><td><a href="../sft_grpo_training_evaluation/run_tcm_grpo_smoke.sh"><code>run_tcm_grpo_smoke.sh</code></a></td><td>Minimal verl policy-optimization launch and validation entry point.</td></tr>
+      <tr><td><a href="../sft_grpo_training_evaluation/eval_qwen35.py"><code>eval_qwen35.py</code></a></td><td>Transformers inference and evaluation.</td></tr>
+      <tr><td><a href="../sft_grpo_training_evaluation/eval_qwen35_vllm.py"><code>eval_qwen35_vllm.py</code></a></td><td>vLLM inference and evaluation.</td></tr>
+      <tr><td><a href="../sft_grpo_training_evaluation/benchmark_tools/generate_doctor_blind.mjs"><code>benchmark_tools/</code></a></td><td>Blinded question books and answer materials for clinician evaluation.</td></tr>
     </tbody>
   </table>
 </main></body>

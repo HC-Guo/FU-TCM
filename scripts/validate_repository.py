@@ -28,6 +28,9 @@ FORBIDDEN_PREFIXES = (
 ALLOWED_BINARY_PREFIXES = (
     "textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/static/logo/",
 )
+ALLOWED_BINARY_FILES = {
+    "assets/fu-tcm-framework-overview.png",
+}
 REQUIRED_PIPELINE_FILES = (
     "classical_text_qa/scripts/process/convert_to_sft_format.py",
     "textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/pyproject.toml",
@@ -102,6 +105,7 @@ def main() -> int:
             errors.append(f"non-English tracked path: {relative}")
         if (
             path.suffix.lower() in DATA_EXTENSIONS
+            and relative not in ALLOWED_BINARY_FILES
             and not relative.startswith(ALLOWED_BINARY_PREFIXES)
         ):
             errors.append(f"tracked dataset/binary source file: {relative}")
