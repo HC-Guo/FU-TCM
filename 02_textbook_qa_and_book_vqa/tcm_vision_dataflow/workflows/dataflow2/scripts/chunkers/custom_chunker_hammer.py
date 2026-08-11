@@ -173,7 +173,8 @@ def extract_figures(lines: list[str], headers: list[tuple[int, str]]) -> list[Fi
 
 def collect_figure_mentions(lines: list[str], figure_id: str, strict_mode: bool) -> list[int]:
     mentions: list[int] = []
-    pattern = re.compile(rf"图\s*{re.escape(figure_id).replace('\\-', '[-－—\\.]')}")
+    escaped_figure_id = re.escape(figure_id).replace(r"\-", r"[-－—\.]")
+    pattern = re.compile(rf"图\s*{escaped_figure_id}")
     for idx, line in enumerate(lines):
         text = line.strip()
         if not text or text.startswith("# "):

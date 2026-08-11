@@ -86,7 +86,9 @@ def main() -> int:
                 errors.append(f"{label} candidate: {relative}")
         if path.suffix == ".py":
             try:
-                ast.parse(text, filename=relative)
+                # Validate against the oldest Python version supported by CI even
+                # when this script is run from a newer local interpreter.
+                ast.parse(text, filename=relative, feature_version=(3, 11))
             except SyntaxError as exc:
                 errors.append(f"Python syntax error: {relative}:{exc.lineno}: {exc.msg}")
             for line_number, line in enumerate(text.splitlines(), start=1):
