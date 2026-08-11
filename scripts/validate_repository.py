@@ -133,16 +133,16 @@ def main() -> int:
             for line_number, line in enumerate(text.splitlines(), start=1):
                 if WINDOWS_ABSOLUTE_PATH.search(line):
                     errors.append(f"hardcoded Windows path: {relative}:{line_number}")
-                if relative != "scripts/check_repository_hygiene.py" and KEY_DERIVATION_LOG.search(line):
+                if relative != "scripts/validate_repository.py" and KEY_DERIVATION_LOG.search(line):
                     errors.append(f"credential-derived logging: {relative}:{line_number}")
 
     if errors:
-        print("Repository hygiene check failed:")
+        print("Repository validation failed:")
         for error in sorted(set(errors)):
             print(f"- {error}")
         return 1
 
-    print(f"Repository hygiene check passed ({len(files)} tracked files).")
+    print(f"Repository validation passed ({len(files)} tracked files).")
     return 0
 
 
