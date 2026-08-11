@@ -16,7 +16,7 @@ exposure, unsafe dependency use, and vulnerabilities in its workflow code.
 - Store source and generated datasets only in paths ignored by `.gitignore`.
 - Use a separate private data repository or controlled object storage when
   data must be shared.
-- Run `python scripts/check_repository_hygiene.py` before every push.
+- Run `python scripts/validate_repository.py` before every push.
 
 ## Reporting
 

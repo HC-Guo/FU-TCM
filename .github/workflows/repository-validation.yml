@@ -1,4 +1,4 @@
-name: Repository hygiene
+name: Repository validation
 
 on:
   push:
@@ -8,12 +8,12 @@ permissions:
   contents: read
 
 jobs:
-  code-only-check:
+  quality-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Reject datasets, secrets, non-English paths, and syntax errors
-        run: python scripts/check_repository_hygiene.py
+      - name: Validate repository structure and security rules
+        run: python scripts/validate_repository.py
