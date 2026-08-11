@@ -1,8 +1,8 @@
 """
 mlzy 数据四诊补足 + 辨证参数复核脚本
 
-输入：bianzheng_mlzy_train.jsonl (1402条) + bianzheng_mlzy_test.jsonl (295条)
-输出：*_verified.jsonl（不覆盖原文件）
+输入：bianzheng_mlzy.jsonl
+输出：bianzheng_mlzy_verified.jsonl（不覆盖原文件）
 
 两步合一：单次 API 调用同时补足缺失四诊 + 复核辨证参数
 
@@ -44,8 +44,7 @@ MAX_TOKENS = 2560
 PROGRESS_PATH = os.path.join(PROJECT_ROOT, "data", "progress", "verify_mlzy_progress.json")
 
 INPUT_FILES = [
-    ("bianzheng_mlzy_train.jsonl", "bianzheng_mlzy_train_verified.jsonl"),
-    ("bianzheng_mlzy_test.jsonl", "bianzheng_mlzy_test_verified.jsonl"),
+    ("bianzheng_mlzy.jsonl", "bianzheng_mlzy_verified.jsonl"),
 ]
 
 write_lock = threading.Lock()

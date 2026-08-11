@@ -29,7 +29,7 @@ sys.path.insert(0, str(PROJECT_ROOT.parent / "Dataflow" / "run_dataflow"))
 # ── Prompt ────────────────────────────────────────────────────────────────────
 PROMPT_PATH = (
     PROJECT_ROOT.parent.parent
-    / "面诊及脉诊_vqa_prompt工程"
+    / "prompt_engineering"
     / "zhongyao_caotu"
     / "vqa_prompt.md"
 )

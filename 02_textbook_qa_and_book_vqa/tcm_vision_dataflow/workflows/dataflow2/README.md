@@ -48,8 +48,7 @@
 │   ├── wangzhen_mixed/                 # 望诊综合 prompt
 │   └── zhongyao_caotu/                 # 中药彩图 prompt
 │
-└── framework/                      # DataFlow 开源框架
-    └── DataFlow-main/
+└── requirements.txt                # 位于 tcm_vision_dataflow 根目录
 ```
 
 ## 数据格式
@@ -99,7 +98,7 @@
 ### 依赖
 
 ```bash
-pip install open-dataflow pandas tqdm
+pip install -r ../../requirements.txt
 ```
 
 ### 环境变量

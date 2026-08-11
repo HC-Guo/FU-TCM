@@ -1,6 +1,6 @@
 """
 中医病案辨证结构化转换脚本 — MiniMax API
-将 train_set_599.json 转换为 prompt_example.json 格式的结构化辨证数据
+将本地提取结果转换为结构化辨证数据；可选 few-shot 示例保持在本地。
 
 核心原则：四诊 → 辨证参数 → 证型（正向推理，禁止从证型倒推）
 """
@@ -25,7 +25,9 @@ MODEL_NAME = os.getenv("OPENAI_MODEL") or os.getenv("MINIMAX_MODEL") or "MiniMax
 INPUT_FILE = PROCESSED_DIR / "名老中医_extracted.json"
 OUTPUT_FILE = PROCESSED_DIR / "bianzheng_mlzy.jsonl"
 MAPPING_FILE = CONFIG_DIR / "mapping_table.json"
-EXAMPLE_FILE = PROJECT_ROOT / "prompt_example.json"
+EXAMPLE_FILE = Path(
+    os.getenv("TCM_PROMPT_EXAMPLE_FILE", str(PROJECT_ROOT / "prompt_example.json"))
+).expanduser()
 
 CONCURRENCY = 10
 TEMPERATURE = 0.3
@@ -245,10 +247,12 @@ def build_system_prompt(mapping_table_str: str) -> str:
 
 
 def build_user_prompt(example_raw: dict, example_converted: dict, record: dict) -> str:
-    raw_str = json.dumps(example_raw, ensure_ascii=False, indent=2)
-    conv_str = json.dumps(example_converted, ensure_ascii=False, indent=2)
     rec_str = json.dumps(record, ensure_ascii=False, indent=2)
-    return f"""以下是一个完整的转换示例，请严格参照其格式、推理深度和正向推理原则：
+    example_section = ""
+    if example_raw and example_converted:
+        raw_str = json.dumps(example_raw, ensure_ascii=False, indent=2)
+        conv_str = json.dumps(example_converted, ensure_ascii=False, indent=2)
+        example_section = f"""以下是一个本地转换示例，请参照其格式和正向推理原则：
 
 【示例】
 输入：
@@ -259,7 +263,9 @@ def build_user_prompt(example_raw: dict, example_converted: dict, record: dict) 
 
 ---
 
-现在请对以下病案进行辨证结构化转换，输出JSON（只输出与上面"输出"相同结构的JSON，包含case_id、case_info、four_diagnosis、bianzheng、syndrome、explanations）：
+"""
+
+    return f"""{example_section}现在请对以下病案进行辨证结构化转换，输出JSON（包含case_id、case_info、four_diagnosis、bianzheng、syndrome、explanations）：
 
 {rec_str}"""
 
@@ -367,12 +373,17 @@ async def main():
         mapping = json.load(f)
     mapping_str = json.dumps(mapping, ensure_ascii=False, indent=2)
 
-    # 加载示例
-    print("loading example...")
-    with open(EXAMPLE_FILE, "r", encoding="utf-8") as f:
-        example_data = json.load(f)
-    example_raw = example_data["raw_data"]
-    example_converted = example_data["converted"]
+    # few-shot 病案属于本地数据；缺失时安全退化为 zero-shot。
+    example_raw = {}
+    example_converted = {}
+    if EXAMPLE_FILE.exists():
+        print(f"loading local example: {EXAMPLE_FILE}")
+        with EXAMPLE_FILE.open("r", encoding="utf-8") as f:
+            example_data = json.load(f)
+        example_raw = example_data.get("raw_data", {})
+        example_converted = example_data.get("converted", {})
+    else:
+        print("local prompt example not found; continuing without few-shot data")
 
     # 构建 system prompt
     system_prompt = build_system_prompt(mapping_str)

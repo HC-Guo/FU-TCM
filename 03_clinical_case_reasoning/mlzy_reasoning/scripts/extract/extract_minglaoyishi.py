@@ -1,5 +1,5 @@
 """
-从名老中医CSV数据中提取辨证病案，转为与 train_grpo_600.json 相同的 raw_data 格式。
+从本地名老中医 CSV 数据中提取统一的 raw_data 病案格式。
 输出：名老中医_extracted.json
 """
 
@@ -73,7 +73,7 @@ def dedup_tongue_pulse(text: str) -> str:
 def build_望闻切诊(row: dict) -> str:
     """
     从舌脉象、舌质舌态、脉等字段构造 '中医望闻切诊' 文本。
-    模仿 train_grpo_600.json 的格式。
+    转换为下游脚本使用的统一 raw_data 格式。
     """
     # 舌象
     she = clean_text(row.get('舌质舌态', ''))
@@ -281,7 +281,7 @@ def extract_cases():
     best_rows = [v[0] for v in patient_best.values()]
     print(f"按患者去重后: {len(best_rows)}")
 
-    # 转换为 train_grpo_600.json 的 raw_data 格式
+    # 转换为下游脚本使用的统一 raw_data 格式
     results = []
     for idx, row in enumerate(best_rows):
         pid = row.get('患者编号', str(idx))

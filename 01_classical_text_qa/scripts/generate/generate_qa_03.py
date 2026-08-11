@@ -391,9 +391,9 @@ def main():
     """主函数 - 批量处理03_classics/standard目录下所有文件"""
 
     # 目录配置
-    INPUT_DIR = PROJECT_ROOT / "中医古籍分类/03_classics/standard"
+    INPUT_DIR = PROJECT_ROOT / "source_texts/03_classics/standard"
     CHECKPOINT_DIR = PROJECT_ROOT / "qa_output/03_classics"       # 旧输出，用于读断点
-    OUTPUT_DIR = PROJECT_ROOT / "qa_output_v2/03_classics"        # 新输出
+    OUTPUT_DIR = PROJECT_ROOT / "qa_output/03_classics"
 
     # 创建输出目录
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

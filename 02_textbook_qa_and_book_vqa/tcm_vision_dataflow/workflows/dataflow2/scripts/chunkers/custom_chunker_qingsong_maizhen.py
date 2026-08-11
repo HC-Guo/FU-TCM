@@ -17,14 +17,11 @@ import shutil
 from dataclasses import dataclass
 from pathlib import Path
 
+from config import get_custom_chunker_paths
+
 BOOK_NAME = "轻松学脉诊"
-MD_ROOT = Path(
-    r"E:\md\轻松学脉诊 (古聖先賢, 周幸来, 陈新华, 中華傳統文化, 中医学习, 中医医案) (Z-Library).pdf-7d5707a9-460c-4f7f-87f0-0dec9c3273b4"
-)
+MD_ROOT, OUTPUT_ROOT = get_custom_chunker_paths("easy_pulse_diagnosis")
 MD_PATH = MD_ROOT / "full.md"
-OUTPUT_ROOT = Path(
-    r"d:\Desktop\Dataflow\Dataflow\DataFlow-main\maizhen_vqa_workdir\output\manual_split"
-) / BOOK_NAME
 OUTPUT_PATH = OUTPUT_ROOT / "split_samples.jsonl"
 IMAGE_OUT_DIR = OUTPUT_ROOT / "images"
 

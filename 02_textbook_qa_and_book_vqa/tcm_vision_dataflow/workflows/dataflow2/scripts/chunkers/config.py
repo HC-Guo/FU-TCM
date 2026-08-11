@@ -3,9 +3,11 @@
 所有流水线共享相同的目录结构
 """
 import os
+from pathlib import Path
 
 # 基础目录（相对于 run_dataflow）
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BUNDLE_ROOT = Path(__file__).resolve().parents[3]
 
 # 统一目录结构
 DATA_DIR = os.path.join(BASE_DIR, "data")          # 输入文件
@@ -42,9 +44,26 @@ def get_book_paths(book_name: str):
     return {
         "input_jsonl": os.path.join(DATA_DIR, f"input_{config['input_name']}.jsonl"),
         "cache_dir": os.path.join(CACHE_DIR, config["cache_subdir"]),
-        "mineru_dir": os.path.join(MINUERU_CACHE_DIR, config["mineru_subdir"]),
+        "mineru_dir": os.path.join(MINERU_CACHE_DIR, config["mineru_subdir"]),
         "output_dir": os.path.join(OUTPUT_DIR, book_name),
     }
+
+
+def get_custom_chunker_paths(book_slug: str) -> tuple[Path, Path]:
+    """Return portable input/output roots for a book-specific chunker."""
+    source_root = Path(
+        os.getenv(
+            "TCM_CHUNKER_SOURCE_ROOT",
+            str(BUNDLE_ROOT / "data" / "chunker_markdown"),
+        )
+    ).expanduser()
+    output_root = Path(
+        os.getenv(
+            "TCM_CHUNKER_OUTPUT_ROOT",
+            str(BUNDLE_ROOT / "data" / "maizhen_vqa_workdir" / "output" / "manual_split"),
+        )
+    ).expanduser()
+    return source_root / book_slug, output_root / book_slug
 
 
 def ensure_dirs():

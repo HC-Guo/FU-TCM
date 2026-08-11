@@ -4,6 +4,7 @@ from pathlib import Path
 
 # ── 路径配置 ──────────────────────────────────────────────────────────────────
 PROJECT_ROOT = Path(__file__).resolve().parent
+BUNDLE_ROOT = PROJECT_ROOT.parents[3]
 
 
 def _resolve_run_dataflow_dir() -> Path:
@@ -39,8 +40,12 @@ from dataflow.serving import APILLMServing_request
 from dataflow.utils.storage import FileStorage
 from dataflow.operators.pdf2vqa import MinerU2LLMInputOperator, LLMOutputParser, QA_Merger, PDF_Merger
 from dataflow.pipeline import PipelineABC
-from chapter_based_generator import ChapterBasedGenerator
-from zhaoliming_output_parser import ZhaoLiMingOutputParser
+try:
+    from chapter_based_generator import ChapterBasedGenerator
+    from zhaoliming_output_parser import ZhaoLiMingOutputParser
+except ModuleNotFoundError:
+    ChapterBasedGenerator = None
+    ZhaoLiMingOutputParser = None
 
 
 # 全局 mineru_output 目录（step1 转换的结果存在这里）
@@ -128,7 +133,10 @@ SHEZHEN_VQA_PROMPT = (
 )
 
 # ── 目标书籍列表 ──────────────────────────────────────────────────────────────
-SHEZHEN_BOOKS_DIR = PROJECT_ROOT / "舌诊带图书籍"
+SHEZHEN_BOOKS_DIR = _resolve_path_from_env(
+    "SHEZHEN_BOOKS_DIR",
+    BUNDLE_ROOT / "source_books" / "tongue",
+)
 
 TARGET_BOOKS = [
     {"name": "中医舌诊彩色图谱_龚一萍",
@@ -175,6 +183,11 @@ class ShezhenVQAPipeline(PipelineABC):
         archive_output_dir: Path | None = None,
     ):
         super().__init__()
+        if ChapterBasedGenerator is None or ZhaoLiMingOutputParser is None:
+            raise RuntimeError(
+                "该旧版入口缺少 chapter_based_generator.py 或 "
+                "zhaoliming_output_parser.py；请参见 docs/repository_inventory.html。"
+            )
         self.book_name = book_name
         self.skip_llm_if_cached = skip_llm_if_cached
         self.sample_images = sample_images

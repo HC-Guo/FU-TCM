@@ -59,10 +59,16 @@ FORMAT_GROUPS = [
 # ==========================================
 # 国标证型树距离（GB/T 15657-2021）
 # ==========================================
-_BTREE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "zhenghou_btree.json")
-with open(_BTREE_PATH, "r", encoding="utf-8") as _f:
-    _BTREE_DATA = json.load(_f)
-NAME_TO_CODE: dict[str, str] = _BTREE_DATA["name_to_code"]
+_BTREE_PATH = os.getenv(
+    "TCM_ZHENGHOU_BTREE",
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "zhenghou_btree.json"),
+)
+if os.path.exists(_BTREE_PATH):
+    with open(_BTREE_PATH, "r", encoding="utf-8") as _f:
+        _BTREE_DATA = json.load(_f)
+else:
+    _BTREE_DATA = {"name_to_code": {}}
+NAME_TO_CODE: dict[str, str] = _BTREE_DATA.get("name_to_code", {})
 
 PATHO_KEYWORDS = [
     "气虚", "气陷", "气脱", "气滞", "气逆", "气闭",

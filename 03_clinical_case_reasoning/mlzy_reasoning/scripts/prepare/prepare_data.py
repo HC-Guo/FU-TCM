@@ -1,16 +1,26 @@
 """
-将 train_grpo_600.json 转为 verl 要求的 parquet 格式
+将本地 train/test JSONL 转为 verl 要求的 parquet 格式。
 字段：data_source, prompt, ability, reward_model, extra_info
 """
 import json
 import os
+from pathlib import Path
 import datasets
 
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-INPUT_FILE = os.path.join(PROJECT_ROOT, "data", "train", "train_grpo_600.json")
-TEST_FILE = os.path.join(PROJECT_ROOT, "data", "processed", "bianzheng_minimax_test.jsonl")
-EXAMPLE_FILE = os.path.join(PROJECT_ROOT, "prompt_example.json")
-OUTPUT_DIR = os.path.join(PROJECT_ROOT, "data_parquet")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
+INPUT_FILE = Path(
+    os.getenv("TCM_GRPO_TRAIN_FILE", str(PROCESSED_DIR / "bianzheng_mlzy_train.jsonl"))
+).expanduser()
+TEST_FILE = Path(
+    os.getenv("TCM_GRPO_TEST_FILE", str(PROCESSED_DIR / "bianzheng_mlzy_test.jsonl"))
+).expanduser()
+EXAMPLE_FILE = Path(
+    os.getenv("TCM_PROMPT_EXAMPLE_FILE", str(PROJECT_ROOT / "prompt_example.json"))
+).expanduser()
+OUTPUT_DIR = Path(
+    os.getenv("TCM_VERL_OUTPUT_DIR", str(PROJECT_ROOT / "data_parquet"))
+).expanduser()
 
 # 加载 few-shot 示例（启动时构建一次）
 EXAMPLE_STR = None
@@ -20,7 +30,11 @@ def _load_example():
     if EXAMPLE_STR is not None:
         return EXAMPLE_STR
 
-    with open(EXAMPLE_FILE, "r", encoding="utf-8") as f:
+    if not EXAMPLE_FILE.exists():
+        EXAMPLE_STR = ""
+        return EXAMPLE_STR
+
+    with EXAMPLE_FILE.open("r", encoding="utf-8") as f:
         ex = json.load(f)
 
     ex_raw = ex["raw_data"]
@@ -96,13 +110,13 @@ def build_prompt(raw_data: dict) -> list[dict]:
         "中医望闻切诊": raw_data.get("中医望闻切诊", ""),
     }
 
+    example_section = f"{example}\n\n---\n\n" if example else ""
     content = (
         "你是一位经验丰富的国医大师，请根据以下病案信息进行辨证分析，判断证型。\n"
         "要求：\n"
         "1. 先在 <think>...</think> 中进行推理，包含：四诊提取、辨证参数推导（八纲/脏腑/气血津液/六淫）、证型判定三个步骤\n"
         "2. 然后输出证型JSON数组，如 [\"证型1\", \"证型2\"]\n\n"
-        f"{example}\n\n"
-        f"---\n\n"
+        f"{example_section}"
         f"现在请对以下病案进行辨证分析：\n\n"
         f"病案：\n{json.dumps(input_fields, ensure_ascii=False, indent=2)}"
     )
@@ -110,9 +124,25 @@ def build_prompt(raw_data: dict) -> list[dict]:
     return [{"role": "user", "content": content}]
 
 
+def load_records(path: Path) -> list[dict]:
+    """Load JSON or JSONL records and retain successful conversions."""
+    if not path.exists():
+        return []
+    if path.suffix.lower() == ".jsonl":
+        rows = [
+            json.loads(line)
+            for line in path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+    else:
+        rows = json.loads(path.read_text(encoding="utf-8"))
+    return [row for row in rows if row.get("status", "success") == "success"]
+
+
 def process_train():
-    with open(INPUT_FILE, "r", encoding="utf-8") as f:
-        data = json.load(f)
+    data = load_records(INPUT_FILE)
+    if not data:
+        raise FileNotFoundError(f"No training records found: {INPUT_FILE}")
 
     records = []
     for idx, item in enumerate(data):
@@ -135,25 +165,18 @@ def process_train():
         })
 
     ds = datasets.Dataset.from_list(records)
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    out_path = os.path.join(OUTPUT_DIR, "train.parquet")
-    ds.to_parquet(out_path)
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    out_path = OUTPUT_DIR / "train.parquet"
+    ds.to_parquet(str(out_path))
     print(f"Train: {len(records)} records -> {out_path}")
 
 
 def process_test():
-    if not os.path.exists(TEST_FILE):
+    if not TEST_FILE.exists():
         print(f"Test file not found: {TEST_FILE}, skipping")
         return
 
-    # bianzheng_minimax_test.jsonl: 每行一条 {"raw_data":..., "converted":..., "status":...}
-    data = []
-    with open(TEST_FILE, "r", encoding="utf-8") as f:
-        for line in f:
-            if line.strip():
-                rec = json.loads(line)
-                if rec.get("status") == "success":
-                    data.append(rec)
+    data = load_records(TEST_FILE)
 
     records = []
     for idx, item in enumerate(data):
@@ -176,9 +199,9 @@ def process_test():
         })
 
     ds = datasets.Dataset.from_list(records)
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    out_path = os.path.join(OUTPUT_DIR, "test.parquet")
-    ds.to_parquet(out_path)
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    out_path = OUTPUT_DIR / "test.parquet"
+    ds.to_parquet(str(out_path))
     print(f"Test: {len(records)} records -> {out_path}")
 
 

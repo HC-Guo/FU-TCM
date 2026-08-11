@@ -20,14 +20,11 @@ import shutil
 from dataclasses import dataclass
 from pathlib import Path
 
+from config import get_custom_chunker_paths
+
 BOOK_NAME = "王光宇精准脉诊带教录 第2版"
-MD_ROOT = Path(
-    r"E:\md\王光宇精准脉诊带教录 第2版 (王光宇) (Z-Library).pdf-c1e60d56-8152-462e-ac5f-e6121c66d927"
-)
+MD_ROOT, OUTPUT_ROOT = get_custom_chunker_paths("wang_guangyu_pulse_diagnosis")
 MD_PATH = MD_ROOT / "full.md"
-OUTPUT_ROOT = Path(
-    r"d:\Desktop\Dataflow\Dataflow\DataFlow-main\maizhen_vqa_workdir\output\manual_split"
-) / BOOK_NAME
 OUTPUT_PATH = OUTPUT_ROOT / "split_samples.jsonl"
 IMAGE_OUT_DIR = OUTPUT_ROOT / "images"
 

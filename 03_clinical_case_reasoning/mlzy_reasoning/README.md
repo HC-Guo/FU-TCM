@@ -5,15 +5,15 @@
 ## 目录结构
 
 ```text
-名老中医/                         原始名老中医数据目录
+source_cases/                      原始名老中医数据目录（本地）
 configs/mapping_table.json         辨证映射规则
-prompt_example.json                转换示例
+prompt_example.json                可选 few-shot 病案（本地，不上传）
 scripts/extract/                   从 CSV 提取 raw_data
 scripts/convert/                   调用模型转换结构化辨证数据
 scripts/verify/                    四诊补足与辨证参数复核
-scripts/prepare/                   转为 verl/parquet 数据
-data/processed/                    中间与最终 JSON/JSONL 数据
-data/train/train_grpo_600.json     prepare 阶段训练输入
+scripts/prepare/split_dataset.py   确定性切分 train/test
+scripts/prepare/prepare_data.py    转为 verl/parquet 数据
+data/processed/                    中间、复核和 train/test JSONL（本地）
 data_parquet/                      prepare 脚本默认输出目录
 ```
 
@@ -35,12 +35,15 @@ export ANTHROPIC_BASE_URL="https://cc.580ai.net"
 export ANTHROPIC_MODEL="claude-opus-4-6"
 ```
 
+可选 few-shot 示例可放在默认的 `prompt_example.json`，也可通过 `TCM_PROMPT_EXAMPLE_FILE` 指定。文件缺失时转换和 prepare 脚本会使用 zero-shot，而不是启动失败。
+
 ## 运行顺序
 
 ```bash
 python scripts/extract/extract_minglaoyishi.py
 python scripts/convert/convert_minimax.py
 python scripts/verify/verify_mlzy.py
+python scripts/prepare/split_dataset.py
 python scripts/prepare/prepare_data.py
 ```
 
@@ -49,6 +52,7 @@ python scripts/prepare/prepare_data.py
 ```text
 data/processed/名老中医_extracted.json
 data/processed/bianzheng_mlzy.jsonl
+data/processed/bianzheng_mlzy_verified.jsonl
 data/processed/bianzheng_mlzy_train.jsonl
 data/processed/bianzheng_mlzy_test.jsonl
 ```

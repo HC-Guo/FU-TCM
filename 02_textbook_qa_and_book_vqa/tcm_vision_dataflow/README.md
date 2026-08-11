@@ -1,6 +1,6 @@
 # 中医视觉/图文 DataFlow 数据处理流程
 
-本目录保留中医视觉/图文数据处理代码、提示词与 DataFlow 框架。原始材料和生成数据不进入版本控制。
+本目录保留中医视觉/图文数据处理代码与提示词。DataFlow 使用固定版本外部依赖，原始材料和生成数据不进入版本控制。
 
 ## 目录结构
 
@@ -9,8 +9,8 @@ source_books/                 舌诊、望诊、面诊等原始 PDF、EPUB 书�
 archives/                     原始压缩包归档
 data/                         医学书籍 QA、舌诊/望诊/脉诊/中药草图 VQA 数据
 results/                      DataFlow 已生成的中医视觉/图文 VQA 结果
-workflows/dataflow2/          Dataflow 2 中的脚本、prompt 和框架
-workflows/dataflow_runtime/   DataFlow 框架源码
+workflows/dataflow2/          FU-TCM 的脚本与 prompt
+requirements.txt             DataFlow 及通用 Python 依赖
 ```
 
 ## 数据说明
@@ -29,13 +29,16 @@ export MINIMAX_API_URL="https://api.minimax.chat/v1/chat/completions"
 export MINIMAX_MODEL="MiniMax-M1"
 ```
 
+```bash
+pip install -r requirements.txt
+```
+
 ## 主要入口
 
 ```text
 workflows/dataflow2/scripts/vqa/
 workflows/dataflow2/scripts/qa/
 workflows/dataflow2/prompt_engineering/
-workflows/dataflow_runtime/
 ```
 
 ## 提交提醒

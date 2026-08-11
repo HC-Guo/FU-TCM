@@ -11,7 +11,11 @@ from pathlib import Path
 from tqdm import tqdm
 
 from dataflow.serving import APILLMServing_request
-from stratify_filter_vqa import process_one_file
+
+try:
+    from stratify_filter_vqa import process_one_file
+except ModuleNotFoundError:
+    process_one_file = None
 
 # Paths
 PROJECT_ROOT = Path(__file__).resolve().parent
@@ -252,6 +256,11 @@ def _emit_quality_ready_file(
     drop_risk_short_context: bool,
     drop_noise_sections: bool,
 ) -> tuple[Path, dict]:
+    if process_one_file is None:
+        raise RuntimeError(
+            "--quality-gate 需要可选脚本 stratify_filter_vqa.py；"
+            "请按 docs/repository_inventory.html 中的路径补充后再启用。"
+        )
     summary = process_one_file(
         input_path=input_path,
         min_context_gold=max(1, int(min_context_gold)),
@@ -351,10 +360,9 @@ class ShezhenVQAProcessor:
             raise ValueError("未检测到 API Key，请设置 DF_API_KEY 或 MINIMAX_API_KEY")
         os.environ["DF_API_KEY"] = api_key
         api_url = os.getenv("MINIMAX_API_URL", "https://api.minimaxi.com/v1/chat/completions")
-        key_prefix = api_key[:10] + ("..." if len(api_key) > 10 else "")
         print(f"[配置] api_url={api_url}")
         print(f"[配置] model={model_name}")
-        print(f"[配置] key_prefix={key_prefix} len={len(api_key)}")
+        print("[配置] API credential loaded from environment")
         print(f"[配置] mode={mode}")
         print(f"[配置] drop_noise_sections={drop_noise_sections}")
         print(f"[配置] max_context_chars={max_context_chars}")

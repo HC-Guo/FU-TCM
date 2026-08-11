@@ -240,13 +240,18 @@ def filter_noise_chunks(df: pd.DataFrame) -> pd.DataFrame:
 class MedicalBooksQAPipeline:
     def __init__(self):
         self.project_root = Path(__file__).resolve().parent
-        self.bundle_root = self.project_root.parents[4]
+        self.bundle_root = self.project_root.parents[3]
         self.source_dir = self._resolve_source_dir()
 
-        self.work_dir = self.project_root / "medical_books_qa_workdir"
+        configured_work_dir = os.getenv("MEDICAL_QA_WORK_DIR", "").strip()
+        self.work_dir = (
+            Path(configured_work_dir).expanduser()
+            if configured_work_dir
+            else self.bundle_root / "data" / "medical_books_qa_workdir"
+        )
         self.cache_dir = self.work_dir / "cache"
         self.markdown_dir = self.work_dir / "markdown"
-        self.output_dir = self.project_root / "output"
+        self.output_dir = self.bundle_root / "results" / "medical_books_qa"
         self.manifest_path = self.work_dir / "medical_books_input.jsonl"
         self.final_output_path = self.output_dir / "medical_books_qa_pairs.jsonl"
 
@@ -458,4 +463,3 @@ if __name__ == "__main__":
     pipeline = MedicalBooksQAPipeline()
     output_path = pipeline.forward()
     print(f"QA 提取完成，输出文件：{output_path}")
-

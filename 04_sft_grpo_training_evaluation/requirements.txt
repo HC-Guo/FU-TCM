@@ -1,0 +1,9 @@
+datasets>=2.19
+pandas>=2.0
+Pillow>=10.0
+pyarrow>=15
+python-docx>=1.1
+transformers>=4.51
+
+# Install torch, vLLM, verl, TRL, and LLaMA-Factory separately for the
+# CUDA/accelerator environment used for training and inference.

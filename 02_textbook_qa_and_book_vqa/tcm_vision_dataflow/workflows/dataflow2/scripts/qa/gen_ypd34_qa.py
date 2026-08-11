@@ -23,9 +23,12 @@ from dataflow.prompts.core_text import FormatStrPrompt
 from dataflow.serving import APILLMServing_request
 from dataflow.utils.storage import FileStorage
 
-BASE = Path(r"D:\Desktop\Dataflow\DataFlow-main")
-CACHE_DIR = BASE / "medical_books_qa_workdir" / "cache"
-MARKDOWN_DIR = BASE / "medical_books_qa_workdir" / "markdown"
+BUNDLE_ROOT = Path(__file__).resolve().parents[3]
+WORK_DIR = Path(
+    os.getenv("MEDICAL_QA_WORK_DIR", str(BUNDLE_ROOT / "data" / "medical_books_qa_workdir"))
+).expanduser()
+CACHE_DIR = WORK_DIR / "cache"
+MARKDOWN_DIR = WORK_DIR / "markdown"
 
 TARGET_BOOKS = [
     {

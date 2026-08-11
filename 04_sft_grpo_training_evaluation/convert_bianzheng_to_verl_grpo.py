@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import os
 import re
 from collections import Counter
 from pathlib import Path
@@ -21,8 +22,8 @@ from typing import Any
 
 DEFAULT_TRAIN = Path("grpodata/bianzheng_merged_train.jsonl")
 DEFAULT_TEST = Path("grpodata/bianzheng_merged_test.jsonl")
-DEFAULT_TREE = Path("zhenghou_btree.json")
-DEFAULT_OUTPUT_DIR = Path("grpodata/verl")
+DEFAULT_TREE = Path(os.getenv("TCM_ZHENGHOU_BTREE", "zhenghou_btree.json"))
+DEFAULT_OUTPUT_DIR = Path("verl_data")
 
 
 PROMPT_TEMPLATE = """你是一位经验丰富的国医大师，请根据以下病案信息进行辨证分析，判断证型。

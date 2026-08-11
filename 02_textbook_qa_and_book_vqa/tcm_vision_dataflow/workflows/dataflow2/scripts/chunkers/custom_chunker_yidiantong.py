@@ -26,15 +26,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from PIL import Image
 
+from config import get_custom_chunker_paths
+
 
 BOOK_NAME = "中医脉诊一点通（修订版）"
-MD_ROOT = Path(
-    r"E:\md\中医脉诊一点通（修订版） (王桂茂) (Z-Library).pdf-69deb583-6b99-480d-9053-a49b58f49517"
-)
+MD_ROOT, OUTPUT_ROOT = get_custom_chunker_paths("pulse_diagnosis_quick_guide")
 MD_PATH = MD_ROOT / "full.md"
-OUTPUT_ROOT = Path(
-    r"d:\Desktop\Dataflow\Dataflow\DataFlow-main\maizhen_vqa_workdir\output\manual_split"
-) / BOOK_NAME
 OUTPUT_PATH = OUTPUT_ROOT / "split_samples.jsonl"
 IMAGE_OUT_DIR = OUTPUT_ROOT / "images"
 MIN_IMAGE_WIDTH = 120

@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:aaf6808b5a7df91e4fde0f07df1ef7b0b8f0447378bb14b416c20507f64f2eb9
-size 308
+{
+  "tcm_sft_mm": {
+    "file_name": "tcm_sft_mm.json",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "conversations",
+      "images": "images"
+    },
+    "tags": {
+      "role_tag": "from",
+      "content_tag": "value",
+      "user_tag": "human",
+      "assistant_tag": "gpt"
+    }
+  }
+}
