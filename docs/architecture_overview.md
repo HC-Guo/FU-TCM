@@ -10,9 +10,9 @@ Local source data (ignored)
                  │
                  ▼
 Versioned processing code
-  ├─ 01_classical_text_qa
-  ├─ 02_textbook_qa_and_book_vqa
-  └─ 03_clinical_case_reasoning
+  ├─ classical_text_qa
+  ├─ textbook_qa_and_book_vqa
+  └─ clinical_case_reasoning
                  │
                  ▼
 Local model-ready data (ignored)
@@ -22,7 +22,7 @@ Local model-ready data (ignored)
                  │
                  ▼
 Versioned training and evaluation code
-  └─ 04_sft_grpo_training_evaluation
+  └─ sft_grpo_training_evaluation
 ```
 
 ## Design rules

@@ -8,7 +8,7 @@ set -xeuo pipefail
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 ROOT_DIR="${ROOT_DIR:-${SCRIPT_DIR}}"
 if [ ! -d "${ROOT_DIR}" ]; then
-    echo "Missing project root: ${ROOT_DIR}. Set ROOT_DIR to 04_sft_grpo_training_evaluation." >&2
+    echo "Missing project root: ${ROOT_DIR}. Set ROOT_DIR to sft_grpo_training_evaluation." >&2
     exit 1
 fi
 ROOT_DIR=$(cd "${ROOT_DIR}" && pwd)

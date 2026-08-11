@@ -21,27 +21,27 @@ FORBIDDEN_PATH_PARTS = {
     "source_cases", "sft_data", "sft_image_data", "sft_merged", "verl_data",
 }
 FORBIDDEN_PREFIXES = (
-    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow2/framework/DataFlow-main/",
-    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/dataflow/example/",
-    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/test/",
+    "textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow2/framework/DataFlow-main/",
+    "textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/dataflow/example/",
+    "textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/test/",
 )
 ALLOWED_BINARY_PREFIXES = (
-    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/static/logo/",
+    "textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/static/logo/",
 )
 REQUIRED_PIPELINE_FILES = (
-    "01_classical_text_qa/scripts/process/convert_to_sft_format.py",
-    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/pyproject.toml",
-    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/dataflow/serving/api_llm_serving_request.py",
-    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/dataflow/operators/pdf2vqa/generate/llm_output_parser.py",
-    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/dataflow/statics/pipelines/api_pipelines/pdf_vqa_extract_pipeline_part1.py",
-    "02_textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow2/scripts/vqa/gen_shezhen_vqa_final.py",
-    "03_clinical_case_reasoning/mlzy_reasoning/scripts/prepare/split_dataset.py",
-    "03_clinical_case_reasoning/mlzy_reasoning/scripts/prepare/prepare_data.py",
-    "04_sft_grpo_training_evaluation/convert_bianzheng_to_verl_grpo.py",
-    "04_sft_grpo_training_evaluation/reward_functions.py",
-    "04_sft_grpo_training_evaluation/run_tcm_grpo_smoke.sh",
-    "04_sft_grpo_training_evaluation/run_tcm_grpo_smoke_hf.sh",
-    "04_sft_grpo_training_evaluation/verl_py_shims/sitecustomize.py",
+    "classical_text_qa/scripts/process/convert_to_sft_format.py",
+    "textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/pyproject.toml",
+    "textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/dataflow/serving/api_llm_serving_request.py",
+    "textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/dataflow/operators/pdf2vqa/generate/llm_output_parser.py",
+    "textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow_runtime/dataflow/statics/pipelines/api_pipelines/pdf_vqa_extract_pipeline_part1.py",
+    "textbook_qa_and_book_vqa/tcm_vision_dataflow/workflows/dataflow2/scripts/vqa/gen_shezhen_vqa_final.py",
+    "clinical_case_reasoning/mlzy_reasoning/scripts/prepare/split_dataset.py",
+    "clinical_case_reasoning/mlzy_reasoning/scripts/prepare/prepare_data.py",
+    "sft_grpo_training_evaluation/convert_bianzheng_to_verl_grpo.py",
+    "sft_grpo_training_evaluation/reward_functions.py",
+    "sft_grpo_training_evaluation/run_tcm_grpo_smoke.sh",
+    "sft_grpo_training_evaluation/run_tcm_grpo_smoke_hf.sh",
+    "sft_grpo_training_evaluation/verl_py_shims/sitecustomize.py",
 )
 SECRET_PATTERNS = {
     "OpenAI-style token": re.compile(r"\bsk-[A-Za-z0-9_-]{20,}\b"),

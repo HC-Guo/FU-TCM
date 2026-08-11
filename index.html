@@ -3,67 +3,176 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FU-TCM Code Repository</title>
+  <meta name="description" content="FU-TCM: traditional Chinese medicine data production, reasoning, SFT, GRPO and evaluation workflows.">
+  <link rel="icon" href="data:,">
+  <title>FU-TCM · TCM Data &amp; Training Workflows</title>
   <style>
-    :root { color-scheme: light; --ink: #18201d; --muted: #5c6a64; --line: #dce5e0; --green: #176b4d; --soft: #eef7f2; --paper: #fff; }
+    :root {
+      color-scheme: light;
+      --ink: #17231e;
+      --muted: #627069;
+      --line: #dbe5df;
+      --green: #176b4d;
+      --green-dark: #0e4934;
+      --jade: #dff2e8;
+      --cream: #f8f5ed;
+      --paper: rgba(255, 255, 255, .92);
+      --shadow: 0 22px 60px rgba(31, 62, 48, .09);
+    }
     * { box-sizing: border-box; }
-    body { margin: 0; color: var(--ink); background: #f5f8f6; font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; padding: 56px 0 72px; }
-    h1 { margin: 0; font-size: clamp(2.2rem, 7vw, 4.8rem); line-height: 1; letter-spacing: -.055em; }
-    h2 { margin: 42px 0 14px; font-size: 1.35rem; }
-    p { max-width: 760px; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 2%, rgba(105, 179, 143, .18), transparent 28rem),
+        radial-gradient(circle at 92% 13%, rgba(209, 177, 112, .15), transparent 24rem),
+        #f6f8f6;
+      font: 16px/1.68 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
     a { color: var(--green); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-    code { padding: .12em .38em; border-radius: 5px; background: #edf1ef; font-size: .9em; }
-    .eyebrow { margin-bottom: 12px; color: var(--green); font-size: .78rem; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; }
-    .lead { margin: 22px 0 30px; color: var(--muted); font-size: 1.15rem; }
-    .notice { padding: 18px 20px; border: 1px solid #9bc7b2; border-radius: 12px; background: var(--soft); }
-    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-    .card { display: block; padding: 20px; border: 1px solid var(--line); border-radius: 12px; color: inherit; background: var(--paper); text-decoration: none; }
-    .card:hover { border-color: #8fb3a2; transform: translateY(-1px); }
-    .card strong { display: block; margin-bottom: 8px; color: var(--green); font-size: 1.05rem; }
+    code { padding: .12em .38em; border-radius: 5px; background: #edf2ef; font-size: .9em; overflow-wrap: anywhere; }
+    .shell { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 24px 0; }
+    .brand { color: var(--ink); font-weight: 800; letter-spacing: -.03em; text-decoration: none; }
+    .nav-links { display: flex; gap: 20px; font-size: .92rem; }
+    .nav-links a { color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--green); }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin-top: 20px;
+      padding: clamp(38px, 7vw, 76px);
+      border: 1px solid rgba(113, 150, 132, .28);
+      border-radius: 30px;
+      background: linear-gradient(135deg, rgba(255,255,255,.96), rgba(239,248,243,.9));
+      box-shadow: var(--shadow);
+    }
+    .hero::after {
+      content: "本草 · 四诊 · 辨证";
+      position: absolute;
+      right: -24px;
+      bottom: -12px;
+      color: rgba(23, 107, 77, .055);
+      font: 800 clamp(3.4rem, 10vw, 8rem)/1 serif;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .eyebrow { color: var(--green); font-size: .76rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { max-width: 850px; margin: 16px 0 0; font-size: clamp(3.2rem, 9vw, 7rem); line-height: .92; letter-spacing: -.065em; }
+    .lead { max-width: 760px; margin: 26px 0 0; color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.3rem); }
+    .badges { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 28px; }
+    .badge { padding: 7px 11px; border: 1px solid var(--line); border-radius: 999px; color: var(--green-dark); background: rgba(255,255,255,.75); font-size: .78rem; font-weight: 700; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .button { display: inline-flex; align-items: center; padding: 11px 16px; border: 1px solid var(--green); border-radius: 10px; font-weight: 750; text-decoration: none; }
+    .button.primary { color: white; background: var(--green); }
+    .button.secondary { color: var(--green); background: white; }
+    main { padding: 34px 0 76px; }
+    h2 { margin: 52px 0 8px; font-size: clamp(1.6rem, 3vw, 2.25rem); letter-spacing: -.035em; }
+    .section-intro { max-width: 700px; margin: 0 0 20px; color: var(--muted); }
+    .notice { display: grid; grid-template-columns: auto 1fr; gap: 14px; margin-top: 24px; padding: 18px 20px; border: 1px solid #abd2be; border-radius: 14px; background: var(--jade); }
+    .notice-icon { font-size: 1.25rem; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
+    .card { position: relative; display: block; min-height: 175px; padding: 24px; border: 1px solid var(--line); border-radius: 18px; color: inherit; background: var(--paper); box-shadow: 0 8px 24px rgba(31,62,48,.04); text-decoration: none; transition: .18s ease; }
+    .card:hover { border-color: #8fb9a4; box-shadow: 0 16px 34px rgba(31,62,48,.09); transform: translateY(-3px); }
+    .card-kicker { color: var(--green); font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .card strong { display: block; margin: 9px 0 8px; font-size: 1.18rem; letter-spacing: -.015em; }
     .card span { color: var(--muted); }
-    table { width: 100%; border-collapse: collapse; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
-    th, td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
-    th { background: #edf3f0; font-size: .86rem; }
+    .card-arrow { position: absolute; right: 22px; bottom: 18px; color: var(--green); font-size: 1.25rem; }
+    .flow { display: grid; grid-template-columns: repeat(7, auto); align-items: center; gap: 8px; overflow-x: auto; padding: 20px; border: 1px solid var(--line); border-radius: 18px; background: var(--paper); }
+    .flow-step { min-width: 130px; padding: 14px; border-radius: 12px; text-align: center; background: var(--cream); font-weight: 720; }
+    .flow-arrow { color: #8aa397; font-size: 1.2rem; }
+    table { width: 100%; border-spacing: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); }
+    th, td { padding: 13px 15px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: var(--green-dark); background: #edf4f0; font-size: .82rem; letter-spacing: .04em; text-transform: uppercase; }
     tr:last-child td { border-bottom: 0; }
-    footer { margin-top: 44px; color: var(--muted); font-size: .9rem; }
-    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } table { display: block; overflow-x: auto; } }
+    footer { display: flex; justify-content: space-between; gap: 20px; margin-top: 52px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: .88rem; }
+    @media (max-width: 760px) {
+      .nav-links { display: none; }
+      .hero { border-radius: 22px; }
+      .grid { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: 1fr; }
+      .flow-arrow { transform: rotate(90deg); text-align: center; }
+      table { display: block; overflow-x: auto; }
+      footer { display: block; }
+    }
   </style>
 </head>
 <body>
-<main>
-  <div class="eyebrow">Traditional Chinese Medicine · Data Engineering · Model Training</div>
-  <h1>FU-TCM</h1>
-  <p class="lead">面向中医古籍、教材、图文书籍与病例推理的数据生产、SFT、GRPO 和评测代码仓库。</p>
+  <header class="shell">
+    <nav aria-label="Primary navigation">
+      <a class="brand" href="index.html">FU-TCM</a>
+      <div class="nav-links">
+        <a href="#modules">Modules</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#documentation">Documentation</a>
+        <a href="SECURITY.md">Security</a>
+      </div>
+    </nav>
 
-  <section class="notice" aria-label="Data policy">
-    <strong>当前分支仅保留代码。</strong>
-    训练数据、原始书籍、生成结果、图像和评测样本已移除。运行脚本时请把私有数据放入 <a href=".gitignore"><code>.gitignore</code></a> 列出的本地目录，避免再次提交。
-  </section>
+    <section class="hero">
+      <div class="eyebrow">Traditional Chinese Medicine · Data · Reasoning · Training</div>
+      <h1>FU-TCM</h1>
+      <p class="lead">面向中医古籍、教材图文、临床病例推理与模型训练的开放代码工作流。</p>
+      <div class="badges" aria-label="Repository status">
+        <span class="badge">Python 3.11+</span>
+        <span class="badge">Code-only</span>
+        <span class="badge">English paths</span>
+        <span class="badge">Automated hygiene</span>
+      </div>
+      <div class="actions">
+        <a class="button primary" href="README.md">Quick start</a>
+        <a class="button secondary" href="docs/repository_inventory.html">Repository inventory</a>
+      </div>
+    </section>
+  </header>
 
-  <h2>Workflow modules</h2>
-  <div class="grid">
-    <a class="card" href="docs/01_guji_qa.html"><strong>01 · Classical Text QA</strong><span>古籍 QA 生成、清洗与 SFT 格式转换。</span></a>
-    <a class="card" href="docs/02_pdf_vqa.html"><strong>02 · Textbook QA &amp; Book VQA</strong><span>教材文本 QA、图文书籍 VQA 与 DataFlow 工作流。</span></a>
-    <a class="card" href="docs/03_reasoning_expansion.html"><strong>03 · Clinical Case Reasoning</strong><span>病例辨证推理转换、扩写和质量复核。</span></a>
-    <a class="card" href="docs/04_sft_grpo.html"><strong>04 · SFT, GRPO &amp; Evaluation</strong><span>训练配置、数据转换、奖励函数和评测工具。</span></a>
-  </div>
+  <main class="shell">
+    <section class="notice" aria-label="Data policy">
+      <div class="notice-icon">🔒</div>
+      <div><strong>代码与数据分离。</strong> 训练/测试数据、原始书籍、病例、图像、模型权重和生成结果保持本地，不进入 Git。权威目录规则见 <a href=".gitignore"><code>.gitignore</code></a>。</div>
+    </section>
 
-  <h2>Documentation</h2>
-  <table>
-    <thead><tr><th>Page</th><th>Description</th></tr></thead>
-    <tbody>
-      <tr><td><a href="docs/repository_inventory.html">Repository inventory</a></td><td>当前上传内容、已删除数据与确认遗漏文件。</td></tr>
-      <tr><td><a href="docs/architecture_overview.html">Architecture overview</a></td><td>代码与本地数据之间的分层关系。</td></tr>
-      <tr><td><a href="docs/workflow_overview.html">Workflow overview</a></td><td>四段工作流、入口脚本和预期本地目录。</td></tr>
-      <tr><td><a href="docs/01_guji_qa.html">Classical Text QA</a></td><td>古籍 QA 模块说明。</td></tr>
-      <tr><td><a href="docs/02_pdf_vqa.html">Textbook QA &amp; Book VQA</a></td><td>教材与图文数据工作流说明。</td></tr>
-      <tr><td><a href="docs/03_reasoning_expansion.html">Clinical Reasoning</a></td><td>病例推理模块说明。</td></tr>
-      <tr><td><a href="docs/04_sft_grpo.html">SFT &amp; GRPO</a></td><td>训练与评测模块说明。</td></tr>
-    </tbody>
-  </table>
+    <section id="modules">
+      <h2>Workflow modules</h2>
+      <p class="section-intro">四个模块覆盖数据生成、结构化推理、训练准备和评测，目录名称均使用无编号的英文路径。</p>
+      <div class="grid">
+        <a class="card" href="docs/classical_text_qa.html"><span class="card-kicker">Text pipeline</span><strong>Classical Text QA</strong><span>古籍 QA 生成、清洗与 SFT 格式转换。</span><span class="card-arrow">→</span></a>
+        <a class="card" href="docs/textbook_qa_and_book_vqa.html"><span class="card-kicker">Multimodal pipeline</span><strong>Textbook QA &amp; Book VQA</strong><span>教材文本 QA、图文书籍 VQA 与定制 DataFlow 工作流。</span><span class="card-arrow">→</span></a>
+        <a class="card" href="docs/clinical_case_reasoning.html"><span class="card-kicker">Reasoning pipeline</span><strong>Clinical Case Reasoning</strong><span>病例抽取、结构化辨证推理转换、复核和切分。</span><span class="card-arrow">→</span></a>
+        <a class="card" href="docs/sft_grpo_evaluation.html"><span class="card-kicker">Model pipeline</span><strong>SFT, GRPO &amp; Evaluation</strong><span>训练配置、数据转换、奖励函数和评测工具。</span><span class="card-arrow">→</span></a>
+      </div>
+    </section>
 
-  <footer>Repository paths use English names; documentation may remain bilingual.</footer>
-</main>
+    <section id="workflow">
+      <h2>From source to evaluation</h2>
+      <p class="section-intro">版本化代码连接各阶段，本地数据只在运行环境中流动。</p>
+      <div class="flow" aria-label="FU-TCM workflow">
+        <div class="flow-step">Local sources</div><div class="flow-arrow">→</div>
+        <div class="flow-step">QA / VQA / Reasoning</div><div class="flow-arrow">→</div>
+        <div class="flow-step">SFT / GRPO</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Evaluation</div>
+      </div>
+    </section>
+
+    <section id="documentation">
+      <h2>Documentation</h2>
+      <p class="section-intro">从总览进入模块说明；从清单确认已上传、已删除和仍缺失的内容。</p>
+      <table>
+        <thead><tr><th>Guide</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><a href="docs/repository_inventory.html">Repository inventory</a></td><td>当前上传内容、已删除数据与确认遗漏文件。</td></tr>
+          <tr><td><a href="docs/architecture_overview.html">Architecture overview</a></td><td>版本化代码与本地研究数据的分层关系。</td></tr>
+          <tr><td><a href="docs/workflow_overview.html">Workflow overview</a></td><td>模块入口、阶段输入输出和本地目录。</td></tr>
+          <tr><td><a href="SECURITY.md">Security policy</a></td><td>API 密钥、私有数据和安全报告规则。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer>
+      <span>FU-TCM · Code-only research workflows</span>
+      <span>Repository paths are English; documentation is bilingual.</span>
+    </footer>
+  </main>
 </body>
 </html>

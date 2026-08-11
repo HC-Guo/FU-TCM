@@ -31,7 +31,7 @@ export MINIMAX_MODEL="MiniMax-M1"
 ```
 
 ```bash
-cd 02_textbook_qa_and_book_vqa/tcm_vision_dataflow
+cd textbook_qa_and_book_vqa/tcm_vision_dataflow
 pip install -r requirements.txt
 ```
 

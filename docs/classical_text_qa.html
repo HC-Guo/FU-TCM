@@ -1,0 +1,8 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Classical Text QA · FU-TCM</title><style>body{margin:0;background:#f5f8f6;color:#18201d;font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:900px;margin:auto;padding:44px 20px 64px}a{color:#176b4d}h1{font-size:2.4rem;letter-spacing:-.04em}.notice{padding:16px 18px;border:1px solid #9bc7b2;border-radius:12px;background:#eef7f2}table{width:100%;border-collapse:collapse;background:#fff}th,td{padding:11px 13px;border:1px solid #d8e4de;text-align:left}code{overflow-wrap:anywhere}</style></head><body><main>
+<p><a href="workflow_overview.html">← Workflow overview</a></p><h1>Classical Text QA</h1>
+<p>该模块从中医古籍生成分类 QA，执行清洗，并转换为 SFT 格式。</p><p class="notice">数据未提交：<code>classical_text_qa/qa_output*/</code> 与 <code>classical_text_qa/sft_data/</code> 仅在本地使用。</p>
+<h2>Versioned entry points</h2><table><thead><tr><th>Path</th><th>Role</th></tr></thead><tbody>
+<tr><td><a href="../classical_text_qa/scripts/generate/generate_qa_01.py"><code>scripts/generate/generate_qa_01.py</code></a></td><td>第一类 QA 生成入口；同目录保留 01–07 分类脚本。</td></tr>
+<tr><td><a href="../classical_text_qa/scripts/process/clean_and_export.py"><code>scripts/process/clean_and_export.py</code></a></td><td>清洗与导出。</td></tr>
+<tr><td><a href="../classical_text_qa/scripts/process/convert_to_sft_format.py"><code>scripts/process/convert_to_sft_format.py</code></a></td><td>转换为 SFT 格式。</td></tr>
+</tbody></table></main></body></html>
