@@ -129,35 +129,13 @@ print(response)
 
 ## 📊 Training
 
-Fu-TCM is trained on approximately **7.12 million examples** derived from classical TCM texts, modern textbooks, image-rich medical books, clinical cases, and public datasets.
+### Data Preparation
 
-### Stage 1: TCM Domain-Specific Learning
+Our training data consists of three categories:
 
-Full-parameter supervised fine-tuning uses text QA, image-text VQA, and structured case-reasoning data to establish TCM knowledge, multimodal understanding, and structured diagnostic outputs.
-
-```bash
-cd sft_grpo_training_evaluation
-
-# Prepare the local SFT data
-bash llamafactory_qwen35/scripts/prepare_data.sh
-
-# Run full-parameter SFT with DeepSpeed ZeRO-3
-bash llamafactory_qwen35/scripts/train_full_ds3.sh
-```
-
-### Stage 2: Bianzheng-Grounded Policy Optimization
-
-BGPO optimizes response format, syndrome prediction, and fidelity across 30 intermediate *bianzheng* fields.
-
-```bash
-cd sft_grpo_training_evaluation
-
-MODEL_PATH=/path/to/sft_checkpoint \
-FULL_TRAIN_FILE=/path/to/bianzheng_grpo_train.parquet \
-FULL_TEST_FILE=/path/to/bianzheng_grpo_test.parquet \
-VERL_DIR=/path/to/verl \
-bash run_tcm_grpo_smoke.sh
-```
+- **Text QA (1.53M samples):** Classical TCM texts, modern medical textbooks, and syndrome-focused knowledge
+- **Image-Text VQA (8,331 samples):** Image-grounded questions covering tongue, facial, pulse, and other visual diagnostic evidence
+- **Bianzheng Reasoning (1,867 cases):** Structured clinical cases linking four-examination evidence, 30 intermediate *bianzheng* fields, and final syndrome labels
 
 ## 🏗️ Model Architecture
 
