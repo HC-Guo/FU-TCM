@@ -25,3 +25,12 @@ Training proceeds in two stages. **TCM domain-specific learning** uses text QA, 
 - 🔎 **Multimodal four-examination reasoning.** A unified architecture integrates evidence from the four diagnostic methods and generates a complete, traceable evidence-to-syndrome chain for clinician review.
 - 📊 **Process–outcome evaluation.** A dual-dimensional evaluation system measures both final predictions and the intermediate *bianzheng* process. Fu-TCM achieves state-of-the-art results across six benchmarks and professional-level external validation.
 - 🔓 **Computable and open TCM knowledge.** TCM *bianzheng* experience is encoded as 30 learnable fields and a syndrome taxonomy, while open data, code, and model weights lower the cost of reuse and accelerate international research.
+
+## 🚀 Model Zoo
+
+We provide two model variants with different parameter scales:
+
+| Model | Parameters | Base Model | Hugging Face |
+| --- | ---: | --- | --- |
+| **Fu-TCM-9B** | 9B | Qwen3.5-9B | [🤗 Link](https://huggingface.co/fudanxai/Fu-TCM-9B) |
+| **Fu-TCM-27B** | 27B | Qwen3.6-27B | [🤗 Link](https://huggingface.co/fudanxai/Fu-TCM-27B) |
