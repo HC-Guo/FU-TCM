@@ -6,8 +6,8 @@ FU-TCM is a multimodal large-language-model family for Traditional Chinese Medic
 
 | Model | Base model | Modalities | Training objective |
 | --- | --- | --- | --- |
-| FU-TCM-9B | Qwen3.5-9B | Text and image | Domain SFT, cold-start SFT, and BGPO |
-| FU-TCM-27B | Qwen3.6-27B | Text and image | Domain SFT, cold-start SFT, and BGPO |
+| FU-TCM-9B | Qwen3.5-9B | Text and image | TCM domain-specific learning and BGPO |
+| FU-TCM-27B | Qwen3.6-27B | Text and image | TCM domain-specific learning and BGPO |
 
 The public repository currently contains the executable Qwen3.5-9B SFT, policy-optimization, inference, and evaluation path.
 
@@ -46,7 +46,7 @@ The syndrome-consistency term can assign graded credit through a standardized sy
 
 ## Evaluation summary
 
-FU-TCM-27B achieved an 80.41% macro-average across six benchmarks and ranked first on five of the six tasks. Across eight models, strict intermediate-parameter accuracy correlated with final syndrome-choice accuracy at Pearson *r* = 0.81.
+FU-TCM-27B achieved an 81.01% macro-average across six benchmarks and ranked first on all six tasks. Across eight models, mean intermediate-field accuracy correlated with final syndrome-choice accuracy at Pearson *r* = 0.89.
 
 These results are based on retrospective benchmarks. They do not establish clinical benefit or autonomous diagnostic safety.
 

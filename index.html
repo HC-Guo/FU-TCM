@@ -86,7 +86,7 @@
     .card strong { display: block; margin: 9px 0 8px; font-size: 1.18rem; letter-spacing: -.015em; }
     .card p { margin: 0; color: var(--muted); }
     .card-arrow { position: absolute; right: 22px; bottom: 18px; color: var(--green); font-size: 1.25rem; }
-    .training-flow { display: grid; grid-template-columns: repeat(9, auto); align-items: center; gap: 8px; overflow-x: auto; padding: 20px; border: 1px solid var(--line); border-radius: 18px; background: var(--paper); }
+    .training-flow { display: grid; grid-template-columns: repeat(7, auto); align-items: center; gap: 8px; overflow-x: auto; padding: 20px; border: 1px solid var(--line); border-radius: 18px; background: var(--paper); }
     .flow-step { min-width: 138px; padding: 16px; border-radius: 12px; text-align: center; background: var(--cream); font-weight: 760; }
     .flow-step.model { color: white; background: var(--green); }
     .flow-arrow { color: #8aa397; font-size: 1.2rem; }
@@ -141,17 +141,17 @@
   <main class="shell">
     <section id="overview">
       <h2>Overview</h2>
-      <p class="section-intro">FU-TCM integrates TCM knowledge, visual understanding, and structured clinical-case reasoning. Domain SFT is followed by cold-start SFT and Bianzheng-Grounded Policy Optimization, with verifiable rewards for format, syndrome consistency, and intermediate-field fidelity.</p>
+      <p class="section-intro">FU-TCM is trained on approximately 7.12 million examples spanning classical texts, textbooks, medical images, clinical cases, and public datasets. TCM domain-specific learning is followed by Bianzheng-Grounded Policy Optimization, with verifiable rewards for format, tree-based syndrome consistency, and 30-field fidelity.</p>
       <div class="metrics" aria-label="Headline results">
-        <div class="metric"><strong>80.41%</strong><span>six-benchmark macro-average for FU-TCM-27B</span></div>
-        <div class="metric"><strong>5 / 6</strong><span>benchmarks led by FU-TCM-27B</span></div>
-        <div class="metric"><strong>r = 0.81</strong><span>model-level correlation between intermediate and final accuracy</span></div>
+        <div class="metric"><strong>81.01%</strong><span>six-benchmark macro-average for FU-TCM-27B</span></div>
+        <div class="metric"><strong>6 / 6</strong><span>benchmarks led by FU-TCM-27B</span></div>
+        <div class="metric"><strong>r = 0.89</strong><span>model-level correlation between intermediate and final accuracy</span></div>
       </div>
       <figure class="figure-card">
         <a href="assets/fu-tcm-framework-overview.png">
-          <img src="assets/fu-tcm-framework-overview.png" alt="Three-panel overview of FU-TCM data sources, model training, BGPO rewards, and six-benchmark evaluation">
+          <img src="assets/fu-tcm-framework-overview.png" alt="Four-panel overview of FU-TCM data construction, two-stage training, benchmark performance, and external validation">
         </a>
-        <figcaption>FU-TCM framework, training, and evaluation. Original overview figure from the paper; select the image to view it at full resolution.</figcaption>
+        <figcaption>FU-TCM framework: multisource data construction, two-stage training, benchmark performance, and external validation. Select the image to view it at full resolution.</figcaption>
       </figure>
     </section>
 
@@ -167,12 +167,11 @@
     </section>
 
     <section id="training">
-      <h2>Three-stage training</h2>
-      <p class="section-intro">The project moves from broad domain adaptation to structured case reasoning and then reward-based alignment.</p>
+      <h2>Two-stage training</h2>
+      <p class="section-intro">The project moves from multimodal TCM domain learning to reward-based alignment of syndrome differentiation.</p>
       <div class="training-flow" aria-label="FU-TCM training stages">
         <div class="flow-step">Base VLMs</div><div class="flow-arrow">→</div>
-        <div class="flow-step">Domain SFT</div><div class="flow-arrow">→</div>
-        <div class="flow-step">Cold-start SFT</div><div class="flow-arrow">→</div>
+        <div class="flow-step">TCM Domain Learning</div><div class="flow-arrow">→</div>
         <div class="flow-step">BGPO</div><div class="flow-arrow">→</div>
         <div class="flow-step model">FU-TCM</div>
       </div>
@@ -196,7 +195,7 @@
         <thead><tr><th>Guide</th><th>Description</th></tr></thead>
         <tbody>
           <tr><td><a href="docs/model_overview.html">Model overview</a></td><td>Model family, capabilities, and structured reasoning design.</td></tr>
-          <tr><td><a href="docs/training_overview.html">Training overview</a></td><td>Domain SFT, cold-start SFT, BGPO, and evaluation.</td></tr>
+          <tr><td><a href="docs/training_overview.html">Training overview</a></td><td>TCM domain-specific learning, BGPO, and evaluation.</td></tr>
           <tr><td><a href="docs/sft_grpo_evaluation.html">Training and evaluation reference</a></td><td>Main configuration, reward function, and executable entry points.</td></tr>
           <tr><td><a href="SECURITY.md">Security policy</a></td><td>Credentials, sensitive data, and responsible disclosure.</td></tr>
         </tbody>
