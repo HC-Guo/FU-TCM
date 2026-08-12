@@ -34,3 +34,23 @@ We provide two model variants with different parameter scales:
 | --- | ---: | --- | --- |
 | **Fu-TCM-9B** | 9B | Qwen3.5-9B | [🤗 Link](https://huggingface.co/fudanxai/Fu-TCM-9B) |
 | **Fu-TCM-27B** | 27B | Qwen3.6-27B | [🤗 Link](https://huggingface.co/fudanxai/Fu-TCM-27B) |
+
+## 🏆 Performance Highlights
+
+### TCM Reasoning, Text, and Vision Benchmarks
+
+Accuracy comparison across six benchmarks. **Bold** indicates Fu-TCM models; macro averages include only models with results on all six benchmarks.
+
+| Model | Fu-bianzheng | Fu-text | Ladder text | Shizhen exam | Fu-vision | Shizhen vision | Macro avg. |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Qwen3.5-9B | 49.52 | 73.00 | 65.63 | 67.00 | 62.40 | 57.93 | 62.58 |
+| Qwen3.5-27B | 52.41 | 76.90 | 74.05 | 75.46 | 65.40 | 61.22 | 67.57 |
+| Qwen3.6-27B | 60.77 | 78.70 | 72.81 | 75.55 | 62.80 | 61.95 | 68.76 |
+| DeepSeek-V4-Pro | 56.59 | 78.10 | 75.37 | — | — | — | — |
+| Kimi-K2.6 | 61.09 | 81.70 | 77.55 | 80.79 | 67.60 | 65.24 | 72.33 |
+| Qwen3.7-Max | 61.74 | 84.30 | 78.15 | 82.17 | 71.00 | 65.89 | 73.88 |
+| GLM-5.2 | 56.91 | 78.00 | 75.10 | — | — | — | — |
+| GPT-5.5 | 55.95 | 84.20 | 78.63 | 87.22 | 64.20 | 65.95 | 72.69 |
+| Claude-Opus-4.8 | 59.16 | 86.20 | 76.59 | 81.62 | 70.40 | 65.02 | 73.16 |
+| **Fu-TCM-9B** | **70.42** | **85.30** | **81.35** | **82.17** | **67.60** | **70.00** | **76.14** |
+| **Fu-TCM-27B** | **73.63** | **89.20** | **84.57** | **89.71** | **74.00** | **74.93** | **81.01** |
