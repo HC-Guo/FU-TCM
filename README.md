@@ -1,13 +1,9 @@
-<h1 align="center">FU-TCM</h1>
+<h1 align="center">FU-TCM: Advancing Large-Model Capabilities in Traditional Chinese Medicine through Diagnostic-Reasoning Training</h1>
 
 <p align="center">
-  <strong>Advancing Large-Model Capabilities in Traditional Chinese Medicine through Diagnostic-Reasoning Training</strong>
-</p>
-
-<h3 align="center">
   🤗 <a href="https://huggingface.co/fudanxai/Fu-TCM-9B">Fu-TCM-9B</a> |
   🤗 <a href="https://huggingface.co/fudanxai/Fu-TCM-27B">Fu-TCM-27B</a>
-</h3>
+</p>
 
 ## Overview
 
