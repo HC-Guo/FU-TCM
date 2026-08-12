@@ -126,3 +126,44 @@ response = processor.decode(
 )
 print(response)
 ```
+
+## 📊 Training
+
+Fu-TCM is trained on approximately **7.12 million examples** derived from classical TCM texts, modern textbooks, image-rich medical books, clinical cases, and public datasets.
+
+### Stage 1: TCM Domain-Specific Learning
+
+Full-parameter supervised fine-tuning uses text QA, image-text VQA, and structured case-reasoning data to establish TCM knowledge, multimodal understanding, and structured diagnostic outputs.
+
+```bash
+cd sft_grpo_training_evaluation
+
+# Prepare the local SFT data
+bash llamafactory_qwen35/scripts/prepare_data.sh
+
+# Run full-parameter SFT with DeepSpeed ZeRO-3
+bash llamafactory_qwen35/scripts/train_full_ds3.sh
+```
+
+### Stage 2: Bianzheng-Grounded Policy Optimization
+
+BGPO optimizes response format, syndrome prediction, and fidelity across 30 intermediate *bianzheng* fields.
+
+```bash
+cd sft_grpo_training_evaluation
+
+MODEL_PATH=/path/to/sft_checkpoint \
+FULL_TRAIN_FILE=/path/to/bianzheng_grpo_train.parquet \
+FULL_TEST_FILE=/path/to/bianzheng_grpo_test.parquet \
+VERL_DIR=/path/to/verl \
+bash run_tcm_grpo_smoke.sh
+```
+
+## 🏗️ Model Architecture
+
+Fu-TCM consists of four core components:
+
+1. **Multimodal Backbone:** Qwen3.5-9B and Qwen3.6-27B provide unified text and image understanding for the two Fu-TCM model scales.
+2. **Four-Examination Evidence Encoder:** Clinical text and diagnostic images are organized as evidence from inspection, auscultation and olfaction, inquiry, and palpation.
+3. **Structured *Bianzheng* Representation:** Evidence is mapped to 30 intermediate fields: four eight-principle fields, five zang-fu fields, 15 qi–blood–body-fluid fields, and six pathogenic-factor fields.
+4. **Syndrome Prediction and BGPO Alignment:** The model produces the final syndrome prediction, while format, syndrome-tree, and intermediate-field rewards jointly optimize the reasoning path.
