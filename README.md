@@ -74,5 +74,5 @@ pip install torch==2.11.0 torchvision==0.26.0 torchaudio==2.11.0 \
 pip install flash-attn==2.8.3 --no-build-isolation
 
 # Install the project dependencies
-pip install -r sft_grpo_training_evaluation/requirements.txt
+pip install -r requirements.txt
 ```
