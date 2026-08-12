@@ -70,6 +70,9 @@ conda activate fu-tcm
 pip install torch==2.11.0 torchvision==0.26.0 torchaudio==2.11.0 \
   --index-url https://download.pytorch.org/whl/cu128
 
+# Install FlashAttention
+pip install flash-attn==2.8.3 --no-build-isolation
+
 # Install the project dependencies
 pip install -r sft_grpo_training_evaluation/requirements.txt
 ```
