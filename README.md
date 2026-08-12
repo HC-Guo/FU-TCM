@@ -12,6 +12,13 @@
 </p>
 
 <p align="center">
+  <a href="https://huggingface.co/fudanxai/Fu-TCM-27B">
+    <img alt="Fu-TCM-27B on Hugging Face" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Fu--TCM--27B-FFD21E?labelColor=1f1f1f">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://huggingface.co/fudanxai/Fu-TCM-27B">Hugging Face model</a> ·
   <a href="index.html">Project page</a> ·
   <a href="docs/model_overview.md">Model overview</a> ·
   <a href="docs/training_overview.md">Training</a> ·
