@@ -1,4 +1,4 @@
-<h1 align="center">FU-TCM: Advancing Large-Model Capabilities in Traditional Chinese Medicine through Diagnostic-Reasoning Training</h1>
+<h1 align="center">Fu-TCM: a multimodal large language model that learns traditional Chinese medicine diagnostic reasoning</h1>
 
 <p align="center">
   🤗 <a href="https://huggingface.co/fudanxai/Fu-TCM-9B">Fu-TCM-9B</a> |
