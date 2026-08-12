@@ -54,3 +54,22 @@ Accuracy comparison across six benchmarks. **Bold** indicates Fu-TCM models; mac
 | Claude-Opus-4.8 | 59.16 | 86.20 | 76.59 | 81.62 | 70.40 | 65.02 | 73.16 |
 | **Fu-TCM-9B** | **70.42** | **85.30** | **81.35** | **82.17** | **67.60** | **70.00** | **76.14** |
 | **Fu-TCM-27B** | **73.63** | **89.20** | **84.57** | **89.71** | **74.00** | **74.93** | **81.01** |
+
+## 🛠️ Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/HC-Guo/FU-TCM.git
+cd FU-TCM
+
+# Create the Conda environment
+conda create -n fu-tcm python=3.12 -y
+conda activate fu-tcm
+
+# Install PyTorch for CUDA 12.8
+pip install torch==2.11.0 torchvision==0.26.0 torchaudio==2.11.0 \
+  --index-url https://download.pytorch.org/whl/cu128
+
+# Install the project dependencies
+pip install -r sft_grpo_training_evaluation/requirements.txt
+```
