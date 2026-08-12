@@ -1,17 +1,16 @@
 # FU-TCM training overview
 
-FU-TCM uses a three-stage strategy that moves from broad TCM domain adaptation to structured case reasoning and reward-based alignment.
+FU-TCM uses a two-stage strategy: TCM domain-specific learning followed by Bianzheng-Grounded Policy Optimization.
 
-## Stage 1: Full-parameter domain SFT
+## Stage 1: TCM domain-specific learning
 
-Qwen3.5-9B and Qwen3.6-27B are adapted with text and visual question-answer data. The executable 9B configuration in this repository uses:
+Qwen3.5-9B and Qwen3.6-27B undergo full-parameter supervised fine-tuning on three complementary inputs:
 
-- LLaMA-Factory full-parameter fine-tuning;
-- text and image instruction samples;
-- DeepSpeed ZeRO-3 and bf16;
-- a 4,096-token context length;
-- gradient checkpointing;
-- a cosine learning-rate schedule.
+- 1.53 million text question-answer examples;
+- 8,331 image-text visual question-answer examples;
+- 1,867 structured case-reasoning examples.
+
+This stage establishes TCM knowledge, multimodal understanding, and structured *bianzheng* outputs. The executable 9B configuration in this repository uses LLaMA-Factory, DeepSpeed ZeRO-3, bf16, a 4,096-token context length, gradient checkpointing, and a cosine learning-rate schedule.
 
 ```bash
 cd sft_grpo_training_evaluation
@@ -22,17 +21,13 @@ bash llamafactory_qwen35/scripts/train_full_ds3.sh
 
 Configuration: `llamafactory_qwen35/qwen35_9b_full_sft_ds3.yaml`
 
-## Stage 2: Cold-start SFT
-
-Structured clinical-case examples teach the model the required output format and the path from four-examination evidence through intermediate *bianzheng* fields to the final syndrome.
-
-## Stage 3: BGPO reasoning alignment
+## Stage 2: BGPO reasoning alignment
 
 Bianzheng-Grounded Policy Optimization evaluates:
 
-1. the required response sections and output format;
-2. consistency between the predicted and reference syndromes;
-3. fidelity across the eight principles, organ systems, qi-blood-fluid states, pathogenic factors, and other intermediate fields.
+1. the required response sections, order, and format;
+2. tree-based similarity between predicted and reference syndromes;
+3. fidelity across 30 intermediate fields covering the eight principles, organ systems, qi-blood-fluid states, and pathogenic factors.
 
 The repository implements this objective with verl and the project-specific `reward_functions.py::compute_score` entry point.
 
@@ -51,6 +46,4 @@ TCM_MODEL_PATH=/path/to/FU-TCM python eval_qwen35.py
 TCM_MODEL_PATH=/path/to/FU-TCM python eval_qwen35_vllm.py
 ```
 
-Evaluation reports overall accuracy and grouped accuracy by dataset and category. Benchmark tools can also generate blinded materials for clinician review.
-
-The paper evaluates case-based *bianzheng*, TCM text knowledge, examination questions, and visual understanding across three held-out internal benchmarks and three independently sourced tasks.
+The paper evaluates TCM reasoning, text, and vision across six benchmarks and includes same-question external validation of model-only, independent physician, and FU-TCM-assisted responses.

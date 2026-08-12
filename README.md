@@ -11,30 +11,30 @@
 
 ## Overview
 
-FU-TCM is a multimodal large-language-model family for Traditional Chinese Medicine (TCM). It is designed to connect evidence from the four examinations to explicit intermediate *bianzheng* judgments and a final syndrome prediction. The model combines TCM knowledge, image-grounded understanding, and structured clinical-case reasoning.
+FU-TCM is a multimodal large-language-model family for Traditional Chinese Medicine (TCM), trained on approximately **7.12 million examples** derived from classical texts, textbooks, medical images, clinical cases, and public datasets. It is designed to connect evidence from the four diagnostic methods to explicit intermediate *bianzheng* fields and a final syndrome prediction.
 
-Training proceeds through full-parameter domain supervised fine-tuning, cold-start supervised fine-tuning on structured cases, and Bianzheng-Grounded Policy Optimization (BGPO). BGPO is a TCM-specific policy-optimization objective with verifiable rewards for response format, syndrome consistency, and fidelity to intermediate *bianzheng* fields.
+Training proceeds in two stages. **TCM domain-specific learning** uses text QA, image-text VQA, and case-reasoning examples to establish TCM knowledge, multimodal understanding, and structured reasoning. **Bianzheng-Grounded Policy Optimization (BGPO)** then optimizes response format, tree-based syndrome consistency, and fidelity across 30 intermediate *bianzheng* fields.
 
 <p align="center">
   <a href="assets/fu-tcm-framework-overview.png">
-    <img src="assets/fu-tcm-framework-overview.png" alt="FU-TCM framework, training stages, BGPO alignment, and benchmark evaluation" width="900">
+    <img src="assets/fu-tcm-framework-overview.png" alt="Four-panel FU-TCM framework covering data construction, two-stage training, benchmark performance, and external validation" width="900">
   </a>
 </p>
 
-<p align="center"><em>FU-TCM framework, training, and evaluation. This is the overview figure from the paper.</em></p>
+<p align="center"><em>FU-TCM framework: multisource data construction, two-stage training, benchmark performance, and external validation.</em></p>
 
 ## Highlights
 
 - **Two model scales:** FU-TCM-9B and FU-TCM-27B.
 - **Multimodal TCM capability:** text and image understanding across classical texts, textbooks, diagnostic images, and clinical cases.
 - **Inspectable syndrome differentiation:** a structured path from four-examination evidence through 30 intermediate *bianzheng* fields to the final syndrome.
-- **Three-stage training:** domain SFT, cold-start SFT, and BGPO reasoning alignment.
+- **Two-stage training:** TCM domain-specific learning followed by BGPO reasoning alignment.
 - **Verifiable rewards:** format compliance, syndrome consistency, and intermediate-field fidelity.
 - **Six-benchmark evaluation:** case-based *bianzheng*, TCM text knowledge, examination questions, and visual understanding.
 
 ## Results at a glance
 
-FU-TCM-27B achieved the highest six-benchmark macro-average accuracy of **80.41%** and ranked first on **five of six** benchmarks. Across eight models, strict intermediate-parameter accuracy correlated with final syndrome-choice accuracy (Pearson **r = 0.81**). These results support explicit *bianzheng* supervision as a route toward more accurate and auditable TCM reasoning.
+FU-TCM-27B led **all six benchmarks** spanning TCM reasoning, text, and vision, with a macro-average accuracy of **81.01%**. Across eight models, mean intermediate-field accuracy correlated positively with final syndrome-choice accuracy (Pearson **r = 0.89**). These results support explicit *bianzheng* supervision as a route toward stronger and more auditable TCM reasoning.
 
 The current evidence is based on retrospective benchmarks and does not establish clinical benefit or autonomous diagnostic safety. FU-TCM is intended for research and practitioner-reviewed decision support.
 
@@ -59,9 +59,8 @@ flowchart LR
 
 ## Training
 
-1. **Domain SFT** adapts the base vision-language models to TCM text and visual question answering.
-2. **Cold-start SFT** teaches the required structured case-reasoning format.
-3. **BGPO** reinforces format validity, syndrome consistency, and fidelity across intermediate diagnostic fields.
+1. **TCM domain-specific learning** applies full-parameter SFT to text QA, image-text VQA, and case-reasoning examples.
+2. **BGPO** reinforces format validity, tree-based syndrome consistency, and fidelity across 30 intermediate diagnostic fields.
 
 The repository currently provides the executable Qwen3.5-9B training path with LLaMA-Factory, DeepSpeed ZeRO-3, bf16, and verl-based policy optimization.
 
@@ -115,6 +114,6 @@ The evaluation utilities report overall, dataset-level, and category-level accur
 | Guide | Contents |
 | --- | --- |
 | [Model overview](docs/model_overview.md) | Model family, capabilities, and structured reasoning design |
-| [Training overview](docs/training_overview.md) | Domain SFT, cold-start SFT, BGPO, and evaluation |
+| [Training overview](docs/training_overview.md) | TCM domain-specific learning, BGPO, and evaluation |
 | [Training and evaluation reference](docs/sft_grpo_evaluation.html) | Main configuration and executable entry points |
 | [Security policy](SECURITY.md) | Credentials, sensitive data, and responsible disclosure |

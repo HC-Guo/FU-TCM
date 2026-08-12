@@ -18,23 +18,19 @@
 <body><main>
   <p><a href="model_overview.html">← Model overview</a></p>
   <h1>FU-TCM training</h1>
-  <p class="lead">Training moves from domain adaptation to structured case reasoning and Bianzheng-Grounded Policy Optimization.</p>
+  <p class="lead">FU-TCM uses two stages: TCM domain-specific learning followed by Bianzheng-Grounded Policy Optimization.</p>
 
   <div class="stages">
     <section class="stage">
       <div class="number">1</div>
-      <div><h2>Full-parameter domain SFT</h2><p>Adapt the base vision-language models with TCM text and image question-answer data. The public 9B path uses DeepSpeed ZeRO-3, bf16, and a 4,096-token context.</p><p><code>llamafactory_qwen35/qwen35_9b_full_sft_ds3.yaml</code></p></div>
+      <div><h2>TCM domain-specific learning</h2><p>Apply full-parameter SFT to 1.53 million text QA, 8,331 image-text VQA, and 1,867 structured case-reasoning examples. The public 9B path uses DeepSpeed ZeRO-3, bf16, and a 4,096-token context.</p><p><code>llamafactory_qwen35/qwen35_9b_full_sft_ds3.yaml</code></p></div>
     </section>
     <section class="stage">
       <div class="number">2</div>
-      <div><h2>Cold-start SFT</h2><p>Teach the required structured case format and the path from four-examination evidence through intermediate <em>bianzheng</em> judgments to the final syndrome.</p></div>
+      <div><h2>BGPO reasoning alignment</h2><p>Apply verifiable rewards for response format, tree-based syndrome consistency, and fidelity across 30 intermediate diagnostic fields.</p><p><code>reward_functions.py::compute_score</code></p></div>
     </section>
     <section class="stage">
       <div class="number">3</div>
-      <div><h2>BGPO reasoning alignment</h2><p>Apply verifiable rewards for format validity, syndrome consistency, and fidelity across 30 intermediate diagnostic fields.</p><p><code>reward_functions.py::compute_score</code></p></div>
-    </section>
-    <section class="stage">
-      <div class="number">4</div>
       <div><h2>Evaluation</h2><p>Run text and vision benchmarks with Transformers or vLLM and generate blinded materials for clinician review.</p><p><code>eval_qwen35.py</code> · <code>eval_qwen35_vllm.py</code></p></div>
     </section>
   </div>
