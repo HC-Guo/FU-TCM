@@ -19,14 +19,12 @@ Training proceeds in two stages. **TCM domain-specific learning** uses text QA, 
 
 <p align="center"><em>FU-TCM framework: multisource data construction, two-stage training, benchmark performance, and external validation.</em></p>
 
-## Highlights
+## Key Features
 
-- **Two model scales:** FU-TCM-9B and FU-TCM-27B.
-- **Multimodal TCM capability:** text and image understanding across classical texts, textbooks, diagnostic images, and clinical cases.
-- **Inspectable syndrome differentiation:** a structured path from four-examination evidence through 30 intermediate *bianzheng* fields to the final syndrome.
-- **Two-stage training:** TCM domain-specific learning followed by BGPO reasoning alignment.
-- **Verifiable rewards:** format compliance, syndrome consistency, and intermediate-field fidelity.
-- **Six-benchmark evaluation:** case-based *bianzheng*, TCM text knowledge, examination questions, and visual understanding.
+- **From knowledge to *bianzheng*.** Fu-TCM shifts TCM large-model training from knowledge accumulation toward learning how clinical evidence is organized into *bianzheng* decisions.
+- **Multimodal four-examination reasoning.** A unified architecture integrates evidence from the four diagnostic methods and generates a complete, traceable evidence-to-syndrome chain for clinician review.
+- **Process–outcome evaluation.** A dual-dimensional evaluation system measures both final predictions and the intermediate *bianzheng* process. Fu-TCM achieves state-of-the-art results across six benchmarks and professional-level external validation.
+- **Computable and open TCM knowledge.** TCM *bianzheng* experience is encoded as 30 learnable fields and a syndrome taxonomy, while open data, code, and model weights lower the cost of reuse and accelerate international research.
 
 ## Results at a glance
 
