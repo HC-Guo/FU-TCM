@@ -76,3 +76,53 @@ pip install flash-attn==2.8.3 --no-build-isolation
 # Install the project dependencies
 pip install -r requirements.txt
 ```
+
+## 💻 Quick Start
+
+```python
+import torch
+from transformers import AutoProcessor, Qwen3_5ForConditionalGeneration
+
+model_id = "fudanxai/Fu-TCM-9B"
+
+processor = AutoProcessor.from_pretrained(
+    model_id,
+    trust_remote_code=True,
+)
+model = Qwen3_5ForConditionalGeneration.from_pretrained(
+    model_id,
+    trust_remote_code=True,
+    torch_dtype=torch.bfloat16,
+    device_map="auto",
+    attn_implementation="flash_attention_2",
+).eval()
+
+messages = [
+    {
+        "role": "user",
+        "content": "请根据四诊信息分析患者的中医证型，并说明辨证依据。",
+    }
+]
+
+text = processor.apply_chat_template(
+    messages,
+    tokenize=False,
+    add_generation_prompt=True,
+    enable_thinking=False,
+)
+inputs = processor(text=text, return_tensors="pt").to(model.device)
+
+with torch.inference_mode():
+    generated_ids = model.generate(
+        **inputs,
+        max_new_tokens=512,
+        do_sample=False,
+    )
+
+input_length = inputs["input_ids"].shape[1]
+response = processor.decode(
+    generated_ids[0][input_length:],
+    skip_special_tokens=True,
+)
+print(response)
+```
