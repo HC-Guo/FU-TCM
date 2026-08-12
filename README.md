@@ -4,26 +4,10 @@
   <strong>Advancing Large-Model Capabilities in Traditional Chinese Medicine through Diagnostic-Reasoning Training</strong>
 </p>
 
-<p align="center">
-  <img alt="Model family: 9B and 27B" src="https://img.shields.io/badge/Models-9B%20%7C%2027B-6B5DD3">
-  <img alt="Modalities: text and vision" src="https://img.shields.io/badge/Modalities-Text%20%2B%20Vision-176B4D">
-  <img alt="Training: full-parameter SFT" src="https://img.shields.io/badge/Training-Full--parameter%20SFT-3776AB">
-  <img alt="Alignment: BGPO" src="https://img.shields.io/badge/Alignment-BGPO-B56A2D">
-</p>
-
-<p align="center">
-  <a href="https://huggingface.co/fudanxai/Fu-TCM-27B">
-    <img alt="Fu-TCM-27B on Hugging Face" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Fu--TCM--27B-FFD21E?labelColor=1f1f1f">
-  </a>
-</p>
-
-<p align="center">
-  <a href="https://huggingface.co/fudanxai/Fu-TCM-27B">Hugging Face model</a> ·
-  <a href="index.html">Project page</a> ·
-  <a href="docs/model_overview.md">Model overview</a> ·
-  <a href="docs/training_overview.md">Training</a> ·
-  <a href="docs/sft_grpo_evaluation.html">Evaluation</a>
-</p>
+<h3 align="center">
+  🤗 <a href="https://huggingface.co/fudanxai/Fu-TCM-9B">Fu-TCM-9B</a> |
+  🤗 <a href="https://huggingface.co/fudanxai/Fu-TCM-27B">Fu-TCM-27B</a>
+</h3>
 
 ## Overview
 
